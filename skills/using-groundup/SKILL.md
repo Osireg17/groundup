@@ -118,6 +118,55 @@ This mirrors how senior engineers think about build order — dependency-first, 
 
 ---
 
+## Session State
+
+At each phase transition, write `.groundup/session-state.json` using your Write tool. This file lets you resume mid-session without restarting the process from scratch.
+
+**Schema:**
+
+```json
+{
+  "task": "One sentence describing what the engineer is building",
+  "phase": "grill | flow_map | per_file_loop | final_review | complete",
+  "current_file": "path/to/current/file.ts or null",
+  "files": [
+    {
+      "path": "path/to/file.ts",
+      "status": "pending | pseudocode_written | implementing | review | done",
+      "reason": "Why this file is in scope"
+    }
+  ],
+  "skipped_gates": [
+    {
+      "gate": "flow_map",
+      "reason": "Engineer chose to proceed without it",
+      "risk_named": "Pseudocode without flow may miss transaction boundaries"
+    }
+  ],
+  "flow_diagram": "ASCII or Mermaid diagram agreed during flow-map, or null",
+  "updated_at": "ISO 8601 timestamp"
+}
+```
+
+**When to write state:**
+
+| Moment | Phase to write | Notes |
+|--------|---------------|-------|
+| Grill exits (approach + files + edges agreed) | `flow_map` | Populate `task` and `files` list with `pending` status |
+| Flow map signed off | `per_file_loop` | Set `current_file` to first file; populate `flow_diagram` |
+| Moving to next file in loop | `per_file_loop` | Mark completed file `done`; update `current_file` |
+| Per-file pseudocode written | (same phase) | Update file status to `pseudocode_written` |
+| Per-file review passes | (same phase) | Update file status to `done` |
+| Final review starts | `final_review` | All files should be `done` |
+| PR opened / session ends | `complete` | |
+| A gate is skipped | (same phase) | Append to `skipped_gates` |
+
+**On resume:** When the session-start hook surfaces a state file, open it, read the phase and current file, and say: "Welcome back — we left off on [phase] for [task]. [Current file status context]. Ready to continue?"
+
+Do not restart grill or flow-map if they are already recorded as complete. Trust the state.
+
+**Directory:** Create `.groundup/` if it doesn't exist. This directory is local to the project and should be gitignored — it is per-engineer working state, not team configuration.
+
 ## Career Framing
 
 When engineers ask why the process is this structured, the answer is:

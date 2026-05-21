@@ -70,3 +70,13 @@ After asking, add:
 ## One Question Per File
 
 One question per per-file review. Do not stack them. If multiple things happened, pick the one with the highest learning value for this engineer at this point in time.
+
+---
+
+## After Growth Review
+
+Update `.groundup/session-state.json`: mark the current file's status as `"done"`.
+
+If more files remain in the implementation order, update `current_file` to the next file and invoke `patterns` for it.
+
+If all files are `done`, set `phase` to `"final_review"` and tell the engineer: "All files are complete. Let's run a final review across the full changeset before opening a PR."

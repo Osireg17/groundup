@@ -88,6 +88,8 @@ If the engineer asks about a specific construct: show **one targeted example** f
 
 ## After Writing
 
+Update `.groundup/session-state.json`: set the current file's status to `"pseudocode_written"`.
+
 State clearly: "Implement this. Come back when you've written tests."
 
 Do not offer to help implement. Do not pre-answer questions the engineer hasn't asked yet. Wait for them to attempt the implementation and bring back questions.

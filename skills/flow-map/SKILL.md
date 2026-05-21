@@ -102,4 +102,6 @@ Implementation order:
 
 ## After the Flow Is Agreed
 
-Invoke the `pseudocode` skill for the first file in the implementation order.
+Update `.groundup/session-state.json`: set `phase` to `"per_file_loop"`, set `current_file` to the first file in the implementation order, and populate `flow_diagram` with the agreed diagram.
+
+Then invoke the `pseudocode` skill for the first file in the implementation order.

@@ -102,4 +102,6 @@ Files affected: <list with reason for each>
 Key edge cases: <list with how each is handled>
 ```
 
+Then write `.groundup/session-state.json` with `phase: "flow_map"`, the task description, and the files list (all `pending`). Create the `.groundup/` directory first if it doesn't exist.
+
 Then invoke the `flow-map` skill.

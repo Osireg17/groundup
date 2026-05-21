@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # groundup session-start hook
 # Injects the using-groundup bootstrap skill into every session,
-# followed by any project-level .grounduprc.md overrides.
+# followed by any in-progress session state and project-level overrides.
 
 set -euo pipefail
 
@@ -13,6 +13,24 @@ fi
 
 # Plain stdout is added directly to Claude's context for SessionStart hooks
 cat "$SKILL_FILE"
+
+# If a session is in progress, surface the state so Claude can resume rather
+# than restart. Only shown when phase is not "complete".
+STATE_FILE=".groundup/session-state.json"
+if [[ -f "$STATE_FILE" ]]; then
+  phase=$(python3 -c "import json,sys; d=json.load(open('$STATE_FILE')); print(d.get('phase',''))" 2>/dev/null || true)
+  if [[ -n "$phase" && "$phase" != "complete" ]]; then
+    echo ""
+    echo "---"
+    echo "# Resuming In-Progress Session"
+    echo ""
+    echo "A groundup session is already in progress for this project."
+    echo "Read .groundup/session-state.json and resume from the recorded phase."
+    echo "Do NOT restart the process — continue from where the engineer left off."
+    echo ""
+    cat "$STATE_FILE"
+  fi
+fi
 
 # If the project has a .grounduprc.md, append it so team-specific rules
 # override or extend the defaults for this session.

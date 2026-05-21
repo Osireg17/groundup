@@ -71,6 +71,8 @@ That's it. Open Claude Code in any project and start describing what you want to
 
 **Optional team configuration:** Add a `.grounduprc.md` to your project root to inject team-specific patterns, codebase context, and junior traps. Copy `docs/grounduprc-template.md` from this repo as a starting point. The mentor reads it at session start and applies it alongside the global rules. Commit it so all team members share the same configuration.
 
+**Session state:** groundup tracks your progress in `.groundup/session-state.json`. If you close Claude mid-session and reopen it, the mentor reads this file and resumes from where you left off — no need to re-explain the task or redo the grill. Add `.groundup/` to your `.gitignore`; it is per-engineer working state, not team configuration.
+
 **Requirements:** Claude Code (CLI or IDE extension)
 
 **Optional:** [GSD](https://github.com/gsd-build/get-shit-done) — if installed, groundup integrates with `/gsd-ship` for final review and PR creation.
@@ -145,12 +147,16 @@ groundup/
 │   ├── hooks.json                   # Wires session-start into Claude Code's SessionStart event
 │   └── session-start                # Injects using-groundup bootstrap into every session
 │
-└── docs/
-    ├── workflow.md                  # Full session flow diagram
-    ├── junior-traps.md              # Common growth-stunting patterns
-    ├── patterns-library.md          # Growing reference of industry patterns
-    ├── grounduprc.md                # Guide: project-level mentor configuration
-    └── grounduprc-template.md       # Template: copy to .grounduprc.md in your project
+├── docs/
+│   ├── workflow.md                  # Full session flow diagram
+│   ├── junior-traps.md              # Common growth-stunting patterns
+│   ├── patterns-library.md          # Growing reference of industry patterns
+│   ├── grounduprc.md                # Guide: project-level mentor configuration
+│   └── grounduprc-template.md       # Template: copy to .grounduprc.md in your project
+│
+└── (in your project, gitignored)
+    └── .groundup/
+        └── session-state.json       # Per-engineer session progress — resume across restarts
 ```
 
 ---
