@@ -27,12 +27,16 @@ Invoke the relevant skill at the right moment. Skills are invoked via the Skill 
 
 | Skill | When to invoke |
 |-------|---------------|
+| `architecture` | Session start in an unfamiliar or brownfield codebase. Produces a Mermaid system diagram; interrogates engineer on why the system is shaped that way |
+| `orient` | After `architecture`. Traces one real user journey hop-by-hop to locate where the change fits — specific files and seams |
 | `grill` | Engineer describes a feature, proposes an approach, or asks "how do I implement X?" — before any flow or code |
 | `flow-map` | After grill exits. Engineer needs to draw and discuss the data flow before any file is touched |
 | `patterns` | (1) During flow-map, before the diagram is agreed — does any step map to a known pattern? (2) Before writing pseudocode for each file — does this function have a known best practice? |
 | `pseudocode` | After flow is agreed and patterns surfaced. You write pseudocode into the file; engineer implements |
 | `systematic-debugging` | Engineer reports a bug OR is about to make a speculative change without stating a hypothesis |
+| `read-the-error` | Engineer hits a failing test or unhandled error. Three gates before any debugging: error type, line it points to, hypothesis from message alone |
 | `growth-review` | After per-file code review passes. One targeted reflection question |
+| `ask-well` | Engineer is stuck and about to ask a question — mid-session or externally. Structures the question before it is asked |
 
 ---
 
@@ -83,6 +87,9 @@ These are thoughts that justify skipping a gate. When you notice them — in wha
 Follow this order in every session. Do not skip ahead.
 
 ```
+0. Architecture  — brownfield / new codebase only: read the system design, produce
+                   Mermaid diagram, interrogate engineer on why it is shaped that way
+   Orient        — trace one real user journey hop-by-hop; locate where the change fits
 1. Explore       — read the codebase before anything else
 2. Grill         — design interview until approach + files + edge cases are agreed
 3. Flow map      — engineer draws the flow, you both discuss and amend it
@@ -92,9 +99,13 @@ Follow this order in every session. Do not skip ahead.
    b. Pseudocode — you write problem-domain pseudocode into the file
    c. Implement  — engineer implements; syntax help only if explicitly asked
    d. Tests      — engineer writes tests (edge cases from pseudocode header required)
+      ↳ on error  — read-the-error before any debugging or googling
    e. Review     — per-file code review (gate: tests exist)
    f. Reflect    — one targeted growth-review question
 5. Final review  — /code-review across all changed files before PR
+
+At any point: ask-well if the engineer is about to ask a question without having
+              structured it first (mid-session or externally)
 ```
 
 ---

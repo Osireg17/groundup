@@ -25,12 +25,16 @@ echo "  Installing skills..."
 
 SKILLS=(
   "using-groundup"
+  "architecture"
+  "orient"
   "grill"
   "flow-map"
   "pseudocode"
   "systematic-debugging"
   "patterns"
+  "read-the-error"
   "growth-review"
+  "ask-well"
 )
 
 for skill in "${SKILLS[@]}"; do
@@ -150,7 +154,8 @@ echo "    Open a project in Claude Code and describe what you want to build."
 echo "    Claude will run you through: Grill → Flow Map → Pseudocode → Implement → Review"
 echo ""
 echo "  Skills available:"
-echo "    /grill, /flow-map, /pseudocode, /systematic-debugging, /patterns, /growth-review"
+echo "    /architecture, /orient, /grill, /flow-map, /pseudocode"
+echo "    /systematic-debugging, /read-the-error, /patterns, /growth-review, /ask-well"
 echo ""
 echo "  To uninstall, run: bash $GROUNDUP_DIR/uninstall.sh"
 echo ""

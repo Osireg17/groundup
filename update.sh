@@ -17,12 +17,16 @@ echo ""
 
 SKILLS=(
   "using-groundup"
+  "architecture"
+  "orient"
   "grill"
   "flow-map"
   "pseudocode"
   "systematic-debugging"
   "patterns"
+  "read-the-error"
   "growth-review"
+  "ask-well"
 )
 
 for skill in "${SKILLS[@]}"; do
