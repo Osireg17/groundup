@@ -64,9 +64,7 @@ flowchart LR
 ## Install
 
 ```bash
-git clone https://github.com/Osireg17/groundup
-cd groundup
-bash install.sh
+claude plugin install https://github.com/Osireg17/groundup
 ```
 
 That's it. Open Claude Code in any project and start describing what you want to build.
@@ -79,35 +77,31 @@ That's it. Open Claude Code in any project and start describing what you want to
 
 ## Update
 
-After a `git pull`, re-copy skills and the hook without touching your `CLAUDE.md`:
-
 ```bash
-bash update.sh
+claude plugin update groundup
 ```
 
-To also update the `CLAUDE.md` block, run `install.sh` instead — it will replace the existing groundup block safely.
+groundup pulls the latest version from GitHub automatically. Run this on any machine where you have it installed — personal laptop, work laptop, anywhere.
 
 ---
 
 ## Uninstall
 
 ```bash
-bash uninstall.sh
+claude plugin uninstall groundup
 ```
-
-Removes skills, hook, and the groundup block from `~/.claude/CLAUDE.md`.
 
 ---
 
 ## How It Works
 
-groundup installs into `~/.claude/`:
+groundup is a Claude Code plugin. Installing it adds:
 
-- **Skills** — invokable via Claude Code's Skill tool: `architecture`, `orient`, `grill`, `flow-map`, `pseudocode`, `systematic-debugging`, `read-the-error`, `patterns`, `growth-review`, `ask-well`
-- **Bootstrap** — a session-start hook that loads the `using-groundup` skill at the start of every session
-- **CLAUDE.md block** — appended to your existing `~/.claude/CLAUDE.md`, defining the mentor persona and engagement rules
+- **Skills** — invokable via `/groundup:<skill>`: `architecture`, `orient`, `grill`, `flow-map`, `pseudocode`, `systematic-debugging`, `read-the-error`, `patterns`, `growth-review`, `ask-well`
+- **Bootstrap** — a `SessionStart` hook that loads the `using-groundup` skill at the start of every session, activating the mentor persona automatically
+- **Mentor persona** — defined in `CLAUDE.md`, loaded via the bootstrap hook into every session
 
-Skills are triggered automatically (with a nudge, not a hard block) when a gate is bypassed. They can also be invoked manually.
+Skills are triggered automatically (with a nudge, not a hard block) when a gate is bypassed. They can also be invoked manually with `/groundup:<skill-name>`.
 
 ---
 
@@ -123,11 +117,14 @@ This is a deliberate choice. Engineers who learn to recognise *when* to invoke t
 
 ```
 groundup/
-├── CLAUDE.md                        # Mentor persona (appended to ~/.claude/CLAUDE.md)
+├── .claude-plugin/
+│   └── plugin.json                  # Plugin manifest (name, version, metadata)
+│
+├── CLAUDE.md                        # Mentor persona — loaded into every session via hook
 ├── PHILOSOPHY.md                    # Why this framework exists
-├── install.sh                       # One-command install
-├── update.sh                        # Re-copy skills + hook after git pull
-├── uninstall.sh                     # Clean uninstall
+├── install.sh                       # Runs: claude plugin install
+├── update.sh                        # Runs: claude plugin update groundup
+├── uninstall.sh                     # Runs: claude plugin uninstall groundup
 │
 ├── skills/
 │   ├── using-groundup/SKILL.md      # Bootstrap: skill map, iron laws, trigger rules
@@ -143,7 +140,8 @@ groundup/
 │   └── ask-well/SKILL.md            # Structure questions before asking them
 │
 ├── hooks/
-│   └── session-start                # Bootstrap injection hook
+│   ├── hooks.json                   # Wires session-start into Claude Code's SessionStart event
+│   └── session-start                # Injects using-groundup bootstrap into every session
 │
 └── docs/
     ├── workflow.md                  # Full session flow diagram

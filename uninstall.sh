@@ -3,32 +3,16 @@
 
 set -euo pipefail
 
-CLAUDE_DIR="$HOME/.claude"
-SKILLS_DIR="$CLAUDE_DIR/skills"
-CLAUDE_MD="$CLAUDE_DIR/CLAUDE.md"
-
 echo ""
 echo "  groundup — uninstalling"
 echo ""
 
-SKILLS=(using-groundup grill flow-map pseudocode systematic-debugging patterns growth-review)
-
-for skill in "${SKILLS[@]}"; do
-  if [[ -d "$SKILLS_DIR/$skill" ]]; then
-    rm -rf "$SKILLS_DIR/$skill"
-    echo "  ✓ removed skill: $skill"
-  fi
-done
-
-if [[ -f "$CLAUDE_DIR/hooks/groundup-session-start" ]]; then
-  rm "$CLAUDE_DIR/hooks/groundup-session-start"
-  echo "  ✓ removed hook"
+if ! command -v claude &>/dev/null; then
+  echo "  ✗ Claude Code CLI not found."
+  exit 1
 fi
 
-if [[ -f "$CLAUDE_MD" ]]; then
-  sed -i.bak '/<!-- groundup:start -->/,/<!-- groundup:end -->/d' "$CLAUDE_MD"
-  echo "  ✓ removed groundup block from CLAUDE.md"
-fi
+claude plugin uninstall groundup
 
 echo ""
 echo "  groundup uninstalled."

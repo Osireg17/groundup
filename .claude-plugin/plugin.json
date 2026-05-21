@@ -1,9 +1,13 @@
 {
   "name": "groundup",
-  "version": "1.0.0",
   "description": "Senior engineer mentor framework for junior engineers. Enforces Grill → Flow → Pseudocode → Implement → Review discipline with contextual pattern teaching.",
-  "author": "groundup",
-  "skills": "../skills",
-  "hooks": "../hooks/session-start",
+  "version": "1.0.0",
+  "author": {
+    "name": "Osire Gbemisola",
+    "url": "https://github.com/Osireg17"
+  },
+  "repository": "https://github.com/Osireg17/groundup",
+  "homepage": "https://github.com/Osireg17/groundup",
+  "license": "MIT",
   "keywords": ["mentoring", "junior-engineers", "growth", "tdd", "code-review", "patterns"]
 }
