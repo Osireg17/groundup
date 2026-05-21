@@ -1,6 +1,7 @@
 ---
 name: grill
-description: "Run this before any flow, pseudocode, or code. Relentless design interview until the engineer can state the approach, the affected files, and the key edge cases."
+description: "Relentless design interview — runs before any flow, pseudocode, or code is written. Exits only when the engineer can state the approach, affected files, and key edge cases."
+when_to_use: "Use when the engineer describes a feature or asks 'how do I implement X?' — before any design or code. Use when the engineer proposes an approach without having reasoned through edge cases or file impact."
 ---
 
 # Grill — Design Interview

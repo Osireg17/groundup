@@ -1,6 +1,7 @@
 ---
 name: systematic-debugging
-description: "Iron law: no fix without a stated root cause. Four-phase process — engineer completes each phase before Claude helps with the next."
+description: "Root cause first, no exceptions. Four-phase debugging process: reproduce, hypothesise, instrument, verify. Engineer states the cause before any fix is discussed."
+when_to_use: "Use when the engineer reports a bug or is about to make a speculative change. Use when the engineer says 'it's broken', 'this is weird', 'let me just try X' without stating a hypothesis. Use when a fix is proposed without a named root cause."
 ---
 
 # Systematic Debugging

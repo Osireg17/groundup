@@ -1,6 +1,7 @@
 ---
 name: orient
-description: "After architecture is understood, trace one real user journey end-to-end to locate exactly where the change fits. Output: the specific files, entry points, and seams relevant to this session."
+description: "Traces one real user journey end-to-end through the codebase with file and line references to locate exactly where a change fits."
+when_to_use: "Use after architecture is mapped, before grill. Use when the engineer needs to find where their change lives — 'where does this feature go?', 'what calls what here?', 'where does the request land?'"
 ---
 
 # Orient — Locate Your Change in the System

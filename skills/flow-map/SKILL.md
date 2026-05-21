@@ -1,6 +1,7 @@
 ---
 name: flow-map
-description: "Engineer draws the data flow. Claude and engineer discuss it together. Only when both agree does Claude produce the canonical diagram and ordered file list."
+description: "Engineer draws the data flow; Claude interrogates it for transaction boundaries, failure modes, and ownership. Both sign off before any file is touched."
+when_to_use: "Use after grill exits, before pseudocode. Use when the engineer is ready to design the flow — 'here's how I think it works', 'let me draw this out', or when the approach is agreed but no file-level design exists yet."
 ---
 
 # Flow Map — Data Flow Discussion

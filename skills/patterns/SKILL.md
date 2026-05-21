@@ -1,6 +1,7 @@
 ---
 name: patterns
-description: "Surface known industry patterns BEFORE the engineer commits to an approach — during flow-map and before pseudocode for each file. Never as hindsight."
+description: "Surfaces known industry patterns before the engineer commits to an approach — during flow-map discussion and before pseudocode for each file. Never as hindsight in code review."
+when_to_use: "Use during flow-map before the diagram is agreed (does any step map to a known pattern?), and before writing pseudocode for each file (does this function have a known best practice?). Use when the engineer is about to implement something that has a standard solution — batching, outbox, retry, guard clauses, N+1, etc."
 ---
 
 # Patterns — Contextual Teaching

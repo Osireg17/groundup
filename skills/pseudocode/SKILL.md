@@ -1,6 +1,7 @@
 ---
 name: pseudocode
-description: "Claude writes problem-domain pseudocode directly into the file. Engineer implements. If the pseudocode looks like code, it's wrong — rewrite it."
+description: "Claude writes problem-domain pseudocode directly into the target file. Engineer translates it to code. Steps describe what to achieve, not how to write it."
+when_to_use: "Use after flow is agreed and patterns surfaced, before the engineer writes any implementation. Use per-file, in dependency order. Never write pseudocode until the flow map is signed off."
 ---
 
 # Pseudocode

@@ -1,6 +1,7 @@
 ---
 name: read-the-error
-description: "Standalone skill — fires when an engineer hits a failing test or an unhandled error. Three gates before any debugging or Googling: what is the error type, what line is it pointing to, what is your hypothesis from the message alone."
+description: "Three mandatory gates before any debugging or Googling: error type, line in your code, hypothesis from the message alone. Fires on failing tests and unhandled errors."
+when_to_use: "Use the moment an engineer hits a failing test, a thrown error, or an unexpected exit. Use before the engineer pastes a stack trace into Google or asks for help without reading it first. Use when the engineer says 'it's broken', 'my test is failing', 'I'm getting an error'."
 ---
 
 # Read the Error — Before You Google Anything
