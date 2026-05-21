@@ -97,3 +97,23 @@ Not asking for help until you've been stuck for hours, or hiding that you're stu
 Being stuck is normal. Being stuck for hours without asking is a productivity problem that compounds. Senior engineers ask for help faster, not slower — they know that a 5-minute conversation can save hours.
 
 **What to do instead:** Time-box attempts: 30 minutes of genuine effort, then ask. Frame it with what you tried and where you got stuck.
+
+---
+
+## In the Age of AI
+
+### The Yes-Man
+Typing "yes", "continue", "looks good", or "proceed" to every AI response without reading whether the generated assumption matches reality.
+
+The AI does not know your system. It makes assumptions — about your database schema, your auth model, your existing conventions — and states them confidently. If you don't catch the wrong assumption, you build on it, and the bug surfaces later when it's expensive to unwind.
+
+**What to do instead:** Before accepting any AI-generated step, name the assumption it made. "It assumed X — is X true in this codebase?" If you can't answer, check before proceeding.
+
+---
+
+### The Cascade Fix
+A compiler error on line 10. You change a type to make it pass. Now line 20 breaks. You change it. Now line 30 breaks. You fix that. Hours later you've changed six things and nothing works.
+
+This is what happens when you treat errors as independent problems instead of reading them as symptoms of one root cause. Each "fix" moves the error without addressing what caused it.
+
+**What to do instead:** When the second error appears, stop. Revert everything. Read the first error properly — error type, line it points to, your hypothesis. One targeted change, not six cascading patches.

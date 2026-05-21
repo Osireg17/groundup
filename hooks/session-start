@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 # groundup session-start hook
-# Injects the using-groundup bootstrap skill into every session
+# Injects the using-groundup bootstrap skill into every session,
+# followed by any project-level .grounduprc.md overrides.
 
 set -euo pipefail
 
@@ -12,3 +13,13 @@ fi
 
 # Plain stdout is added directly to Claude's context for SessionStart hooks
 cat "$SKILL_FILE"
+
+# If the project has a .grounduprc.md, append it so team-specific rules
+# override or extend the defaults for this session.
+if [[ -f ".grounduprc.md" ]]; then
+  echo ""
+  echo "---"
+  echo "# Project Overrides (.grounduprc.md)"
+  echo ""
+  cat ".grounduprc.md"
+fi

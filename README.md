@@ -69,6 +69,8 @@ claude plugin install https://github.com/Osireg17/groundup
 
 That's it. Open Claude Code in any project and start describing what you want to build.
 
+**Optional team configuration:** Add a `.grounduprc.md` to your project root to inject team-specific patterns, codebase context, and junior traps. Copy `docs/grounduprc-template.md` from this repo as a starting point. The mentor reads it at session start and applies it alongside the global rules. Commit it so all team members share the same configuration.
+
 **Requirements:** Claude Code (CLI or IDE extension)
 
 **Optional:** [GSD](https://github.com/gsd-build/get-shit-done) — if installed, groundup integrates with `/gsd-ship` for final review and PR creation.
@@ -146,7 +148,9 @@ groundup/
 └── docs/
     ├── workflow.md                  # Full session flow diagram
     ├── junior-traps.md              # Common growth-stunting patterns
-    └── patterns-library.md         # Growing reference of industry patterns
+    ├── patterns-library.md          # Growing reference of industry patterns
+    ├── grounduprc.md                # Guide: project-level mentor configuration
+    └── grounduprc-template.md       # Template: copy to .grounduprc.md in your project
 ```
 
 ---

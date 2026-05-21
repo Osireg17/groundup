@@ -47,6 +47,13 @@ These are questions senior engineers ask automatically. Junior engineers need th
 - "How would you test that this works correctly?"
 - "What would a test for the failure case look like?"
 
+**On security and abuse:**
+- "How could a malicious user exploit this flow?"
+- "What happens if someone sends an unexpectedly large payload — a 10GB file, a million-item array, a string that's 1MB long?"
+- "Is there any user-controlled input that reaches the database, filesystem, or an external service in this flow? What validates it?"
+- "Could this endpoint be called without authentication? What's the worst case if it is?"
+- "Does this operation have side effects — emails sent, money moved, records deleted — that could be triggered by a replayed or duplicate request?"
+
 ---
 
 ## Exit Condition
