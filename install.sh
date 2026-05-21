@@ -59,8 +59,9 @@ echo "    ✓ groundup-session-start"
 
 echo "  Wiring session-start hook..."
 
+HOOK_ENTRY="{\"type\":\"command\",\"command\":\"$HOOK_DST\"}"
+
 if [[ ! -f "$SETTINGS_FILE" ]]; then
-  # Create minimal settings.json
   cat > "$SETTINGS_FILE" <<EOF
 {
   "hooks": {
@@ -78,23 +79,31 @@ if [[ ! -f "$SETTINGS_FILE" ]]; then
 }
 EOF
   echo "    ✓ Created settings.json with hook"
+elif grep -q "groundup-session-start" "$SETTINGS_FILE" 2>/dev/null; then
+  echo "    ↻ Hook already configured in settings.json"
+elif command -v jq &>/dev/null; then
+  # Auto-merge using jq: append to SessionStart hooks array if it exists, create it if not
+  MERGED=$(jq --argjson entry "$HOOK_ENTRY" '
+    if .hooks.SessionStart then
+      .hooks.SessionStart[0].hooks += [$entry]
+    else
+      .hooks.SessionStart = [{"hooks": [$entry]}]
+    end
+  ' "$SETTINGS_FILE")
+  printf '%s\n' "$MERGED" > "$SETTINGS_FILE"
+  echo "    ✓ Added hook to existing settings.json"
 else
-  # Check if the hook is already configured
-  if grep -q "groundup-session-start" "$SETTINGS_FILE" 2>/dev/null; then
-    echo "    ↻ Hook already configured in settings.json"
-  else
-    echo ""
-    echo "  ⚠  settings.json already exists."
-    echo "     Add the following to the SessionStart hooks manually:"
-    echo ""
-    echo '     {'
-    echo '       "type": "command",'
-    echo "       \"command\": \"$HOOK_DST\""
-    echo '     }'
-    echo ""
-    echo "     See: https://docs.anthropic.com/en/docs/claude-code/hooks"
-    echo ""
-  fi
+  echo ""
+  echo "  ⚠  settings.json already exists and jq is not installed."
+  echo "     Add the following to the SessionStart hooks manually:"
+  echo ""
+  echo '     {'
+  echo '       "type": "command",'
+  echo "       \"command\": \"$HOOK_DST\""
+  echo '     }'
+  echo ""
+  echo "     See: https://docs.anthropic.com/en/docs/claude-code/hooks"
+  echo ""
 fi
 
 # ── 5. Append CLAUDE.md block ────────────────────────────────────────────────
@@ -141,10 +150,7 @@ echo "    Open a project in Claude Code and describe what you want to build."
 echo "    Claude will run you through: Grill → Flow Map → Pseudocode → Implement → Review"
 echo ""
 echo "  Skills available:"
-for skill in "${SKILLS[@]}"; do
-  echo "    /grill, /flow-map, /pseudocode, /systematic-debugging, /patterns, /growth-review"
-  break
-done
+echo "    /grill, /flow-map, /pseudocode, /systematic-debugging, /patterns, /growth-review"
 echo ""
 echo "  To uninstall, run: bash $GROUNDUP_DIR/uninstall.sh"
 echo ""

@@ -80,7 +80,7 @@ The engineer decides. You explain the options.
 
 When both of you agree on the flow:
 
-1. Produce the canonical ASCII diagram
+1. Produce the canonical Mermaid diagram (flowchart TD)
 2. List the affected files in **dependency order** — the order in which they will be implemented
 3. State the order explicitly: "We'll start with X because it has no dependencies on the other files. Then Y, then Z."
 

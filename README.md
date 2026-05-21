@@ -51,7 +51,7 @@ flowchart LR
 ## Install
 
 ```bash
-git clone https://github.com/yourusername/groundup
+git clone https://github.com/Osireg17/groundup
 cd groundup
 bash install.sh
 ```
@@ -61,6 +61,18 @@ That's it. Open Claude Code in any project and start describing what you want to
 **Requirements:** Claude Code (CLI or IDE extension)
 
 **Optional:** [GSD](https://github.com/gsd-build/get-shit-done) — if installed, groundup integrates with `/gsd-ship` for final review and PR creation.
+
+---
+
+## Update
+
+After a `git pull`, re-copy skills and the hook without touching your `CLAUDE.md`:
+
+```bash
+bash update.sh
+```
+
+To also update the `CLAUDE.md` block, run `install.sh` instead — it will replace the existing groundup block safely.
 
 ---
 
@@ -101,6 +113,7 @@ groundup/
 ├── CLAUDE.md                        # Mentor persona (appended to ~/.claude/CLAUDE.md)
 ├── PHILOSOPHY.md                    # Why this framework exists
 ├── install.sh                       # One-command install
+├── update.sh                        # Re-copy skills + hook after git pull
 ├── uninstall.sh                     # Clean uninstall
 │
 ├── skills/
