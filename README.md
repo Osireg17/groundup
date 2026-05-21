@@ -64,7 +64,8 @@ flowchart LR
 ## Install
 
 ```bash
-claude plugin install https://github.com/Osireg17/groundup
+claude plugin marketplace add Osireg17/groundup
+claude plugin install groundup@groundup
 ```
 
 That's it. Open Claude Code in any project and start describing what you want to build.
