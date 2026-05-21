@@ -14,13 +14,18 @@ Every session follows a deliberate sequence:
 
 ```mermaid
 flowchart LR
-    A([Start]) --> B[Grill]
+    A([Start]) --> A1[Architecture]
+    A1 --> A2[Orient]
+    A2 --> B[Grill]
     B --> C[Flow Map]
     C --> D[Patterns]
     D --> E[Pseudocode]
     E --> F[Implement]
     F --> G{Stuck?}
-    G -->|Yes| H[Debug]
+    G -->|Error| RE[Read the Error]
+    RE --> H[Debug]
+    G -->|Blocked| AW[Ask Well]
+    AW --> F
     H --> F
     G -->|No| I[Tests]
     I --> J[Review]
@@ -29,6 +34,10 @@ flowchart LR
     L -->|Yes| D
     L -->|No| M([PR])
 ```
+
+**Architecture** — In a brownfield or unfamiliar codebase, Claude reads the system design and produces a Mermaid diagram showing layers, services, and dependency direction. Then interrogates you on *why* it is shaped that way — not just what it does.
+
+**Orient** — After architecture, traces one real user journey hop-by-hop through the codebase with file and line references. Locates exactly where your change fits and names anything unknown as an explicit assumption.
 
 **Grill** — Before any code, Claude interviews you relentlessly until you can state the approach, the affected files, and the key edge cases. One question at a time. No answer given until you've reasoned through it.
 
@@ -40,7 +49,11 @@ flowchart LR
 
 **Implement** — You write the code. Syntax help only if you ask, and only one targeted example.
 
+**Read the Error** — When a test fails or an error is thrown, three gates before any debugging or Googling: what is the error type, what line is it pointing to, what is your hypothesis from the message alone.
+
 **Debug** — When you're stuck, Claude doesn't suggest fixes. It walks you through: reproduce → hypothesise → instrument → verify. No fix without a stated root cause.
+
+**Ask Well** — When you're about to ask a question — mid-session or externally — Claude structures it first: what you're trying to do, what you've tried, what you expected vs what happened, where specifically you're stuck. A well-formed question is already 50% of the answer.
 
 **Review** — Per-file code review once tests exist. Edge cases from the pseudocode header must be covered.
 
@@ -90,7 +103,7 @@ Removes skills, hook, and the groundup block from `~/.claude/CLAUDE.md`.
 
 groundup installs into `~/.claude/`:
 
-- **Skills** — invokable via Claude Code's Skill tool: `grill`, `flow-map`, `pseudocode`, `systematic-debugging`, `patterns`, `growth-review`
+- **Skills** — invokable via Claude Code's Skill tool: `architecture`, `orient`, `grill`, `flow-map`, `pseudocode`, `systematic-debugging`, `read-the-error`, `patterns`, `growth-review`, `ask-well`
 - **Bootstrap** — a session-start hook that loads the `using-groundup` skill at the start of every session
 - **CLAUDE.md block** — appended to your existing `~/.claude/CLAUDE.md`, defining the mentor persona and engagement rules
 
@@ -118,12 +131,16 @@ groundup/
 │
 ├── skills/
 │   ├── using-groundup/SKILL.md      # Bootstrap: skill map, iron laws, trigger rules
+│   ├── architecture/SKILL.md        # System design reading + Mermaid diagram
+│   ├── orient/SKILL.md              # Trace a user journey to locate the change
 │   ├── grill/SKILL.md               # Design interview
 │   ├── flow-map/SKILL.md            # Data flow discussion
 │   ├── pseudocode/SKILL.md          # Problem-domain pseudocode in file
 │   ├── systematic-debugging/SKILL.md # Root cause first
+│   ├── read-the-error/SKILL.md      # Three gates before debugging a failing test
 │   ├── patterns/SKILL.md            # Contextual pattern teaching
-│   └── growth-review/SKILL.md       # Post-review reflection
+│   ├── growth-review/SKILL.md       # Post-review reflection
+│   └── ask-well/SKILL.md            # Structure questions before asking them
 │
 ├── hooks/
 │   └── session-start                # Bootstrap injection hook
