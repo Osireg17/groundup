@@ -42,6 +42,61 @@ This file is for things that are **specific to your codebase and team** — not 
 - Integration tests in `test/integration/` hit a real Postgres instance — do not mock the DB
 ```
 
+**Internal documentation links:**
+
+```markdown
+## Internal Documentation
+- Auth model: https://wiki.internal/auth-architecture
+- Error catalogue: src/errors/README.md
+- API contracts: docs/api/
+```
+
+The mentor cites these when they're relevant — instead of guessing how your auth model works, it reads the link you've provided and advises accordingly. Use file paths for things in the repo, URLs for things on your internal wiki or Confluence.
+
+**Domain idioms — what words mean in your codebase:**
+
+```markdown
+## Domain Idioms
+- "Handler" means: a class that processes a single command type, lives in src/handlers/
+- "Service" vs "Repository": Services contain business logic; Repositories do DB access only
+- "Event" means: a domain event on the internal bus, not an HTTP webhook
+```
+
+Without this, the mentor may use these terms differently than your team does — which creates confusion during grill and pseudocode. Fill in any term that has a company-specific meaning that differs from the generic engineering definition.
+
+**Required probes for high-risk areas:**
+
+```markdown
+## Required Grill Probes by Area
+- src/payments/: always probe for idempotency, replay attacks, double-charge scenarios
+- src/auth/: always probe for token expiry edge cases, concurrent session handling
+- src/migrations/: always probe for rollback plan and zero-downtime strategy
+```
+
+When a session involves a file whose path starts with one of these prefixes, the mentor runs the listed probes during grill — automatically, without the engineer needing to know they apply. Use this for areas where junior engineers have historically underestimated complexity or caused incidents.
+
+**Style guide — company-specific conventions:**
+
+```markdown
+## Style Guide
+- Error handling: always extend `src/errors/AppError.ts`, never throw `new Error()` directly
+- Logging: always use `src/lib/logger.ts`, never console.log
+- File naming: kebab-case for all new files
+```
+
+The mentor enforces these during per-file code review. Do not list generic best practices (those are already in the framework) — list only what's specific to your team and not obvious from reading the code.
+
+**Onboarding context — week-1 knowledge:**
+
+```markdown
+## Onboarding Context
+- We do not use ORMs — raw SQL via src/lib/db.ts
+- Integration tests use a real Postgres instance — never mock the DB layer
+- src/payments/ is PCI-scoped — all changes require a security probe and a second reviewer
+```
+
+This is what a new engineer needs to know that isn't obvious from reading the code. The mentor uses it to give contextually accurate advice from session one — instead of recommending an ORM query, it knows to use the raw SQL layer.
+
 ---
 
 ## What Doesn't Belong Here

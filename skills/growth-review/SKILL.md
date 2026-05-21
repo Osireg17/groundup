@@ -73,6 +73,33 @@ One question per per-file review. Do not stack them. If multiple things happened
 
 ---
 
+## Write to Growth Log
+
+After the reflection exchange (question asked + engineer has responded), append an entry to `~/.claude/groundup/growth-log.md`. Create the file and directory if they don't exist.
+
+**Entry format:**
+
+```markdown
+## <ISO 8601 date> — <project directory name> / <current file path>
+
+**Trap observed:** <trap name, or "none">
+**Evidence:** <one sentence describing what the engineer did that revealed the trap, or "n/a">
+
+**Win observed:** <skill or gate name, or "none">
+**Evidence:** <one sentence describing what the engineer did well, or "n/a">
+
+**Growth question asked:** "<the exact question you asked>"
+**Engineer's reasoning quality:** <one of: not attempted | partial — identified the question but not the answer | reasoned through it | strong — could explain it to someone else>
+```
+
+**Rules:**
+- Always write an entry — even when nothing notable happened (record "none" for both trap and win)
+- Append only — never rewrite or delete existing entries
+- Be specific in the evidence fields: "engineer skipped hypothesising and went straight to changing the code" is useful; "engineer made an error" is not
+- If both a trap and a win occurred in the same file, record both
+
+---
+
 ## After Growth Review
 
 Update `.groundup/session-state.json`: mark the current file's status as `"done"`.

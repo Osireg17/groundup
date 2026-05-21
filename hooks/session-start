@@ -32,6 +32,35 @@ if [[ -f "$STATE_FILE" ]]; then
   fi
 fi
 
+# Surface the last 10 entries from the global growth log so the mentor can
+# adapt gate depth before the session begins.
+GROWTH_LOG="${HOME}/.claude/groundup/growth-log.md"
+if [[ -f "$GROWTH_LOG" ]]; then
+  echo ""
+  echo "---"
+  echo "# Engineer Growth History (last 10 entries)"
+  echo ""
+  echo "Read these entries and calibrate your approach before this session begins."
+  echo "Recurring traps → increase probe depth. Consistent wins → reduce scaffolding."
+  echo ""
+  # Extract the last 10 H2 sections (## date — ...) from the log
+  python3 - "$GROWTH_LOG" <<'PYEOF' 2>/dev/null || tail -100 "$GROWTH_LOG"
+import sys, re
+
+with open(sys.argv[1]) as f:
+    content = f.read()
+
+# Split on H2 headings (## ...)
+sections = re.split(r'(?=^## )', content, flags=re.MULTILINE)
+sections = [s.strip() for s in sections if s.strip().startswith('## ')]
+
+# Print last 10
+for section in sections[-10:]:
+    print(section)
+    print()
+PYEOF
+fi
+
 # If the project has a .grounduprc.md, append it so team-specific rules
 # override or extend the defaults for this session.
 if [[ -f ".grounduprc.md" ]]; then

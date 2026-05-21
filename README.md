@@ -69,9 +69,11 @@ claude plugin install https://github.com/Osireg17/groundup
 
 That's it. Open Claude Code in any project and start describing what you want to build.
 
-**Optional team configuration:** Add a `.grounduprc.md` to your project root to inject team-specific patterns, codebase context, and junior traps. Copy `docs/grounduprc-template.md` from this repo as a starting point. The mentor reads it at session start and applies it alongside the global rules. Commit it so all team members share the same configuration.
+**Optional team configuration:** Add a `.grounduprc.md` to your project root to inject team-specific patterns, codebase context, domain idioms, required grill probes by file path, style guide rules, and onboarding context. Copy `docs/grounduprc-template.md` from this repo as a starting point. The mentor reads it at session start and applies it alongside the global rules. Commit it so all team members share the same configuration.
 
 **Session state:** groundup tracks your progress in `.groundup/session-state.json`. If you close Claude mid-session and reopen it, the mentor reads this file and resumes from where you left off — no need to re-explain the task or redo the grill. Add `.groundup/` to your `.gitignore`; it is per-engineer working state, not team configuration.
+
+**Growth log:** groundup maintains a persistent growth log at `~/.claude/groundup/growth-log.md`. After each file review, the mentor records what trap was observed, what went well, and how you reasoned through the reflection question. This log is global — it persists across all projects. At the start of each session, the mentor reads the last 10 entries and adapts: increasing probe depth for areas where you've stumbled repeatedly, and stepping back on gates you've mastered consistently.
 
 **Requirements:** Claude Code (CLI or IDE extension)
 
