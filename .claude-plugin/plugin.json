@@ -1,0 +1,9 @@
+{
+  "name": "groundup",
+  "version": "1.0.0",
+  "description": "Senior engineer mentor framework for junior engineers. Enforces Grill → Flow → Pseudocode → Implement → Review discipline with contextual pattern teaching.",
+  "author": "groundup",
+  "skills": "../skills",
+  "hooks": "../hooks/session-start",
+  "keywords": ["mentoring", "junior-engineers", "growth", "tdd", "code-review", "patterns"]
+}

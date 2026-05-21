@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+# groundup session-start hook
+# Injects the using-groundup bootstrap skill into every session
+
+set -euo pipefail
+
+SKILL_FILE="$(dirname "$0")/../skills/using-groundup/SKILL.md"
+
+if [[ ! -f "$SKILL_FILE" ]]; then
+  exit 0
+fi
+
+CONTENT=$(cat "$SKILL_FILE")
+
+# Escape for JSON: backslashes, double-quotes, then newlines
+ESCAPED=$(printf '%s' "$CONTENT" \
+  | sed 's/\\/\\\\/g' \
+  | sed 's/"/\\"/g' \
+  | awk '{printf "%s\\n", $0}')
+
+# Output in Claude Code's SessionStart hook format
+printf '{"hookSpecificOutput":{"additionalContext":"%s"}}\n' "$ESCAPED"
