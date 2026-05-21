@@ -10,13 +10,5 @@ if [[ ! -f "$SKILL_FILE" ]]; then
   exit 0
 fi
 
-CONTENT=$(cat "$SKILL_FILE")
-
-# Escape for JSON: backslashes, double-quotes, then newlines
-ESCAPED=$(printf '%s' "$CONTENT" \
-  | sed 's/\\/\\\\/g' \
-  | sed 's/"/\\"/g' \
-  | awk '{printf "%s\\n", $0}')
-
-# Output in Claude Code's SessionStart hook format
-printf '{"hookSpecificOutput":{"additionalContext":"%s"}}\n' "$ESCAPED"
+# Plain stdout is added directly to Claude's context for SessionStart hooks
+cat "$SKILL_FILE"
