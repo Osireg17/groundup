@@ -1,0 +1,93 @@
+{
+  "metadata": {
+    "skill_name": "groundup:grill",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/grill",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-05-23T18:57:10Z",
+    "evals_run": ["rate-limiting-eval", "delete-account-eval", "notification-system-eval"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "configuration": "with_skill",
+      "eval_name": "rate-limiting-eval",
+      "pass_rate": 1.0,
+      "duration_seconds": 25.4,
+      "total_tokens": 17519,
+      "assertions_passed": 4,
+      "assertions_total": 4
+    },
+    {
+      "configuration": "without_skill",
+      "eval_name": "rate-limiting-eval",
+      "pass_rate": 0.25,
+      "duration_seconds": 28.0,
+      "total_tokens": 16036,
+      "assertions_passed": 1,
+      "assertions_total": 4
+    },
+    {
+      "configuration": "with_skill",
+      "eval_name": "delete-account-eval",
+      "pass_rate": 1.0,
+      "duration_seconds": 27.4,
+      "total_tokens": 17690,
+      "assertions_passed": 4,
+      "assertions_total": 4
+    },
+    {
+      "configuration": "without_skill",
+      "eval_name": "delete-account-eval",
+      "pass_rate": 1.0,
+      "duration_seconds": 20.0,
+      "total_tokens": 15850,
+      "assertions_passed": 4,
+      "assertions_total": 4
+    },
+    {
+      "configuration": "with_skill",
+      "eval_name": "notification-system-eval",
+      "pass_rate": 1.0,
+      "duration_seconds": 25.9,
+      "total_tokens": 17521,
+      "assertions_passed": 4,
+      "assertions_total": 4
+    },
+    {
+      "configuration": "without_skill",
+      "eval_name": "notification-system-eval",
+      "pass_rate": 0.75,
+      "duration_seconds": 14.5,
+      "total_tokens": 15787,
+      "assertions_passed": 3,
+      "assertions_total": 4
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "mean_pass_rate": 1.0,
+      "stddev_pass_rate": 0.0,
+      "mean_duration_seconds": 26.2,
+      "mean_tokens": 17577
+    },
+    "without_skill": {
+      "mean_pass_rate": 0.667,
+      "stddev_pass_rate": 0.321,
+      "mean_duration_seconds": 20.8,
+      "mean_tokens": 15891
+    },
+    "delta": {
+      "pass_rate": "+0.333",
+      "time_seconds": "+5.4",
+      "tokens": "+1686"
+    }
+  },
+  "notes": [
+    "with_skill: 100% pass rate across all 3 evals — consistently holds problem-first discipline and one-question-at-a-time format",
+    "without_skill: rate-limiting eval 25% — opened with 'Good thinking, Redis is a solid fit' and fired 4 questions at once",
+    "without_skill: delete-account 100% — Claude naturally pushes back on hard deletes; skill adds no marginal value on this eval",
+    "without_skill: notification 75% — asked for specific events correctly but didn't name the brief as explicitly insufficient",
+    "Key discriminator: 'does not validate the plan upfront' and 'single question only' — these are reliably enforced by the skill, unreliable without it"
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "Does not open with agreement or validation of the Redis approach",
+      "passed": false,
+      "evidence": "Opens with 'Good thinking — Redis is a solid fit here.' — immediately validates the approach."
+    },
+    {
+      "text": "Asks the engineer to state the actual problem being solved — not accept the solution description as the starting point",
+      "passed": false,
+      "evidence": "Jumps straight into probing the implementation (race condition, atomicity) without asking what problem is being solved."
+    },
+    {
+      "text": "Ends with exactly one focused question, not a numbered list",
+      "passed": false,
+      "evidence": "Has 4 numbered questions plus a closing question — multiple questions across the response."
+    },
+    {
+      "text": "Does not write any code, pseudocode, or implementation",
+      "passed": true,
+      "evidence": "No code written."
+    }
+  ],
+  "pass_rate": 0.25
+}

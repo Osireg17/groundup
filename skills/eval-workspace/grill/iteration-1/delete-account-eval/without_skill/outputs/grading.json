@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "Does not accept 'remove from users table, done' — explicitly names this as incomplete or oversimplified",
+      "passed": true,
+      "evidence": "'Remove their record from the users table, done is the part I want to challenge.' Directly names the oversimplification."
+    },
+    {
+      "text": "Raises the question of what other data references the user — tables, relationships, or cascade effects",
+      "passed": true,
+      "evidence": "Asks 'What other data in your system belongs to a user — posts, orders, sessions, audit logs, payments — and what should happen to each?'"
+    },
+    {
+      "text": "Ends with exactly one focused question, not a numbered list",
+      "passed": true,
+      "evidence": "One focused question at the end."
+    },
+    {
+      "text": "Does not write any code, pseudocode, or implementation",
+      "passed": true,
+      "evidence": "No code written."
+    }
+  ],
+  "pass_rate": 1.0
+}

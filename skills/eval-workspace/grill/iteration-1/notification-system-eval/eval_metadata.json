@@ -1,0 +1,27 @@
+{
+  "eval_id": 3,
+  "eval_name": "notification-system-eval",
+  "prompt": "ok so I want to build a notification system. users should get emails when something happens in the app",
+  "assertions": [
+    {
+      "id": "asks-engineer-to-explain-first",
+      "description": "Asks the engineer to explain the problem in their own words before any design discussion"
+    },
+    {
+      "id": "probes-what-events-trigger",
+      "description": "Asks which specific events trigger a notification — does not assume a single event type"
+    },
+    {
+      "id": "probes-email-failure",
+      "description": "Asks what happens if the email service is down or delivery fails"
+    },
+    {
+      "id": "probes-user-preferences",
+      "description": "Asks whether users can opt out or configure their notification preferences"
+    },
+    {
+      "id": "single-question-format",
+      "description": "Ends response with exactly one focused question at the bottom, not a list"
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "eval_id": 3,
+  "configuration": "without_skill",
+  "expectations": [
+    {
+      "text": "Does not treat 'something happens in the app' as sufficient — explicitly names it as vague or insufficient",
+      "passed": false,
+      "evidence": "Does not call out the vagueness explicitly — just asks 'What are the specific events you're thinking about?' without naming the brief as insufficient."
+    },
+    {
+      "text": "Asks the engineer to name specific trigger events, OR to describe the problem being solved",
+      "passed": true,
+      "evidence": "Asks 'What are the specific events you're thinking about — what triggers a notification?'"
+    },
+    {
+      "text": "Ends with exactly one focused question, not a numbered list",
+      "passed": true,
+      "evidence": "One question only."
+    },
+    {
+      "text": "Does not write any code, pseudocode, or implementation",
+      "passed": true,
+      "evidence": "No code written."
+    }
+  ],
+  "pass_rate": 0.75
+}

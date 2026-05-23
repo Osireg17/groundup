@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Does not accept 'remove from users table, done' — explicitly names this as incomplete or oversimplified",
+      "passed": true,
+      "evidence": "'Done isn't done until you've answered: what happens to all the data that references this user?' — directly names the oversimplification."
+    },
+    {
+      "text": "Raises the question of what other data references the user — tables, relationships, or cascade effects",
+      "passed": true,
+      "evidence": "Asks 'what other tables in your database have a foreign key that references the users table?' and explains CASCADE/RESTRICT implications."
+    },
+    {
+      "text": "Ends with exactly one focused question, not a numbered list",
+      "passed": true,
+      "evidence": "One question: what other tables have a foreign key referencing users?"
+    },
+    {
+      "text": "Does not write any code, pseudocode, or implementation",
+      "passed": true,
+      "evidence": "No code written."
+    }
+  ],
+  "pass_rate": 1.0
+}

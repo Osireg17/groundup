@@ -1,7 +1,6 @@
 ---
 name: groundup:grill
-description: "Relentless design interview — runs before any flow, pseudocode, or code is written. Exits only when the engineer can state the approach, affected files, and key edge cases."
-when_to_use: "Use when the engineer describes a feature or asks 'how do I implement X?' — before any design or code. Use when the engineer proposes an approach without having reasoned through edge cases or file impact."
+description: "Relentless design interview — runs before any flow, pseudocode, or code is written. Exits only when the engineer can state the approach, affected files, and key edge cases. Use this skill the moment an engineer describes a feature, asks 'how do I implement X?', proposes an approach, or starts talking about what they want to build — even if they haven't finished the sentence. Do not let any design or code discussion begin without running this first. If the engineer is jumping straight to pseudocode or flow without having been grilled, invoke this skill and name the skip."
 ---
 
 # Grill — Design Interview
@@ -102,6 +101,6 @@ Files affected: <list with reason for each>
 Key edge cases: <list with how each is handled>
 ```
 
-Then write `.groundup/session-state.json` with `phase: "flow_map"`, the task description, and the files list (all `pending`). Create the `.groundup/` directory first if it doesn't exist.
+Then write `.groundup/session-state.json` updating `phase` to `"flow_map"`, with the task description and the files list (all `"pending"`). Create `.groundup/` if it doesn't exist.
 
 Then invoke the `flow-map` skill.

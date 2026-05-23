@@ -1,0 +1,27 @@
+{
+  "eval_id": 3,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Does not treat 'something happens in the app' as sufficient — explicitly names it as vague or insufficient",
+      "passed": true,
+      "evidence": "'users should get emails when something happens is a product brief, not a design.' Explicitly names it as insufficient."
+    },
+    {
+      "text": "Asks the engineer to name specific trigger events, OR to describe the problem being solved",
+      "passed": true,
+      "evidence": "'Walk me through the specific events in your app that should trigger a notification. Not categories — actual events. Name at least three real ones.'"
+    },
+    {
+      "text": "Ends with exactly one focused question, not a numbered list",
+      "passed": true,
+      "evidence": "One focused ask: name at least three specific trigger events."
+    },
+    {
+      "text": "Does not write any code, pseudocode, or implementation",
+      "passed": true,
+      "evidence": "No code written."
+    }
+  ],
+  "pass_rate": 1.0
+}

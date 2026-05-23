@@ -1,0 +1,77 @@
+{
+  "skill_name": "groundup:grill",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to add rate limiting to our API endpoints. I'm thinking we use Redis to track request counts per user. Here's the plan: store a key like `rate_limit:{userId}` with a counter, increment on each request, expire after 60 seconds, and return 429 if over the limit.",
+      "expected_output": "Skill does NOT validate or accept the engineer's plan. It pushes back and asks the engineer to state the problem in their own words before any design is discussed. One focused question at the end. No code or pseudocode written.",
+      "assertions": [
+        {
+          "id": "does-not-validate-plan",
+          "description": "Does not open with agreement or validation of the Redis approach (e.g. no 'good thinking', 'that sounds right', 'Redis is a good fit')"
+        },
+        {
+          "id": "asks-problem-first",
+          "description": "Asks the engineer to state the actual problem being solved — not accept the solution description as the starting point"
+        },
+        {
+          "id": "single-question-at-end",
+          "description": "Ends with exactly one focused question, not a numbered list of questions"
+        },
+        {
+          "id": "no-code-written",
+          "description": "Does not write any code, pseudocode, or implementation"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I need to add a 'delete account' feature. The user clicks delete, we remove their record from the users table, done.",
+      "expected_output": "Skill pushes back on 'done' — does not accept the oversimplification. Asks about data that depends on the user record. One focused question at the end. No code or pseudocode.",
+      "assertions": [
+        {
+          "id": "challenges-oversimplification",
+          "description": "Does not accept 'remove from users table, done' — explicitly names this as incomplete or oversimplified"
+        },
+        {
+          "id": "asks-about-related-data",
+          "description": "Raises the question of what other data references the user — tables, relationships, or cascade effects"
+        },
+        {
+          "id": "single-question-at-end",
+          "description": "Ends with exactly one focused question, not a numbered list"
+        },
+        {
+          "id": "no-code-written",
+          "description": "Does not write any code, pseudocode, or implementation"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "ok so I want to build a notification system. users should get emails when something happens in the app",
+      "expected_output": "Skill does not accept the vague brief. Asks engineer to describe the problem or name specific trigger events before any design. One focused question at the end. No code or pseudocode.",
+      "assertions": [
+        {
+          "id": "does-not-accept-vague-brief",
+          "description": "Does not treat 'something happens in the app' as a sufficient design brief — explicitly names it as vague or insufficient"
+        },
+        {
+          "id": "asks-for-specific-triggers-or-problem",
+          "description": "Asks the engineer to name specific events that trigger a notification, OR to describe the problem being solved"
+        },
+        {
+          "id": "single-question-at-end",
+          "description": "Ends with exactly one focused question, not a numbered list"
+        },
+        {
+          "id": "no-code-written",
+          "description": "Does not write any code, pseudocode, or implementation"
+        }
+      ],
+      "files": []
+    }
+  ]
+}

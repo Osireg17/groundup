@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "configuration": "with_skill",
+  "expectations": [
+    {
+      "text": "Does not open with agreement or validation of the Redis approach",
+      "passed": true,
+      "evidence": "Opens with 'You've described a solution before you've described the problem. Let's back up.' — no validation of Redis."
+    },
+    {
+      "text": "Asks the engineer to state the actual problem being solved — not accept the solution description as the starting point",
+      "passed": true,
+      "evidence": "'Walk me through this from first principles: what problem are you actually solving?'"
+    },
+    {
+      "text": "Ends with exactly one focused question, not a numbered list",
+      "passed": true,
+      "evidence": "One question at the end only."
+    },
+    {
+      "text": "Does not write any code, pseudocode, or implementation",
+      "passed": true,
+      "evidence": "No code in response."
+    }
+  ],
+  "pass_rate": 1.0
+}

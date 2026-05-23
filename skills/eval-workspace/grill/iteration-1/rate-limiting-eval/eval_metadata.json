@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "rate-limiting-eval",
+  "prompt": "I want to add rate limiting to our API endpoints. I'm thinking we use Redis to track request counts per user. Here's the plan: store a key like `rate_limit:{userId}` with a counter, increment on each request, expire after 60 seconds, and return 429 if over the limit.",
+  "assertions": [
+    {
+      "id": "probes-before-accepting",
+      "description": "Does NOT accept the engineer's plan — asks at least one clarifying question before agreeing"
+    },
+    {
+      "id": "probes-redis-failure",
+      "description": "Asks what happens when Redis is unavailable (fail open vs fail closed)"
+    },
+    {
+      "id": "probes-race-condition",
+      "description": "Surfaces the concurrent increment race condition (two requests hitting simultaneously)"
+    },
+    {
+      "id": "single-question-format",
+      "description": "Ends response with exactly one focused question, not a list of questions"
+    },
+    {
+      "id": "no-code-written",
+      "description": "Does not write any code, pseudocode, or implementation — interview only"
+    }
+  ]
+}

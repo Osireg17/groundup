@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "eval_name": "delete-account-eval",
+  "prompt": "I need to add a 'delete account' feature. The user clicks delete, we remove their record from the users table, done.",
+  "assertions": [
+    {
+      "id": "probes-related-data",
+      "description": "Asks about related data — what happens to orders, payments, sessions, or other records referencing this user"
+    },
+    {
+      "id": "probes-soft-vs-hard-delete",
+      "description": "Raises the question of soft delete vs hard delete and asks the engineer to justify the choice"
+    },
+    {
+      "id": "probes-active-state",
+      "description": "Asks what happens if the user has an active subscription, pending order, or in-flight transaction"
+    },
+    {
+      "id": "does-not-accept-done",
+      "description": "Does not accept 'done' at 'remove from users table' — pushes back on the oversimplification"
+    },
+    {
+      "id": "single-question-format",
+      "description": "Ends response with exactly one focused question, not a list"
+    }
+  ]
+}
