@@ -1,0 +1,22 @@
+[
+  {"query": "I want to add rate limiting to our API endpoints", "should_trigger": true},
+  {"query": "ok so I need to implement the forgot password flow, I'm thinking I'll just add a reset token to the users table and email it out", "should_trigger": true},
+  {"query": "working on the JIRA-412 ticket — add bulk export to CSV for the orders page", "should_trigger": true},
+  {"query": "I think the way to do the notification system is to poll every 30 seconds", "should_trigger": true},
+  {"query": "how do I implement pagination for the search results?", "should_trigger": true},
+  {"query": "i want to build a feature where users can invite teammates to their workspace", "should_trigger": true},
+  {"query": "I'm going to add soft delete to the posts table, just set a deleted_at timestamp", "should_trigger": true},
+  {"query": "the ticket says add an audit log for all user actions, I think I'll just write to a separate table on each mutation", "should_trigger": true},
+  {"query": "I need to refactor the auth middleware — thinking of moving the JWT validation into its own service", "should_trigger": true},
+  {"query": "how should I approach adding multi-tenancy to the app?", "should_trigger": true},
+  {"query": "my test is failing with TypeError: Cannot read property 'id' of undefined", "should_trigger": false},
+  {"query": "can you review this PR? I've added the payment webhook handler", "should_trigger": false},
+  {"query": "what does the outbox pattern do?", "should_trigger": false},
+  {"query": "I'm getting a 401 on the /api/users endpoint, here's the error log", "should_trigger": false},
+  {"query": "walk me through how the auth middleware works in this codebase", "should_trigger": false},
+  {"query": "I just finished implementing the search feature, can you review the code?", "should_trigger": false},
+  {"query": "my build is failing: Module not found: Error: Can't resolve './components/UserCard'", "should_trigger": false},
+  {"query": "what's the difference between optimistic and pessimistic locking?", "should_trigger": false},
+  {"query": "I pushed a fix for the null pointer bug, does it look right?", "should_trigger": false},
+  {"query": "explain what this function does: async function reconcileOrders(batchId)", "should_trigger": false}
+]

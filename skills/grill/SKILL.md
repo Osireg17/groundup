@@ -1,6 +1,7 @@
 ---
 name: groundup:grill
-description: "Relentless design interview — runs before any flow, pseudocode, or code is written. Exits only when the engineer can state the approach, affected files, and key edge cases. Use this skill the moment an engineer describes a feature, asks 'how do I implement X?', proposes an approach, or starts talking about what they want to build — even if they haven't finished the sentence. Do not let any design or code discussion begin without running this first. If the engineer is jumping straight to pseudocode or flow without having been grilled, invoke this skill and name the skip."
+description: "Relentless design interview that runs before any flow, pseudocode, or code. Exits only when the engineer can state the approach, affected files, and key edge cases. The gate before any implementation begins."
+when_to_use: "Use the moment an engineer describes a feature, asks 'how do I implement X?', proposes an approach, or starts talking about what they want to build. Use when the engineer says 'I want to add X', 'I'm working on Y ticket', 'I think I should do Z'. Use when an engineer jumps straight to pseudocode or flow without having been interviewed — invoke and name the skip. Do not let any design discussion begin without running this first."
 ---
 
 # Grill — Design Interview
