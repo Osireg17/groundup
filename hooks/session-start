@@ -2,6 +2,7 @@
 # groundup session-start hook
 # Injects the using-groundup bootstrap skill into every session,
 # followed by any in-progress session state and project-level overrides.
+# Outputs JSON with hookEventName + additionalContext as required by Claude Code.
 
 set -euo pipefail
 
@@ -11,8 +12,10 @@ if [[ ! -f "$SKILL_FILE" ]]; then
   exit 0
 fi
 
-# Plain stdout is added directly to Claude's context for SessionStart hooks
-cat "$SKILL_FILE"
+# Build up the context block in a temp variable
+context=""
+
+context+=$(cat "$SKILL_FILE")
 
 # If a session is in progress, surface the state so Claude can resume rather
 # than restart. Only shown when phase is not "complete".
@@ -20,15 +23,8 @@ STATE_FILE=".groundup/session-state.json"
 if [[ -f "$STATE_FILE" ]]; then
   phase=$(python3 -c "import json,sys; d=json.load(open('$STATE_FILE')); print(d.get('phase',''))" 2>/dev/null || true)
   if [[ -n "$phase" && "$phase" != "complete" ]]; then
-    echo ""
-    echo "---"
-    echo "# Resuming In-Progress Session"
-    echo ""
-    echo "A groundup session is already in progress for this project."
-    echo "Read .groundup/session-state.json and resume from the recorded phase."
-    echo "Do NOT restart the process — continue from where the engineer left off."
-    echo ""
-    cat "$STATE_FILE"
+    context+=$'\n\n---\n# Resuming In-Progress Session\n\nA groundup session is already in progress for this project.\nRead .groundup/session-state.json and resume from the recorded phase.\nDo NOT restart the process — continue from where the engineer left off.\n\n'
+    context+=$(cat "$STATE_FILE")
   fi
 fi
 
@@ -36,37 +32,37 @@ fi
 # adapt gate depth before the session begins.
 GROWTH_LOG="${HOME}/.claude/groundup/growth-log.md"
 if [[ -f "$GROWTH_LOG" ]]; then
-  echo ""
-  echo "---"
-  echo "# Engineer Growth History (last 10 entries)"
-  echo ""
-  echo "Read these entries and calibrate your approach before this session begins."
-  echo "Recurring traps → increase probe depth. Consistent wins → reduce scaffolding."
-  echo ""
-  # Extract the last 10 H2 sections (## date — ...) from the log
-  python3 - "$GROWTH_LOG" <<'PYEOF' 2>/dev/null || tail -100 "$GROWTH_LOG"
+  growth_entries=$(python3 - "$GROWTH_LOG" <<'PYEOF' 2>/dev/null || tail -100 "$GROWTH_LOG"
 import sys, re
 
 with open(sys.argv[1]) as f:
     content = f.read()
 
-# Split on H2 headings (## ...)
 sections = re.split(r'(?=^## )', content, flags=re.MULTILINE)
 sections = [s.strip() for s in sections if s.strip().startswith('## ')]
 
-# Print last 10
 for section in sections[-10:]:
     print(section)
     print()
 PYEOF
+)
+  context+=$'\n\n---\n# Engineer Growth History (last 10 entries)\n\nRead these entries and calibrate your approach before this session begins.\nRecurring traps → increase probe depth. Consistent wins → reduce scaffolding.\n\n'
+  context+="$growth_entries"
 fi
 
 # If the project has a .grounduprc.md, append it so team-specific rules
 # override or extend the defaults for this session.
 if [[ -f ".grounduprc.md" ]]; then
-  echo ""
-  echo "---"
-  echo "# Project Overrides (.grounduprc.md)"
-  echo ""
-  cat ".grounduprc.md"
+  context+=$'\n\n---\n# Project Overrides (.grounduprc.md)\n\n'
+  context+=$(cat ".grounduprc.md")
 fi
+
+# Output JSON as required by Claude Code SessionStart hooks
+python3 -c "
+import json, sys
+context = sys.stdin.read()
+print(json.dumps({
+    'hookEventName': 'SessionStart',
+    'additionalContext': context
+}))
+" <<< "$context"
