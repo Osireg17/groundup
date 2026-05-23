@@ -1,0 +1,32 @@
+{
+  "eval_id": 3,
+  "eval_name": "debug-routing",
+  "prompt": "I'm getting a weird error in my test suite — the auth tests keep failing but only in CI.",
+  "assertions": [
+    {
+      "text": "Infers debug intent from the prompt (does NOT ask the cold mode question verbatim with three numbered options)",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Offers a short confirmation like 'Looks like you're debugging — shall we start there?' rather than the full mode question",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Routes to the debug flow — writes session-state.json with mode 'debug' and phase 'debugging'",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Invokes groundup:read-the-error (or clearly moves to the read-the-error protocol)",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Does NOT invoke groundup:architecture or groundup:orient",
+      "passed": null,
+      "evidence": null
+    }
+  ]
+}

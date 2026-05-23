@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "resume-detection",
+  "prompt": "Let's pick up where we left off.",
+  "assertions": [
+    "Detects the session-state.json file before asking the mode question",
+    "Surfaces the task name ('Add rate limiting to the auth endpoints') in the resume prompt",
+    "Mentions the current file (src/middleware/rateLimiter.ts) and its status (pseudocode written)",
+    "Offers the choice to resume OR start something new — does not auto-resume",
+    "Does NOT show the mode question (implement/debug/scope) before the resume prompt"
+  ]
+}

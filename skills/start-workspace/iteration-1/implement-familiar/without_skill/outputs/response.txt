@@ -1,0 +1,8 @@
+Great, let's dig into the auth ticket. Before we start writing anything, can you give me a quick summary of what the ticket is actually asking for? Even if you know the codebase well, I want to make sure we're aligned on the problem before touching any files.
+
+Specifically:
+- What's the current behaviour in `validateToken.ts` and `authMiddleware.ts`?
+- What's the expected behaviour after this change?
+- Is this a bug fix, a new feature, or a refactor?
+
+Once I understand that, I'll pull up those files and we can figure out the right approach together.

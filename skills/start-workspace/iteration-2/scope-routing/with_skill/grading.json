@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Infers scope intent from the prompt (does NOT ask the cold mode question verbatim with three numbered options)",
+      "passed": true,
+      "evidence": "The response presents no numbered options — it infers scope intent and asks a single binary question: 'It sounds like you're scoping out a new project — is that right, or are you jumping into implementation?'"
+    },
+    {
+      "text": "Offers a short confirmation like 'It sounds like you're scoping out a new project — is that right?' rather than presenting all three options",
+      "passed": true,
+      "evidence": "'It sounds like you're scoping out a new project — is that right, or are you jumping into implementation?' — matches the expected pattern exactly."
+    },
+    {
+      "text": "Does NOT jump to implementation questions or ask about tech stack before confirming scope intent",
+      "passed": true,
+      "evidence": "Confirmation question comes first; implementation or tech stack questions never appear. The follow-up content is scoping questions only, clearly gated behind a simulated confirmation."
+    },
+    {
+      "text": "Does NOT invoke groundup:grill or groundup:orient before the scope path is confirmed",
+      "passed": true,
+      "evidence": "No invocation of groundup:grill or groundup:orient appears anywhere in the response. The response moves directly from confirmation to scoping questions."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

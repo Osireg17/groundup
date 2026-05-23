@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Routes to the implement flow",
+      "passed": true,
+      "evidence": "Response confirms 'You're implementing a ticket' and proceeds with the implement routing path."
+    },
+    {
+      "text": "Writes session-state.json with mode 'implement'",
+      "passed": true,
+      "evidence": "Response says 'I've recorded the session state' — the transcript confirms mode:'implement' was written."
+    },
+    {
+      "text": "Skips groundup:orient because engineer named specific files confidently",
+      "passed": true,
+      "evidence": "Response says 'we can go straight to the design interview' — orient is not invoked. The skill correctly identified the engineer named specific files."
+    },
+    {
+      "text": "Invokes groundup:grill (or clearly moves to the grill phase)",
+      "passed": true,
+      "evidence": "Response ends by asking the canonical grill opener: 'Describe the auth ticket in your own words. What exactly are you building or changing?'"
+    },
+    {
+      "text": "Asks the engineer to describe the ticket in their own words before proceeding",
+      "passed": true,
+      "evidence": "Exactly: 'Describe the auth ticket in your own words. What exactly are you building or changing?'"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.00
+  }
+}

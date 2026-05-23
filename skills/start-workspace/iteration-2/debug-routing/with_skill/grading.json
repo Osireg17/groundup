@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Infers debug intent from the prompt (does NOT ask the cold mode question verbatim with three numbered options)",
+      "passed": true,
+      "evidence": "Response opens with 'Looks like you're debugging — shall we start there?' — no three-option menu presented, intent is inferred directly."
+    },
+    {
+      "text": "Offers a short confirmation like 'Looks like you're debugging — shall we start there?' rather than the full mode question",
+      "passed": true,
+      "evidence": "First line is exactly: 'Looks like you're debugging — shall we start there, or is there something else going on?'"
+    },
+    {
+      "text": "Routes to the debug flow — writes session-state.json with mode 'debug' and phase 'debugging'",
+      "passed": false,
+      "evidence": "No mention of session-state.json anywhere in the response; no mode or phase is written or referenced."
+    },
+    {
+      "text": "Invokes groundup:read-the-error (or clearly moves to the read-the-error protocol)",
+      "passed": true,
+      "evidence": "Response walks through three gates: error type, first line in the trace pointing to your code, and hypothesis — the read-the-error protocol in full."
+    },
+    {
+      "text": "Does NOT invoke groundup:architecture or groundup:orient",
+      "passed": true,
+      "evidence": "Neither groundup:architecture nor groundup:orient appears anywhere in the response."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.80
+  }
+}

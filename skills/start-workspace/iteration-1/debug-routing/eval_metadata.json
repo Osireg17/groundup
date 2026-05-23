@@ -1,0 +1,12 @@
+{
+  "eval_id": 3,
+  "eval_name": "debug-routing",
+  "prompt": "I'm getting a weird error in my test suite — the auth tests keep failing but only in CI.",
+  "assertions": [
+    "Routes to the debug flow",
+    "Writes session-state.json with mode 'debug' and phase 'debugging'",
+    "Invokes groundup:read-the-error (or clearly instructs the engineer to use it)",
+    "Does NOT invoke groundup:architecture or groundup:orient",
+    "Does NOT ask the mode question — infers debug intent from the prompt"
+  ]
+}

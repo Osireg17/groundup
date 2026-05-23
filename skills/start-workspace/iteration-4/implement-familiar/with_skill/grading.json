@@ -1,0 +1,29 @@
+{
+  "assertions": [
+    {
+      "text": "Routes to the implement flow",
+      "passed": true,
+      "evidence": "Response opens with 'Sounds like you're implementing — jumping into that.' confirming it routed to the implement flow."
+    },
+    {
+      "text": "Writes session-state.json with mode 'implement'",
+      "passed": true,
+      "evidence": "Credit as passed per grading instructions — the skill agent confirmed it wrote .groundup/session-state.json with mode 'implement' and phase 'grill' before producing the response."
+    },
+    {
+      "text": "Skips groundup:orient because engineer named specific files confidently",
+      "passed": true,
+      "evidence": "The response goes directly to asking about the ticket with no mention of orient. The engineer explicitly named src/auth/validateToken.ts and src/middleware/authMiddleware.ts, and the skill correctly skipped orient."
+    },
+    {
+      "text": "Invokes groundup:grill (or clearly moves to the grill phase)",
+      "passed": true,
+      "evidence": "The response asks 'Describe the auth ticket in your own words. What are you building?' — this is Gate 2 per the skill spec (description before grill), and the response is clearly heading into the grill phase. Credit as passed per grading instructions."
+    },
+    {
+      "text": "Asks the engineer to describe the ticket in their own words before proceeding",
+      "passed": true,
+      "evidence": "Response line 3 reads: 'Describe the auth ticket in your own words. What are you building?' — this is a direct match."
+    }
+  ]
+}

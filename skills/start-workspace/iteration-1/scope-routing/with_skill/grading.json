@@ -1,0 +1,36 @@
+{
+  "expectations": [
+    {
+      "text": "Routes to the scope flow (does NOT jump to implementation questions or ask about tech stack)",
+      "passed": false,
+      "evidence": "The skill showed the mode question verbatim and stopped — it did not pre-route to scope. This is technically correct per the 'ask exactly this, wait for the answer' instruction, but it means the engineer must select option 3 before the scope flow begins. The skill did not jump to implementation, but it also didn't route to scope yet."
+    },
+    {
+      "text": "Reads SCOPING.md before running the scoping flow",
+      "passed": false,
+      "evidence": "The skill stopped at the mode question and did not proceed to read SCOPING.md. Would happen after engineer selects option 3, but the eval response ends at the question."
+    },
+    {
+      "text": "Asks the first scoping question about the problem and user (not about tech or timeline)",
+      "passed": false,
+      "evidence": "Not reached — skill stopped at mode question awaiting engineer's selection."
+    },
+    {
+      "text": "Does NOT invoke groundup:grill or groundup:orient",
+      "passed": true,
+      "evidence": "Neither skill was invoked. The response is purely the mode question."
+    },
+    {
+      "text": "Writes session-state.json with mode 'scope' and phase 'scoping'",
+      "passed": false,
+      "evidence": "State is not written until after mode selection — not yet at this stage."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 4,
+    "total": 5,
+    "pass_rate": 0.20
+  },
+  "note": "The low pass rate reflects an eval design mismatch, not a skill failure. The skill correctly shows the mode question first; the assertions assumed the skill would auto-detect 'scope' from the prompt. The real test is what happens after the engineer picks option 3 — which this single-turn eval doesn't capture. The skill is behaving correctly per spec."
+}

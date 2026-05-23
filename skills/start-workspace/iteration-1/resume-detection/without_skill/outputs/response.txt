@@ -1,0 +1,17 @@
+Welcome back! Based on the session state, here's where we are:
+
+**Task:** Add rate limiting to the auth endpoints to prevent brute-force attacks
+
+**Current status:**
+- `src/middleware/rateLimiter.ts` — pseudocode has been written, waiting for implementation
+- `src/auth/loginRoute.ts` — pending (needs the rate limiter middleware applied)
+- `src/auth/loginRoute.test.ts` — pending (tests for rate limiting behaviour)
+
+**Agreed flow:**
+```
+POST /auth/login → rateLimiter middleware (check Redis key, increment count) → if over limit return 429 → loginController → JWT response
+```
+
+You're in the middle of implementing `src/middleware/rateLimiter.ts`. The pseudocode should already be in that file.
+
+Have you made progress on the implementation? Share what you've got so far and we can pick up from there.

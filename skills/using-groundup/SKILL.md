@@ -27,6 +27,7 @@ Invoke the relevant skill at the right moment. Skills are invoked via the Skill 
 
 | Skill | When to invoke |
 |-------|---------------|
+| `start` | Beginning of every session, or after /clear. Routes engineer into implement, debug, or scope flow. Handles resume if a session is already in progress. |
 | `architecture` | Session start in an unfamiliar or brownfield codebase. Produces a Mermaid system diagram; interrogates engineer on why the system is shaped that way |
 | `orient` | After `architecture`. Traces one real user journey hop-by-hop to locate where the change fits — specific files and seams |
 | `grill` | Engineer describes a feature, proposes an approach, or asks "how do I implement X?" — before any flow or code |
@@ -126,8 +127,10 @@ At each phase transition, write `.groundup/session-state.json` using your Write 
 
 ```json
 {
+  "mode": "implement | debug | scope",
+  "scope_file": ".groundup/scope.md | null",
   "task": "One sentence describing what the engineer is building",
-  "phase": "grill | flow_map | per_file_loop | final_review | complete",
+  "phase": "grill | flow_map | per_file_loop | final_review | complete | scoping | debugging",
   "current_file": "path/to/current/file.ts or null",
   "files": [
     {
@@ -160,8 +163,9 @@ At each phase transition, write `.groundup/session-state.json` using your Write 
 | Final review starts | `final_review` | All files should be `done` |
 | PR opened / session ends | `complete` | |
 | A gate is skipped | (same phase) | Append to `skipped_gates` |
+| Scoping questions complete, scope.md written | `scoping` (stays) | `scope_file` set; `task` populated |
 
-**On resume:** When the session-start hook surfaces a state file, open it, read the phase and current file, and say: "Welcome back — we left off on [phase] for [task]. [Current file status context]. Ready to continue?"
+**On resume:** When the session-start hook surfaces a state file, open it, read the phase and current file, and say: "Welcome back — we left off on [phase] for [task]. [Current file status context]. Ready to continue?" If `mode` is `"scope"` and `phase` is `"scoping"`, offer to continue the scoping questions or review the existing `scope.md` before deciding next steps.
 
 Do not restart grill or flow-map if they are already recorded as complete. Trust the state.
 

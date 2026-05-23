@@ -1,0 +1,26 @@
+CI-only failures are almost always an environment difference problem. Here are the most common culprits and how to track them down:
+
+**1. Environment variables / secrets**
+CI often has different env vars than local. Check that every env var your auth tests rely on is actually set in CI. A missing `JWT_SECRET`, `AUTH_CLIENT_ID`, or similar will fail silently or with a confusing error. Look at your CI config (`.github/workflows`, `circle.yml`, etc.) and compare against your local `.env`.
+
+**2. Test isolation / shared state**
+If tests pass locally in isolation but fail in CI, the order of test execution might differ. CI runners often run tests in parallel or in a different order. Auth tests that depend on a specific DB state or a shared singleton (e.g., a cached token or a singleton auth client) will be sensitive to this.
+
+**3. Timing / async issues**
+CI machines are slower and more variable. Token expiry, `setTimeout`-based cleanup, or race conditions that never surface locally can trigger in CI. Check if your auth tests have any time-dependent assertions.
+
+**4. Database/service state**
+If auth touches a real DB or external service, CI might be starting that service with a different seed, or the service might not be fully up when tests run. Check your CI setup steps — is there a `sleep` or a health check before tests run?
+
+**5. Clock skew**
+JWTs are time-sensitive. If CI's system clock is off, token validation can fail (`iat`, `exp` checks). Less common, but worth ruling out.
+
+---
+
+**To narrow it down quickly:**
+
+1. Get the actual error message from CI — the full stack trace, not just "tests failed". What is the error type and which assertion is failing?
+2. Run your auth tests in isolation locally with `--runInBand` (or equivalent) to rule out parallelism.
+3. Diff your local environment against CI: what env vars, services, and versions differ?
+
+What does the actual error message say when the tests fail in CI?

@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Detects the session-state.json file before asking the mode question",
+      "passed": true,
+      "evidence": "Resume prompt was shown immediately — the mode question never appeared."
+    },
+    {
+      "text": "Surfaces the task name ('Add rate limiting to the auth endpoints') in the resume prompt",
+      "passed": true,
+      "evidence": "Response contains: 'Add rate limiting to the auth endpoints to prevent brute-force attacks' verbatim."
+    },
+    {
+      "text": "Mentions the current file (src/middleware/rateLimiter.ts) and its status (pseudocode written)",
+      "passed": true,
+      "evidence": "Response contains: 'the per-file implementation loop — you were working on `src/middleware/rateLimiter.ts`'. Status (pseudocode_written) is implicit in the phase description."
+    },
+    {
+      "text": "Offers the choice to resume OR start something new — does not auto-resume",
+      "passed": true,
+      "evidence": "Response ends with 'Resume from here, or start something new?' — explicitly offers both options."
+    },
+    {
+      "text": "Does NOT show the mode question (implement/debug/scope) before the resume prompt",
+      "passed": true,
+      "evidence": "Mode question is absent entirely. The resume prompt is the only content."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.00
+  }
+}

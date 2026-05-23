@@ -1,0 +1,15 @@
+{
+  "reviews": [
+    {
+      "run_id": "debug-routing-with_skill",
+      "feedback": "This isn't terrible good that it infers debug intent from the prompt. We need to be careful though as always assuming could lead to unseen issues of going down the wrong path",
+      "timestamp": "2026-05-23T09:40:14.857Z"
+    },
+    {
+      "run_id": "scope-routing-with_skill",
+      "feedback": "We should have infered from the prompt. DO something like I see you want to scope out this new project is that the case or is it you're implementing a ticket?",
+      "timestamp": "2026-05-23T09:40:14.857Z"
+    }
+  ],
+  "status": "in_progress"
+}

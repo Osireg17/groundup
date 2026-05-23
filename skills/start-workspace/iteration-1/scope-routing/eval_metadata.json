@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "scope-routing",
+  "prompt": "I'm thinking about building a tool for my team to track customer feedback. Not sure where to start.",
+  "assertions": [
+    "Routes to the scope flow (does NOT jump to implementation questions or ask about tech stack)",
+    "Reads SCOPING.md before running the scoping flow",
+    "Asks the first scoping question about the problem and user (not about tech or timeline)",
+    "Does NOT invoke groundup:grill or groundup:orient",
+    "Writes session-state.json with mode 'scope' and phase 'scoping'"
+  ]
+}

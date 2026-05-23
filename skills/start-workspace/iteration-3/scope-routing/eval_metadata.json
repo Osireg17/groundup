@@ -1,0 +1,27 @@
+{
+  "eval_id": 1,
+  "eval_name": "scope-routing",
+  "prompt": "I'm thinking about building a tool for my team to track customer feedback. Not sure where to start.",
+  "assertions": [
+    {
+      "text": "Infers scope intent from the prompt (does NOT ask the cold mode question verbatim with three numbered options)",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Offers a short confirmation like 'It sounds like you're scoping out a new project — is that right?' rather than presenting all three options",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Does NOT jump to implementation questions or ask about tech stack before confirming scope intent",
+      "passed": null,
+      "evidence": null
+    },
+    {
+      "text": "Does NOT invoke groundup:grill or groundup:orient before the scope path is confirmed",
+      "passed": null,
+      "evidence": null
+    }
+  ]
+}

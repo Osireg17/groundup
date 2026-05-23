@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Detects the session-state.json file before asking the mode question",
+      "passed": true,
+      "evidence": "The response opens with 'You have a session in progress: Add rate limiting to the auth endpoints...' — session state was clearly read and surfaced before any mode question was posed."
+    },
+    {
+      "text": "Surfaces the task name ('Add rate limiting to the auth endpoints') in the resume prompt",
+      "passed": true,
+      "evidence": "First line: 'You have a session in progress: **Add rate limiting to the auth endpoints to prevent brute-force attacks**'"
+    },
+    {
+      "text": "Mentions the current file (src/middleware/rateLimiter.ts) and/or its status (pseudocode written)",
+      "passed": true,
+      "evidence": "'You left off at the per-file implementation loop — you were working on `src/middleware/rateLimiter.ts`' and 'src/middleware/rateLimiter.ts` has pseudocode written but is not yet implemented'"
+    },
+    {
+      "text": "Offers the choice to resume OR start something new — does not auto-resume",
+      "passed": false,
+      "evidence": "The response says 'Resume from here, or start something new?' but immediately assumes resume: '*(Assuming resume — orienting to where we are.)*' — it offers the choice in words but auto-resumes without waiting for the engineer's answer."
+    },
+    {
+      "text": "Does NOT show the mode question (implement/debug/scope) before the resume prompt",
+      "passed": true,
+      "evidence": "The response leads directly with the resume prompt about the in-progress session; no implement/debug/scope mode question appears before it."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.80
+  }
+}

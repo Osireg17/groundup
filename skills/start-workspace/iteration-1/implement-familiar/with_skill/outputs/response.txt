@@ -1,0 +1,5 @@
+No session in progress — starting fresh.
+
+You're implementing a ticket and you've already named the files you'll touch (`src/auth/validateToken.ts` and `src/middleware/authMiddleware.ts`), so we can go straight to the design interview. I've recorded the session state.
+
+Describe the auth ticket in your own words. What exactly are you building or changing?

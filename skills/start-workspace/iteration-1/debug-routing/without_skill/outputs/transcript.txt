@@ -1,0 +1,21 @@
+Eval Task: Respond to "auth tests keep failing but only in CI" WITHOUT any special skill loaded.
+
+Steps taken:
+
+1. Checked that the outputs directory existed at the expected path.
+
+2. Drafted a natural, helpful assistant response to the engineer's message. No skill framework was invoked. The response was written as a senior engineer/helpful assistant would naturally respond:
+   - Listed the most common root causes for CI-only test failures (env vars, test isolation, timing, DB state, clock skew)
+   - Gave actionable debugging steps to narrow down the cause
+   - Ended with a clarifying question to get the actual error message, which is the most important next step
+
+3. Wrote the response to response.txt.
+
+4. Wrote this transcript to transcript.txt.
+
+5. Wrote metrics to metrics.json.
+
+Notes:
+- No codebase exploration was needed since no input files were provided.
+- No skill was loaded or invoked — this is the baseline/control condition.
+- The response is diagnostic and helpful but does not enforce any structured debugging protocol (contrast with the systematic-debugging skill which would gate on "state the root cause first").

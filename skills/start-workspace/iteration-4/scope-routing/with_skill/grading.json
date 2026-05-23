@@ -1,0 +1,8 @@
+{
+  "assertions": [
+    {"text": "Infers scope intent from the prompt (does NOT ask the cold mode question verbatim with three numbered options)", "passed": true, "evidence": "The response does not present three numbered options. It infers scope intent and asks a single yes/no confirmation question."},
+    {"text": "Offers a short confirmation like 'It sounds like you're scoping out a new project — is that right?' rather than presenting all three options", "passed": true, "evidence": "Response opens with exactly: 'It sounds like you're scoping out a new project — is that right, or are you jumping into implementation on an existing codebase?' — a short confirmation, not a menu."},
+    {"text": "Does NOT jump to implementation questions or ask about tech stack before confirming scope intent", "passed": true, "evidence": "The response confirms scope intent first, then (after assuming yes) asks a problem-framing question about the user and problem — not tech stack or implementation details."},
+    {"text": "Does NOT invoke groundup:grill or groundup:orient before the scope path is confirmed", "passed": true, "evidence": "No invocation of groundup:grill or groundup:orient appears in the response. The follow-up question is a scoping/problem-framing question, not a grill or orient invocation."}
+  ]
+}

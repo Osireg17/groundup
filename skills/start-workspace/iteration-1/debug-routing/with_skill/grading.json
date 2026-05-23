@@ -1,0 +1,36 @@
+{
+  "expectations": [
+    {
+      "text": "Routes to the debug flow",
+      "passed": true,
+      "evidence": "After showing mode question and engineer selecting debug, the skill routed to the debugging flow and invoked read-the-error logic."
+    },
+    {
+      "text": "Writes session-state.json with mode 'debug' and phase 'debugging'",
+      "passed": true,
+      "evidence": "Response shows the session-state.json being written with mode:'debug', phase:'debugging'."
+    },
+    {
+      "text": "Invokes groundup:read-the-error (or clearly instructs the engineer to use it)",
+      "passed": true,
+      "evidence": "Response explicitly says 'Now invoking groundup:read-the-error' and then runs the read-the-error three-gate protocol."
+    },
+    {
+      "text": "Does NOT invoke groundup:architecture or groundup:orient",
+      "passed": true,
+      "evidence": "Neither architecture nor orient is mentioned or invoked."
+    },
+    {
+      "text": "Does NOT ask the mode question — infers debug intent from the prompt",
+      "passed": false,
+      "evidence": "The skill DID show the mode question first before routing. The assertion assumed auto-detection of debug intent, but the skill spec requires asking the mode question explicitly."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 1,
+    "total": 5,
+    "pass_rate": 0.80
+  },
+  "note": "The one failure is another eval design issue — the assertion expected auto-detection of mode from the message, but the skill correctly asks the mode question first. The routing to debug after selection is correct. The same concern applies to eval 1."
+}

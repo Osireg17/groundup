@@ -1,0 +1,29 @@
+{
+  "skill_name": "groundup:start",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I'm thinking about building a tool for my team to track customer feedback. Not sure where to start.",
+      "expected_output": "Skill routes to scope flow: reads SCOPING.md, asks the first scoping question (problem + user), does NOT jump to implementation or ask about tech stack yet.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Let's pick up where we left off.",
+      "expected_output": "Skill detects .groundup/session-state.json with phase per_file_loop, surfaces the resume prompt with the task and current file context, offers to resume or start fresh.",
+      "files": ["evals/files/session-state-mid-loop.json"]
+    },
+    {
+      "id": 3,
+      "prompt": "I'm getting a weird error in my test suite — the auth tests keep failing but only in CI.",
+      "expected_output": "Skill routes to debug flow: writes session-state.json with mode debug, immediately invokes groundup:read-the-error. Does NOT invoke architecture or orient.",
+      "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Let's work on the auth ticket. I know the codebase well — it touches src/auth/validateToken.ts and src/middleware/authMiddleware.ts.",
+      "expected_output": "Skill routes to implement flow: writes session-state.json with mode implement. Because engineer named specific files confidently, routes directly to groundup:grill (skipping orient). Asks engineer to describe the ticket in their own words.",
+      "files": []
+    }
+  ]
+}

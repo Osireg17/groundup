@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Routes to the implement flow",
+      "passed": true,
+      "evidence": "Sounds like you're implementing — jumping into that."
+    },
+    {
+      "text": "Writes session-state.json with mode 'implement'",
+      "passed": true,
+      "evidence": "*(Writing `.groundup/session-state.json` to track this session.)* — the response indicates writing the file, though mode value is implicit rather than explicitly shown"
+    },
+    {
+      "text": "Skips groundup:orient because engineer named specific files confidently",
+      "passed": true,
+      "evidence": "You've named the files you'll touch, so we're going straight into the design interview. No orientation needed."
+    },
+    {
+      "text": "Invokes groundup:grill (or clearly moves to the grill phase)",
+      "passed": true,
+      "evidence": "Before any flow is drawn or code written, I need us both to reach shared understanding of the problem. That starts with you, not me."
+    },
+    {
+      "text": "Asks the engineer to describe the ticket in their own words before proceeding",
+      "passed": true,
+      "evidence": "In your own words — what is the auth ticket actually asking you to do? What's broken or missing, and what does 'done' look like?"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

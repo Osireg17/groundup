@@ -1,0 +1,27 @@
+{
+  "mode": "implement",
+  "task": "Add rate limiting to the auth endpoints to prevent brute-force attacks",
+  "phase": "per_file_loop",
+  "current_file": "src/middleware/rateLimiter.ts",
+  "files": [
+    {
+      "path": "src/middleware/rateLimiter.ts",
+      "status": "pseudocode_written",
+      "reason": "New middleware — implements sliding window rate limiting"
+    },
+    {
+      "path": "src/auth/loginRoute.ts",
+      "status": "pending",
+      "reason": "Needs to apply the rate limiter middleware"
+    },
+    {
+      "path": "src/auth/loginRoute.test.ts",
+      "status": "pending",
+      "reason": "Tests for rate limiting behaviour"
+    }
+  ],
+  "skipped_gates": [],
+  "flow_diagram": "POST /auth/login → rateLimiter middleware (check Redis key, increment count) → if over limit return 429 → loginController → JWT response",
+  "scope_file": null,
+  "updated_at": "2026-05-23T09:15:00Z"
+}

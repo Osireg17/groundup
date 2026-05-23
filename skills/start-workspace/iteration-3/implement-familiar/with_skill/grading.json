@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Routes to the implement flow",
+      "passed": true,
+      "evidence": "Sounds like you're implementing — jumping into that."
+    },
+    {
+      "text": "Writes session-state.json with mode 'implement'",
+      "passed": false,
+      "evidence": "No mention of writing session-state.json or setting mode anywhere in the response."
+    },
+    {
+      "text": "Skips groundup:orient because engineer named specific files confidently",
+      "passed": false,
+      "evidence": "No mention of orient being skipped or reasoning about it; the response jumps straight to a question without acknowledging the skip."
+    },
+    {
+      "text": "Invokes groundup:grill (or clearly moves to the grill phase)",
+      "passed": true,
+      "evidence": "The response asks the engineer to describe the ticket in their own words, which is the opening move of the grill phase."
+    },
+    {
+      "text": "Asks the engineer to describe the ticket in their own words before proceeding",
+      "passed": true,
+      "evidence": "Describe the ticket in your own words. What problem are you actually solving — what's broken or missing, and what does 'done' look like?"
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 2,
+    "total": 5,
+    "pass_rate": 0.60
+  }
+}

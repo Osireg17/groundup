@@ -1,0 +1,29 @@
+{
+  "assertions": [
+    {
+      "text": "Detects the session-state.json file before asking the mode question",
+      "passed": true,
+      "evidence": "The response immediately surfaces session state ('You have a session in progress') without first asking a mode question, implying it detected the session-state.json file."
+    },
+    {
+      "text": "Surfaces the task name ('Add rate limiting to the auth endpoints') in the resume prompt",
+      "passed": true,
+      "evidence": "Response line 1: 'You have a session in progress: **Add rate limiting to the auth endpoints**.' — exact task name surfaced."
+    },
+    {
+      "text": "Mentions the current file (src/middleware/rateLimiter.ts) and/or its status (pseudocode written)",
+      "passed": true,
+      "evidence": "Response line 2: 'you were working on `src/middleware/rateLimiter.ts`' — file is named. However, the status 'pseudocode written' is not explicitly mentioned; it says 'per-file implementation loop' which implies implementation stage, not pseudocode. Partial credit: file is mentioned, status description is vague."
+    },
+    {
+      "text": "Offers the choice to resume OR start something new — does not auto-resume",
+      "passed": true,
+      "evidence": "Response ends with 'Resume from here, or start something new?' — explicitly presents both options without auto-resuming."
+    },
+    {
+      "text": "Does NOT show the mode question (implement/debug/scope) before the resume prompt",
+      "passed": true,
+      "evidence": "The entire response is the resume prompt. There is no mode question (implement/debug/scope) anywhere in the output — the resume detection fires first and exclusively."
+    }
+  ]
+}

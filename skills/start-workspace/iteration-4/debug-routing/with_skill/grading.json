@@ -1,0 +1,29 @@
+{
+  "assertions": [
+    {
+      "text": "Infers debug intent from the prompt (does NOT ask the cold mode question verbatim with three numbered options)",
+      "passed": true,
+      "evidence": "The response goes straight into debug mode without presenting any numbered mode-selection menu. It infers debugging intent directly from 'failing tests' and 'only in CI'."
+    },
+    {
+      "text": "Offers a short confirmation like 'Looks like you're debugging — shall we start there?' rather than the full mode question",
+      "passed": true,
+      "evidence": "Line 5: 'Looks like you're debugging — shall we start there, or is there something else going on?' — matches the expected short confirmation format almost verbatim."
+    },
+    {
+      "text": "Routes to the debug flow — writes session-state.json with mode 'debug' and phase 'debugging'",
+      "passed": true,
+      "evidence": "Credited as passed per grading instructions: the agent summary confirmed it wrote .groundup/session-state.json with mode 'debug' and phase 'debugging'. The response also explicitly states '(Assuming yes — routing into the debug flow.)' confirming the routing decision."
+    },
+    {
+      "text": "Invokes groundup:read-the-error (or clearly moves to the read-the-error protocol)",
+      "passed": true,
+      "evidence": "Lines 19-29 implement the read-the-error gate protocol explicitly: 'Gate 1 — What is the error type?' with the instruction to identify the error type before discussing anything, and a hold gate '(We will not move to Gate 2 until you've answered Gate 1 yourself.)' — this is the read-the-error three-gate structure."
+    },
+    {
+      "text": "Does NOT invoke groundup:architecture or groundup:orient",
+      "passed": true,
+      "evidence": "The response contains no reference to architecture mapping, orient/tracing a user journey, or any codebase exploration flow. It stays entirely within the debug protocol."
+    }
+  ]
+}

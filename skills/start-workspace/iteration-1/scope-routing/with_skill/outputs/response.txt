@@ -1,0 +1,5 @@
+Which of these describes what you're working on today?
+
+1. Implementing a new ticket or feature
+2. Debugging a bug
+3. Scoping a new project (no codebase yet, or evaluating whether to build something)

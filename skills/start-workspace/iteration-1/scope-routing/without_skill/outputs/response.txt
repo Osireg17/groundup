@@ -1,0 +1,24 @@
+Great idea — customer feedback tools can be genuinely valuable for teams. Let me help you think through where to start.
+
+A few questions to help scope this out:
+
+1. **What's the core problem you're solving?** Is feedback currently getting lost in emails/Slack? Is it hard to prioritise? Is there no single place to see it all? Knowing the pain point shapes everything.
+
+2. **Where does feedback come from?** Support tickets, sales calls, user interviews, NPS surveys, in-app forms? The sources determine what integrations (if any) you need.
+
+3. **What do you want to do with it once it's captured?** Just store and search it? Tag it by theme? Link it to product areas or roadmap items? Route it to different team members?
+
+Once you can answer those, here's a rough decision tree for tooling:
+
+**If the scope is small (one source, one team):**
+Start with a spreadsheet or Notion database. Seriously. The discipline of deciding what fields matter is more valuable than any tool at this stage. Many teams that build custom tools too early end up rebuilding them once they understand the problem better.
+
+**If you need to aggregate from multiple sources:**
+Look at whether something like Linear, Productboard, or even Airtable already solves this. Building a custom tool is a real maintenance commitment — it's worth ruling out off-the-shelf options first.
+
+**If you've decided to build:**
+- What's your team's stack? (This affects what's worth building vs integrating)
+- Do you need a UI, or is this mostly a data pipeline?
+- Who maintains it after you ship v1?
+
+What's the specific pain your team is feeling right now that made you think about this?

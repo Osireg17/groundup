@@ -1,0 +1,12 @@
+{
+  "eval_id": 4,
+  "eval_name": "implement-familiar",
+  "prompt": "Let's work on the auth ticket. I know the codebase well — it touches src/auth/validateToken.ts and src/middleware/authMiddleware.ts.",
+  "assertions": [
+    "Routes to the implement flow",
+    "Writes session-state.json with mode 'implement'",
+    "Skips groundup:orient because engineer named specific files confidently",
+    "Invokes groundup:grill (or clearly moves to the grill phase)",
+    "Asks the engineer to describe the ticket in their own words before proceeding"
+  ]
+}

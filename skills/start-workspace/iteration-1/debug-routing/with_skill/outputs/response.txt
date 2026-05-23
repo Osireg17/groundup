@@ -1,0 +1,50 @@
+No session in progress — starting fresh.
+
+Which of these describes what you're working on today?
+
+1. Implementing a new ticket or feature
+2. Debugging a bug
+3. Scoping a new project (no codebase yet, or evaluating whether to build something)
+
+---
+
+[Engineer selects: 2. Debugging a bug]
+
+---
+
+Got it. Writing session state now.
+
+[Session state written to .groundup/session-state.json:
+{
+  "mode": "debug",
+  "task": null,
+  "phase": "debugging",
+  "current_file": null,
+  "files": [],
+  "skipped_gates": [],
+  "flow_diagram": null,
+  "scope_file": null,
+  "updated_at": "2026-05-23T00:00:00Z"
+}]
+
+Now invoking groundup:read-the-error.
+
+---
+
+Before we do anything else — auth tests failing only in CI is a classic symptom, but the symptom isn't the error. The error is.
+
+One question before the three gates:
+
+**Is this test failing because the code is wrong, or because the test is wrong?**
+
+Think about it before answering. CI-only failures usually fall into a handful of categories — environment differences, timing, test isolation, secrets — but the error message will tell you more than the symptom.
+
+Now: **paste the exact error output from CI.** Not your interpretation of it — the raw output.
+
+Once you've done that, we'll work through three questions from the error alone before we touch anything:
+
+1. What type of error is it — and what does that type tell you about what went wrong?
+2. What is the first line in the stack trace that points to *your* code — not the framework, not a library?
+3. What is your best guess about the cause, based only on the error type and that line?
+
+You answer those three. I'll tell you nothing until you do.
