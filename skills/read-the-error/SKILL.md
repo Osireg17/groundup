@@ -1,5 +1,5 @@
 ---
-name: read-the-error
+name: groundup:read-the-error
 description: "Three mandatory gates before any debugging or Googling: error type, line in your code, hypothesis from the message alone. Fires on failing tests and unhandled errors."
 when_to_use: "Use the moment an engineer hits a failing test, a thrown error, or an unexpected exit. Use before the engineer pastes a stack trace into Google or asks for help without reading it first. Use when the engineer says 'it's broken', 'my test is failing', 'I'm getting an error'."
 ---

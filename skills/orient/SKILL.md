@@ -1,5 +1,5 @@
 ---
-name: orient
+name: groundup:orient
 description: "Traces one real user journey end-to-end through the codebase with file and line references to locate exactly where a change fits."
 when_to_use: "Use after architecture is mapped, before grill. Use when the engineer needs to find where their change lives — 'where does this feature go?', 'what calls what here?', 'where does the request land?'"
 ---

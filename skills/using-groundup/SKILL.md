@@ -1,5 +1,5 @@
 ---
-name: using-groundup
+name: groundup:using-groundup
 description: "Bootstrap skill — loaded at session start. Defines the groundup skill map, iron laws, and hybrid trigger protocol for junior engineer growth sessions."
 user-invocable: false
 ---

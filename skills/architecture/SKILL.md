@@ -1,5 +1,5 @@
 ---
-name: architecture
+name: groundup:architecture
 description: "Maps an unfamiliar or brownfield codebase — produces a Mermaid system diagram of layers, services, and dependency direction, then interrogates the engineer on why it is shaped that way."
 when_to_use: "Use at the start of a session in an unfamiliar or brownfield codebase. Use when the engineer says 'I don't know how this system works', 'I'm new to this codebase', or when a new hire is onboarding. Run before orient."
 ---

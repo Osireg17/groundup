@@ -1,5 +1,5 @@
 ---
-name: ask-well
+name: groundup:ask-well
 description: "Structures a question before it is asked — mid-session or externally. Five fields: trying to, tried, expected, actually, stuck on. A well-formed question is 50% of the answer."
 when_to_use: "Use when the engineer is stuck and about to ask a question without having reasoned through it. Use when the engineer says 'I don't know what to do', 'can you just tell me', or is about to paste a wall of code with no context. Fires both mid-session and for external questions (Stack Overflow, colleagues, GitHub issues)."
 ---

@@ -1,5 +1,5 @@
 ---
-name: growth-review
+name: groundup:growth-review
 description: "After per-file code review passes, ask one targeted session-specific reflection question. Builds instinct, not just knowledge. Never gives the answer."
 when_to_use: "Use after per-file code review passes and tests exist. One question per file, drawn from what specifically happened in this session — not generic. Do not use during the review itself."
 ---
