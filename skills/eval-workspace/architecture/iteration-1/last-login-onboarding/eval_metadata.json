@@ -1,0 +1,12 @@
+{
+  "eval_id": 1,
+  "eval_name": "last-login-onboarding",
+  "prompt": "I just joined this team and I need to add a 'last login' field to the user profile page. I've never seen this codebase before — it's a Node.js app, there's a src/ folder with controllers, services, and models directories. Where do I even start?",
+  "assertions": [
+    "Claude produces a Mermaid diagram before asking any interrogation questions",
+    "After presenting the diagram, Claude asks exactly one question (not a list)",
+    "Claude does not ask the engineer to explain the codebase before reading it themselves",
+    "The diagram uses flowchart TD or flowchart LR syntax",
+    "Claude presents the diagram and invites the engineer to walk through it before interrogating"
+  ]
+}

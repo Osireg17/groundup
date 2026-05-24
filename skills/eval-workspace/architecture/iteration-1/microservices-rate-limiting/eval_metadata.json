@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "eval_name": "microservices-rate-limiting",
+  "prompt": "can you explain how this is structured? it's a microservices setup, there's an api-gateway, auth-service, user-service, and notification-service. I need to add rate limiting but I'm not sure where it goes.",
+  "assertions": [
+    "Claude produces a flowchart LR diagram for the microservices",
+    "Claude asks one question to begin interrogation, not a bulleted list",
+    "At least one interrogation question probes ownership or boundary responsibility",
+    "Claude does not suggest where rate limiting goes before the engineer has demonstrated architectural understanding"
+  ]
+}

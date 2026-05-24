@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude produces a flowchart LR diagram for the microservices",
+      "passed": true,
+      "evidence": "Uses 'flowchart LR' with CLIENT -> GW -> AUTH/USER -> DBs -> Q -> NOTIFY -> EXT."
+    },
+    {
+      "text": "Claude asks one question to begin interrogation, not a bulleted list",
+      "passed": true,
+      "evidence": "'Walk me through this — explain what you see.' — single prompt. First interrogation question noted in parentheses as what comes after engineer responds."
+    },
+    {
+      "text": "At least one interrogation question probes ownership or boundary responsibility",
+      "passed": true,
+      "evidence": "First planned interrogation question: 'What is its job exactly? Is it a service, or something different? What would break if a client bypassed it and called user-service directly?' — directly targets boundary responsibility."
+    },
+    {
+      "text": "Claude does not suggest where rate limiting goes before the engineer has demonstrated architectural understanding",
+      "passed": true,
+      "evidence": "No mention of where rate limiting should go in the response. The answer is withheld pending interrogation exit condition."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

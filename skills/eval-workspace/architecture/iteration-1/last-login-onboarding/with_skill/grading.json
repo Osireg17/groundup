@@ -1,0 +1,35 @@
+{
+  "expectations": [
+    {
+      "text": "Claude produces a Mermaid diagram before asking any interrogation questions",
+      "passed": true,
+      "evidence": "Diagram appears before any question. The only turn-ending prompt is 'Walk me through this — explain what you see.'"
+    },
+    {
+      "text": "After presenting the diagram, Claude asks exactly one question (not a list)",
+      "passed": true,
+      "evidence": "Single sentence: 'Walk me through this — explain what you see.' No follow-up questions appended."
+    },
+    {
+      "text": "Claude does not ask the engineer to explain the codebase before reading it themselves",
+      "passed": true,
+      "evidence": "Opens with 'I explored the codebase before saying anything' and maps the files independently."
+    },
+    {
+      "text": "The diagram uses flowchart TD or flowchart LR syntax",
+      "passed": true,
+      "evidence": "Uses flowchart TD with subgraph notation for layers."
+    },
+    {
+      "text": "Claude presents the diagram and invites the engineer to walk through it before interrogating",
+      "passed": true,
+      "evidence": "'Walk me through this — explain what you see.' placed immediately after diagram, before any interrogation."
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "skill_name": "groundup:architecture",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I just joined this team and I need to add a 'last login' field to the user profile page. I've never seen this codebase before — it's a Node.js app, there's a src/ folder with controllers, services, and models directories. Where do I even start?",
+      "expected_output": "Claude reads the codebase, produces a Mermaid diagram of the layered architecture, presents it, then asks the engineer ONE question to start the interrogation — not a list of questions.",
+      "files": [],
+      "expectations": [
+        "Claude produces a Mermaid diagram before asking any interrogation questions",
+        "After presenting the diagram, Claude asks exactly one question (not a list)",
+        "Claude does not ask the engineer to explain the codebase before reading it themselves",
+        "The diagram uses flowchart TD or flowchart LR syntax",
+        "Claude presents the diagram and invites the engineer to walk through it before interrogating"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "I'm onboarding at a new company. The codebase is a Python Django monolith with separate apps for 'accounts', 'orders', and 'payments'. My first ticket is to add an email notification when an order ships. I don't know how this system works yet.",
+      "expected_output": "Claude explores the Django app structure, maps the dependency direction between apps, produces a diagram, then interrogates one question at a time. Does not dump a list of questions.",
+      "files": [],
+      "expectations": [
+        "Claude produces a Mermaid diagram showing the Django apps and their relationships",
+        "Claude asks one question after presenting the diagram, not multiple",
+        "The interrogation probes WHY the system is shaped the way it is, not just WHAT it does",
+        "Claude does not move to orient or pseudocode before the exit condition is met"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "can you explain how this is structured? it's a microservices setup, there's an api-gateway, auth-service, user-service, and notification-service. I need to add rate limiting but I'm not sure where it goes.",
+      "expected_output": "Claude reads the services, produces a service-to-service flowchart LR diagram, then interrogates the engineer on ownership and boundaries one question at a time.",
+      "files": [],
+      "expectations": [
+        "Claude produces a flowchart LR diagram for the microservices",
+        "Claude asks one question to begin interrogation, not a bulleted list",
+        "At least one interrogation question probes ownership or boundary responsibility",
+        "Claude does not suggest where rate limiting goes before the engineer has demonstrated architectural understanding"
+      ]
+    }
+  ]
+}

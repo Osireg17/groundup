@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "django-email-notification",
+  "prompt": "I'm onboarding at a new company. The codebase is a Python Django monolith with separate apps for 'accounts', 'orders', and 'payments'. My first ticket is to add an email notification when an order ships. I don't know how this system works yet.",
+  "assertions": [
+    "Claude produces a Mermaid diagram showing the Django apps and their relationships",
+    "Claude asks one question after presenting the diagram, not multiple",
+    "The interrogation probes WHY the system is shaped the way it is, not just WHAT it does",
+    "Claude does not move to orient or pseudocode before the exit condition is met"
+  ]
+}

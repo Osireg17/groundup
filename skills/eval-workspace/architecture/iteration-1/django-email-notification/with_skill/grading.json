@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude produces a Mermaid diagram showing the Django apps and their relationships",
+      "passed": true,
+      "evidence": "Full flowchart TD diagram showing accounts, orders, payments, their views/services/models, FK relationships, shared DB, and the signals seam."
+    },
+    {
+      "text": "Claude asks one question after presenting the diagram, not multiple",
+      "passed": true,
+      "evidence": "'Walk me through this — explain what you see.' — single question. Interrogation noted as starting after engineer responds."
+    },
+    {
+      "text": "The interrogation probes WHY the system is shaped the way it is, not just WHAT it does",
+      "passed": true,
+      "evidence": "Notes interrogation will cover 'dependency direction, ownership, and async vs sync design decisions' — all WHY-focused categories."
+    },
+    {
+      "text": "Claude does not move to orient or pseudocode before the exit condition is met",
+      "passed": true,
+      "evidence": "Skill ends at the diagram + first question. No orient invocation, no pseudocode, no implementation guidance offered."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

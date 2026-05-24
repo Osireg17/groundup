@@ -1,0 +1,169 @@
+{
+  "metadata": {
+    "skill_name": "groundup:architecture",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/architecture",
+    "timestamp": "2026-05-24T00:00:00Z",
+    "evals_run": ["last-login-onboarding", "django-email-notification", "microservices-rate-limiting"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "last-login-onboarding",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 38.6,
+        "tokens": 18896,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a Mermaid diagram before asking any interrogation questions", "passed": true, "evidence": "Diagram appears before any question."},
+        {"text": "After presenting the diagram, Claude asks exactly one question (not a list)", "passed": true, "evidence": "Single sentence: 'Walk me through this — explain what you see.'"},
+        {"text": "Claude does not ask the engineer to explain the codebase before reading it themselves", "passed": true, "evidence": "Opens with 'I explored the codebase before saying anything'."},
+        {"text": "The diagram uses flowchart TD or flowchart LR syntax", "passed": true, "evidence": "Uses flowchart TD with subgraph notation."},
+        {"text": "Claude presents the diagram and invites the engineer to walk through it before interrogating", "passed": true, "evidence": "'Walk me through this' placed immediately after diagram."}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "last-login-onboarding",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 5,
+        "total": 5,
+        "time_seconds": 36.6,
+        "tokens": 16511,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a Mermaid diagram before asking any interrogation questions", "passed": false, "evidence": "No diagram produced. Lists grep commands and three questions for the engineer to answer."},
+        {"text": "After presenting the diagram, Claude asks exactly one question (not a list)", "passed": false, "evidence": "No diagram. Ends with a list of 3 questions."},
+        {"text": "Claude does not ask the engineer to explain the codebase before reading it themselves", "passed": false, "evidence": "Tells engineer to run grep commands and answer questions — does not read codebase independently."},
+        {"text": "The diagram uses flowchart TD or flowchart LR syntax", "passed": false, "evidence": "No diagram produced."},
+        {"text": "Claude presents the diagram and invites the engineer to walk through it before interrogating", "passed": false, "evidence": "No diagram. No invitation to walk through."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "django-email-notification",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 84.2,
+        "tokens": 20681,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a Mermaid diagram showing the Django apps and their relationships", "passed": true, "evidence": "Full flowchart TD with accounts/orders/payments, FK relationships, shared DB, signals seam."},
+        {"text": "Claude asks one question after presenting the diagram, not multiple", "passed": true, "evidence": "'Walk me through this — explain what you see.' — single question."},
+        {"text": "The interrogation probes WHY the system is shaped the way it is, not just WHAT it does", "passed": true, "evidence": "Notes interrogation will cover dependency direction, ownership, and async vs sync decisions."},
+        {"text": "Claude does not move to orient or pseudocode before the exit condition is met", "passed": true, "evidence": "No orient invocation, no pseudocode, no implementation guidance offered."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "django-email-notification",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 4,
+        "total": 4,
+        "time_seconds": 47.2,
+        "tokens": 17013,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a Mermaid diagram showing the Django apps and their relationships", "passed": false, "evidence": "No diagram. Lists files to read and grep commands."},
+        {"text": "Claude asks one question after presenting the diagram, not multiple", "passed": false, "evidence": "No diagram. Ends with implementation plan across 4 steps."},
+        {"text": "The interrogation probes WHY the system is shaped the way it is, not just WHAT it does", "passed": false, "evidence": "No interrogation — jumps straight to implementation guidance (signals vs direct call pattern)."},
+        {"text": "Claude does not move to orient or pseudocode before the exit condition is met", "passed": false, "evidence": "Provides implementation pattern and test approach before engineer has demonstrated any architectural understanding."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "microservices-rate-limiting",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 40.8,
+        "tokens": 18336,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a flowchart LR diagram for the microservices", "passed": true, "evidence": "Uses 'flowchart LR' with CLIENT -> GW -> AUTH/USER -> DBs -> Q -> NOTIFY -> EXT."},
+        {"text": "Claude asks one question to begin interrogation, not a bulleted list", "passed": true, "evidence": "'Walk me through this — explain what you see.' — single prompt."},
+        {"text": "At least one interrogation question probes ownership or boundary responsibility", "passed": true, "evidence": "First interrogation question targets what breaks if a client bypasses the gateway."},
+        {"text": "Claude does not suggest where rate limiting goes before the engineer has demonstrated architectural understanding", "passed": true, "evidence": "No mention of where rate limiting should go. Answer withheld pending interrogation."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "microservices-rate-limiting",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 4,
+        "total": 4,
+        "time_seconds": 45.6,
+        "tokens": 16666,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a flowchart LR diagram for the microservices", "passed": false, "evidence": "No Mermaid diagram. Shows ASCII topology only."},
+        {"text": "Claude asks one question to begin interrogation, not a bulleted list", "passed": false, "evidence": "No interrogation. Ends with a single rhetorical question after full implementation guidance."},
+        {"text": "At least one interrogation question probes ownership or boundary responsibility", "passed": false, "evidence": "Asks about token validation approach but only after already telling the engineer the answer."},
+        {"text": "Claude does not suggest where rate limiting goes before the engineer has demonstrated architectural understanding", "passed": false, "evidence": "First sentence: 'The api-gateway is almost always the right place for rate limiting.' Answer given immediately."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 54.5, "stddev": 23.6, "min": 38.6, "max": 84.2},
+      "tokens": {"mean": 19304, "stddev": 1124, "min": 18336, "max": 20681}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.0, "stddev": 0.0, "min": 0.0, "max": 0.0},
+      "time_seconds": {"mean": 43.1, "stddev": 5.6, "min": 36.6, "max": 47.2},
+      "tokens": {"mean": 16730, "stddev": 254, "min": 16511, "max": 17013}
+    },
+    "delta": {
+      "pass_rate": "+1.00",
+      "time_seconds": "+11.4",
+      "tokens": "+2574"
+    }
+  },
+  "notes": [
+    "All 3 with_skill runs passed 100% of assertions — the one-question pacing rule is holding cleanly",
+    "All 3 without_skill runs failed 100% of assertions — baseline jumps to implementation immediately, confirming the skill is doing essential differentiating work",
+    "The 'Claude asks exactly one question' assertion is the key discriminator — the skill enforces it via the 'Walk me through this' prompt pattern",
+    "Eval 2 (Django) shows higher token usage (84s, 20k tokens) — the richer diagram with signals seam and FK relationships costs more but produces a more useful map",
+    "Without-skill runs are slightly faster and use fewer tokens — the skill's value is in pedagogical restraint, which the baseline completely lacks"
+  ]
+}
