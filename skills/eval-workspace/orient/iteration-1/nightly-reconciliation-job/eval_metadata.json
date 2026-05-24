@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "eval_name": "nightly-reconciliation-job",
+  "prompt": "There's a nightly job that reconciles orders. I need to add a step that flags any order over $1000 for manual review. I've never touched the jobs layer before.",
+  "assertions": [
+    "Claude traces the job execution flow with file + line references from the scheduler/entrypoint through to data access",
+    "Claude asks the engineer to identify which hop the change belongs to — as a single question",
+    "Claude surfaces at least one unknown or assumption in Step 4",
+    "Claude does not volunteer the implementation approach before the engineer has demonstrated they know where the change lives"
+  ]
+}

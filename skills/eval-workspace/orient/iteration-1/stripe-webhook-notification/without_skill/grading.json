@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude produces a hop-by-hop trace starting from the webhook entry point (controller/route/handler)",
+      "passed": false,
+      "evidence": "No hop-by-hop trace. Shows directory structure and the Express route registration snippet, but no numbered hops with file + line for each step in the flow."
+    },
+    {
+      "text": "Claude identifies the file and method where the notification logic would be added",
+      "passed": true,
+      "evidence": "Correctly identifies 'src/services/payment.service.ts — add handlePaymentSucceeded' and 'src/services/mailer.service.ts — add sendPaymentConfirmation'."
+    },
+    {
+      "text": "Claude asks one focused question after the trace — not a bulleted list of questions",
+      "passed": false,
+      "evidence": "Ends with a bulleted list of 4 edge cases to handle (signature verification, idempotency, raw body, event type) — not a question to the engineer."
+    },
+    {
+      "text": "Claude does not immediately tell the engineer what to implement before they have located the change themselves",
+      "passed": false,
+      "evidence": "Immediately tells the engineer what to implement: '1. webhooks.controller.ts — add a case for payment_intent.succeeded... 2. payment.service.ts — add handlePaymentSucceeded...' No orientation question first."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 3,
+    "total": 4,
+    "pass_rate": 0.25
+  }
+}

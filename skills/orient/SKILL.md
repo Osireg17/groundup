@@ -1,16 +1,15 @@
 ---
 name: groundup:orient
-description: "Traces one real user journey end-to-end through the codebase with file and line references to locate exactly where a change fits."
-when_to_use: "Use after architecture is mapped, before grill. Use when the engineer needs to find where their change lives — 'where does this feature go?', 'what calls what here?', 'where does the request land?'"
+description: "Traces one real user journey end-to-end through the codebase, with file and line references, to locate exactly where a change fits. Use this skill whenever an engineer knows what they want to build but doesn't know where in the code it lives — when they say things like 'where does this go?', 'what calls what here?', 'where does the request land?', 'I don't know which file to touch', or 'how does this flow work?'. Also invoke when the engineer can name the feature but not the files, or when they are about to start in the wrong place. Always run this after architecture and before grill."
 ---
 
 # Orient — Locate Your Change in the System
 
-You have the architecture map. Now trace the specific path that is relevant to this session.
+You have the architecture map. Now trace the specific path that matters for this session.
 
-The goal is to answer one question precisely: **where exactly does this change live, and what does it touch?**
+The goal is a precise answer to one question: **where exactly does this change live, and what does it touch?**
 
-Junior engineers often start in the wrong place — they find a file that looks relevant and start reading outward from there. That produces a patchy mental model with gaps exactly where the bugs live. Tracing a journey end-to-end, from entry point to storage and back, closes those gaps before any code is written.
+Junior engineers often start in the wrong place — they find a file that looks relevant and read outward from there. That produces a patchy mental model with gaps exactly where the bugs live. Tracing a journey end-to-end, from entry point to storage and back, closes those gaps before any code is written.
 
 ---
 
@@ -18,28 +17,29 @@ Junior engineers often start in the wrong place — they find a file that looks 
 
 Ask the engineer: "What is the one user action or system event that is most relevant to what we're building?"
 
-This should be concrete and specific:
+Wait for their answer. If it is too broad, narrow it: "Pick the single most important entry point for the change we're making."
+
+A good journey is concrete and specific:
 - "A user submits the checkout form"
 - "The payment webhook arrives from Stripe"
 - "The nightly reconciliation job runs"
 - "A message arrives on the orders queue"
 
-Not: "when users do stuff with orders." That is not a journey.
-
-If the engineer picks something too broad, narrow it: "Pick the single most important entry point for the change we're making."
+"When users do stuff with orders" is not a journey. Push until you have a single, nameable event.
 
 ---
 
 ## Step 2 — Trace It End-to-End
 
-Walk through the journey together, one hop at a time. For each hop:
+You do the tracing. Read the code — do not ask the engineer to trace it for you.
 
-1. Find the actual file and line where control passes
-2. State what data arrives at that point and what shape it is in
-3. State what decision or transformation happens here
-4. State where control goes next
+Walk through the journey one hop at a time. For each hop, find and record:
+1. The actual file and line where control passes
+2. What data arrives at that point and what shape it is in
+3. What decision or transformation happens here
+4. Where control goes next
 
-Do not summarise. Do not say "then it hits the service layer." Name the file. Name the method. Show the call.
+Do not summarise. "Then it hits the service layer" is not a hop. Name the file. Name the method. Show the call.
 
 **Format for each hop:**
 
@@ -59,32 +59,35 @@ Do not summarise. Do not say "then it hits the service layer." Name the file. Na
 [5] → back to CheckoutController.ts:67 — serialises response, returns 201
 ```
 
-Every hop should have: file + line, what arrives, what happens, what leaves.
+Every hop needs: file + line, what arrives, what happens, what leaves.
 
 ---
 
 ## Step 3 — Mark Where the Change Lands
 
-Once the full journey is traced, ask the engineer:
+Once the full journey is traced, present it to the engineer and ask:
 
-"Point to the hop where our change starts. What is the first file we will need to touch?"
+"Point to the hop where our change starts. Which file do we touch first?"
 
-Then:
-- "What does our change need from the hops before it?"
-- "What do the hops after it depend on that our change might affect?"
-- "Are we crossing any architectural boundary? If yes, which one, and does the change belong on this side of it?"
+Wait for their answer. Then, one question at a time:
 
-This is the entry point for the Grill and the Flow Map. The engineer should now be able to answer "which files are affected and why" with specific paths, not vague layer names.
+- If they point to the right hop: "What does our change need from the hops before it?"
+- Once they answer that: "What do the hops after it depend on that our change might affect?"
+- Once they answer that: "Are we crossing an architectural boundary here? If yes — does our change belong on this side of it?"
+
+**Pacing rule:** One question per turn. Do not present all three as a list. Ask the first, wait, then ask the next based on what they said.
+
+The engineer should leave this step able to answer "which files are affected and why" with specific paths — not vague layer names. If they can't, the trace wasn't specific enough. Go back and tighten it.
 
 ---
 
 ## Step 4 — Surface What You Don't Know
 
-After the trace, ask:
+After Step 3, ask:
 
 "Was there any hop in that journey where you weren't sure what was happening — where you followed the call but didn't understand the decision?"
 
-These gaps are where assumptions live. Name them explicitly before any design is done. A named assumption is a testable assumption. An unnamed one is a future bug.
+Wait for their answer. These gaps are where assumptions live. A named assumption is testable. An unnamed one is a future bug. If they name a gap, acknowledge it and add it to the list of things to resolve during grill.
 
 ---
 
@@ -92,13 +95,13 @@ These gaps are where assumptions live. Name them explicitly before any design is
 
 This skill is complete when:
 
-- [ ] One user journey has been traced hop-by-hop with file + line references
-- [ ] The engineer can point to the exact file and method where the change starts
-- [ ] Boundary crossings (if any) have been identified and justified
-- [ ] Unknown hops have been named as explicit assumptions
+- One user journey has been traced hop-by-hop with file + line references
+- The engineer can point to the exact file and method where the change starts
+- Boundary crossings (if any) have been identified and justified
+- Unknown hops have been named as explicit assumptions
 
 ---
 
 ## After Orient
 
-If this is the start of a session, invoke `grill`. The engineer is now equipped to answer the grill questions about which files are affected and why — because they have traced the actual path.
+Invoke `groundup:grill`. The engineer is now equipped to answer the grill questions about which files are affected and why — because they have traced the actual path.

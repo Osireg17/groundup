@@ -1,0 +1,41 @@
+{
+  "skill_name": "groundup:orient",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I need to add a 'save for later' feature to the checkout flow. I know we have a checkout controller somewhere but I don't know what calls what or which files I'd actually be touching.",
+      "expected_output": "Claude traces the checkout journey end-to-end with file + line references, then asks the engineer one question at a time to locate where the change lands.",
+      "files": [],
+      "assertions": [
+        "Claude traces the journey with at least 3 hops, each naming a specific file and line number or method",
+        "Claude asks the engineer to point to where the change starts — as a single question, not a list",
+        "Claude does not ask all three Step 3 questions in one turn",
+        "Claude reads the codebase itself rather than asking the engineer to trace the flow"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "We get a webhook from Stripe when a payment completes. I need to trigger an email notification when that happens. Where does the webhook land and what would I need to touch?",
+      "expected_output": "Claude traces the webhook journey end-to-end with file + line references from the entry point through to where a notification would be triggered, then walks the engineer through locating the change one question at a time.",
+      "files": [],
+      "assertions": [
+        "Claude produces a hop-by-hop trace starting from the webhook entry point (controller/route/handler)",
+        "Claude identifies the file and method where the notification logic would be added",
+        "Claude asks one focused question after the trace — not a bulleted list of questions",
+        "Claude does not immediately tell the engineer what to implement before they have located the change themselves"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "There's a nightly job that reconciles orders. I need to add a step that flags any order over $1000 for manual review. I've never touched the jobs layer before.",
+      "expected_output": "Claude traces the scheduled job journey end-to-end with file + line references, identifies where the flagging logic would live, then asks the engineer one question at a time about where the change lands and what it touches.",
+      "files": [],
+      "assertions": [
+        "Claude traces the job execution flow with file + line references from the scheduler/entrypoint through to data access",
+        "Claude asks the engineer to identify which hop the change belongs to — as a single question",
+        "Claude surfaces at least one unknown or assumption in Step 4",
+        "Claude does not volunteer the implementation approach before the engineer has demonstrated they know where the change lives"
+      ]
+    }
+  ]
+}

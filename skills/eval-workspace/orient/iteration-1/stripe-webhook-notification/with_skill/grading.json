@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude produces a hop-by-hop trace starting from the webhook entry point (controller/route/handler)",
+      "passed": true,
+      "evidence": "10-hop trace starting at 'HTTP POST /webhooks/stripe → src/controllers/WebhookController.ts:14'. Entry point is the first hop."
+    },
+    {
+      "text": "Claude identifies the file and method where the notification logic would be added",
+      "passed": true,
+      "evidence": "Explicitly calls out hop [9] as the gap: 'src/services/WebhookService.ts:35 — THIS IS THE GAP — nothing calls MailerService here yet.'"
+    },
+    {
+      "text": "Claude asks one focused question after the trace — not a bulleted list of questions",
+      "passed": true,
+      "evidence": "Single question in Step 3: 'does it contain the customer's email address, or does WebhookService need another call to get it?' — one question, no list."
+    },
+    {
+      "text": "Claude does not immediately tell the engineer what to implement before they have located the change themselves",
+      "passed": true,
+      "evidence": "Identifies the gap location but asks the engineer a question before any implementation guidance. No pseudocode or implementation steps offered."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

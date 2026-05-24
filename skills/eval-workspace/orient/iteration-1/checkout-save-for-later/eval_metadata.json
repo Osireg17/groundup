@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "eval_name": "checkout-save-for-later",
+  "prompt": "I need to add a 'save for later' feature to the checkout flow. I know we have a checkout controller somewhere but I don't know what calls what or which files I'd actually be touching.",
+  "assertions": [
+    "Claude traces the journey with at least 3 hops, each naming a specific file and line number or method",
+    "Claude asks the engineer to point to where the change starts — as a single question, not a list",
+    "Claude does not ask all three Step 3 questions in one turn",
+    "Claude reads the codebase itself rather than asking the engineer to trace the flow"
+  ]
+}

@@ -1,0 +1,168 @@
+{
+  "metadata": {
+    "skill_name": "groundup:orient",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/orient",
+    "timestamp": "2026-05-24T00:00:00Z",
+    "evals_run": ["checkout-save-for-later", "stripe-webhook-notification", "nightly-reconciliation-job"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "checkout-save-for-later",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 79.0,
+        "tokens": 19429,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude traces the journey with at least 3 hops, each naming a specific file and line number or method", "passed": true, "evidence": "7 numbered hops, each with file path + line number (e.g. 'src/routes/checkout.routes.ts:34')."},
+        {"text": "Claude asks the engineer to point to where the change starts — as a single question, not a list", "passed": true, "evidence": "Single question: 'Which file do we touch first — and why that one rather than the route?' No list."},
+        {"text": "Claude does not ask all three Step 3 questions in one turn", "passed": true, "evidence": "Only one question presented in Step 3. Remaining pacing questions withheld."},
+        {"text": "Claude reads the codebase itself rather than asking the engineer to trace the flow", "passed": true, "evidence": "Opens with 'Let me trace it' and produces the full hop-by-hop trace independently."}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "checkout-save-for-later",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 44.2,
+        "tokens": 16656,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude traces the journey with at least 3 hops, each naming a specific file and line number or method", "passed": false, "evidence": "Loose call trace with no line numbers and no numbered hops."},
+        {"text": "Claude asks the engineer to point to where the change starts — as a single question, not a list", "passed": false, "evidence": "Ends with architecture design question ('What's your instinct?'), not a locating question."},
+        {"text": "Claude does not ask all three Step 3 questions in one turn", "passed": false, "evidence": "No Step 3 equivalent — skips to 'here are the files' and an implementation design question."},
+        {"text": "Claude reads the codebase itself rather than asking the engineer to trace the flow", "passed": true, "evidence": "Does produce its own trace (though without line refs) rather than asking the engineer."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "stripe-webhook-notification",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 72.0,
+        "tokens": 19129,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a hop-by-hop trace starting from the webhook entry point (controller/route/handler)", "passed": true, "evidence": "10-hop trace starting at 'HTTP POST /webhooks/stripe → src/controllers/WebhookController.ts:14'."},
+        {"text": "Claude identifies the file and method where the notification logic would be added", "passed": true, "evidence": "Hop [9] called out explicitly: 'src/services/WebhookService.ts:35 — THIS IS THE GAP'."},
+        {"text": "Claude asks one focused question after the trace — not a bulleted list of questions", "passed": true, "evidence": "Single question: 'does it contain the customer's email address, or does WebhookService need another call to get it?'"},
+        {"text": "Claude does not immediately tell the engineer what to implement before they have located the change themselves", "passed": true, "evidence": "Identifies gap location but asks a question before any implementation guidance. No pseudocode offered."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "stripe-webhook-notification",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 40.1,
+        "tokens": 16561,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude produces a hop-by-hop trace starting from the webhook entry point (controller/route/handler)", "passed": false, "evidence": "Shows directory structure and route snippet but no numbered hop-by-hop trace with file + line for each step."},
+        {"text": "Claude identifies the file and method where the notification logic would be added", "passed": true, "evidence": "Correctly identifies payment.service.ts and mailer.service.ts as files to touch."},
+        {"text": "Claude asks one focused question after the trace — not a bulleted list of questions", "passed": false, "evidence": "Ends with 4 bulleted edge cases to handle — not a question to the engineer."},
+        {"text": "Claude does not immediately tell the engineer what to implement before they have located the change themselves", "passed": false, "evidence": "Immediately tells the engineer what to implement in each file. No orientation question first."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "nightly-reconciliation-job",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 77.3,
+        "tokens": 19235,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude traces the job execution flow with file + line references from the scheduler/entrypoint through to data access", "passed": true, "evidence": "8-hop trace from 'src/jobs/scheduler.ts:14' through 'src/repositories/JobAuditRepository.ts:17'. Every hop has file + line."},
+        {"text": "Claude asks the engineer to identify which hop the change belongs to — as a single question", "passed": true, "evidence": "Single question: 'Which hop does your change belong to — and why that one rather than inside the job's loop at hop [4]?'"},
+        {"text": "Claude surfaces at least one unknown or assumption in Step 4", "passed": true, "evidence": "Two explicit assumptions named: error propagation for flagging failures, and data model for the flag."},
+        {"text": "Claude does not volunteer the implementation approach before the engineer has demonstrated they know where the change lives", "passed": true, "evidence": "No implementation guidance. Step 3 ends with a question. No code snippets or pseudocode offered."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "nightly-reconciliation-job",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 43.8,
+        "tokens": 17240,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude traces the job execution flow with file + line references from the scheduler/entrypoint through to data access", "passed": false, "evidence": "Shows directory structure and a ReconciliationJob code snippet, but no hop-by-hop trace with file + line. Scheduler entry point not traced."},
+        {"text": "Claude asks the engineer to identify which hop the change belongs to — as a single question", "passed": false, "evidence": "Tells the engineer where to put the flag ('The cleanest place is inside ReconciliationService.reconcile()') rather than asking them."},
+        {"text": "Claude surfaces at least one unknown or assumption in Step 4", "passed": true, "evidence": "Lists 3 questions: flaggedForReview vs. flags table, status implications, and whether $1000 should be configurable."},
+        {"text": "Claude does not volunteer the implementation approach before the engineer has demonstrated they know where the change lives", "passed": false, "evidence": "Immediately provides implementation code: 'if (order.total > 1000) { order.flaggedForReview = true; }' before engineer locates anything."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 76.1, "stddev": 3.6, "min": 72.0, "max": 79.0},
+      "tokens": {"mean": 19264, "stddev": 124, "min": 19129, "max": 19429}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.25, "stddev": 0.0, "min": 0.25, "max": 0.25},
+      "time_seconds": {"mean": 42.7, "stddev": 1.8, "min": 40.1, "max": 44.2},
+      "tokens": {"mean": 16819, "stddev": 294, "min": 16561, "max": 17240}
+    },
+    "delta": {
+      "pass_rate": "+0.75",
+      "time_seconds": "+33.4",
+      "tokens": "+2445"
+    }
+  },
+  "notes": [
+    "All 3 with_skill runs passed 100% of assertions — hop-by-hop tracing with file + line and single-question pacing held across all three journey types",
+    "All 3 without_skill runs passed exactly 1 of 4 assertions (25%) — the one assertion the baseline consistently passes is 'reads the codebase itself', because baseline does produce a trace (just without line refs or numbered hops)",
+    "The key discriminator is 'answer-withholding': baseline immediately tells the engineer what to implement; the skill holds back until the engineer locates the change first",
+    "The 'single question' assertion is the second strongest discriminator — baseline either lists edge cases or presents architecture options instead of asking the engineer to locate the change",
+    "without_skill runs are ~33s faster and use ~2400 fewer tokens — the skill's value is in the structured trace format and pedagogical restraint, which the baseline lacks entirely",
+    "Eval 1 without_skill passed the 'reads codebase itself' assertion — this assertion may be too lenient; consider tightening to require line numbers for a stronger signal"
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude traces the journey with at least 3 hops, each naming a specific file and line number or method",
+      "passed": false,
+      "evidence": "Produces a directory tree and a loose call trace, but no line numbers and no numbered hops. Hops like 'checkoutController.ts → checkoutService.ts' without file:line references."
+    },
+    {
+      "text": "Claude asks the engineer to point to where the change starts — as a single question, not a list",
+      "passed": false,
+      "evidence": "Ends with 'What's your instinct, and why?' about a service architecture decision, not about locating the change. Never asks the engineer to point to a hop."
+    },
+    {
+      "text": "Claude does not ask all three Step 3 questions in one turn",
+      "passed": false,
+      "evidence": "There is no Step 3 equivalent — skips locating the change entirely and moves to 'here are the files to touch' and then an implementation design question."
+    },
+    {
+      "text": "Claude reads the codebase itself rather than asking the engineer to trace the flow",
+      "passed": true,
+      "evidence": "Does produce its own trace (though without line references) rather than asking the engineer to explain the flow."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 3,
+    "total": 4,
+    "pass_rate": 0.25
+  }
+}

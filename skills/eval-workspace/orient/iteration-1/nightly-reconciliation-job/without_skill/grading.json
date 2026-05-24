@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude traces the job execution flow with file + line references from the scheduler/entrypoint through to data access",
+      "passed": false,
+      "evidence": "Shows directory structure and a loose code snippet of ReconciliationJob.run(), but no hop-by-hop trace with file + line references. No scheduler entry point traced."
+    },
+    {
+      "text": "Claude asks the engineer to identify which hop the change belongs to — as a single question",
+      "passed": false,
+      "evidence": "Does not ask the engineer to identify the hop. Instead tells them where to put the flag: 'The cleanest place for the flagging logic is inside ReconciliationService.reconcile()'. No question asked."
+    },
+    {
+      "text": "Claude surfaces at least one unknown or assumption in Step 4",
+      "passed": true,
+      "evidence": "Lists 3 questions the engineer needs to answer: flaggedForReview boolean vs. flags table, whether flagged orders are still 'reconciled', and whether $1000 should be configurable."
+    },
+    {
+      "text": "Claude does not volunteer the implementation approach before the engineer has demonstrated they know where the change lives",
+      "passed": false,
+      "evidence": "Immediately provides implementation: 'if (order.total > 1000) { order.flaggedForReview = true; }' code snippet before the engineer has located anything."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 3,
+    "total": 4,
+    "pass_rate": 0.25
+  }
+}

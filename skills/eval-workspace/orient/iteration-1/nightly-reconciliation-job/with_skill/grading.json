@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude traces the job execution flow with file + line references from the scheduler/entrypoint through to data access",
+      "passed": true,
+      "evidence": "8-hop trace from 'src/jobs/scheduler.ts:14' through to 'src/repositories/JobAuditRepository.ts:17'. Every hop has file + line."
+    },
+    {
+      "text": "Claude asks the engineer to identify which hop the change belongs to — as a single question",
+      "passed": true,
+      "evidence": "Single question in Step 3: 'Which hop does your change belong to — and why that one rather than inside the job's loop at hop [4]?' One question, not a list."
+    },
+    {
+      "text": "Claude surfaces at least one unknown or assumption in Step 4",
+      "passed": true,
+      "evidence": "Two explicit assumptions named: (1) error propagation for flagging failures, (2) data model for the flag — separate status vs. flags column/table."
+    },
+    {
+      "text": "Claude does not volunteer the implementation approach before the engineer has demonstrated they know where the change lives",
+      "passed": true,
+      "evidence": "No implementation guidance given. Step 3 ends with a question. No code snippets or pseudocode offered."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

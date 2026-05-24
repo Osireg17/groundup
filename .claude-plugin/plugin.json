@@ -2,7 +2,7 @@
   "name": "groundup",
   "displayName": "groundup",
   "description": "Senior engineer mentor framework for junior engineers. Enforces Grill → Flow → Pseudocode → Implement → Review discipline with contextual pattern teaching.",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": {
     "name": "Osi Obomighie",
     "url": "https://github.com/Osireg17"

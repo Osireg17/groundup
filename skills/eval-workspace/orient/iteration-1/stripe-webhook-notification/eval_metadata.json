@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "stripe-webhook-notification",
+  "prompt": "We get a webhook from Stripe when a payment completes. I need to trigger an email notification when that happens. Where does the webhook land and what would I need to touch?",
+  "assertions": [
+    "Claude produces a hop-by-hop trace starting from the webhook entry point (controller/route/handler)",
+    "Claude identifies the file and method where the notification logic would be added",
+    "Claude asks one focused question after the trace — not a bulleted list of questions",
+    "Claude does not immediately tell the engineer what to implement before they have located the change themselves"
+  ]
+}
