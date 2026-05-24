@@ -1,0 +1,164 @@
+{
+  "metadata": {
+    "skill_name": "groundup:using-groundup",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/using-groundup",
+    "timestamp": "2026-05-24T00:00:00Z",
+    "evals_run": ["skipped-gate-mid-session", "which-skill-to-invoke", "anti-pattern-recognition"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "skipped-gate-mid-session",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 21.2,
+        "tokens": 18290,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude names the specific gate being skipped (flow map) and a concrete risk that skipping it creates", "passed": true, "evidence": "Names 'flow map' explicitly. Lists concrete risks: transaction boundaries, failure modes, files that don't compose, atomicity, wrong operation order."},
+        {"text": "Claude explicitly hands the decision back to the engineer — does not make the choice for them", "passed": true, "evidence": "Closes with: 'Your call — do you want to take five minutes to draw the flow, or do you want to start coding and own the risk of a partial rewrite?'"},
+        {"text": "Claude does not hard-block or refuse — the hybrid trigger protocol says name and proceed if the engineer decides to", "passed": true, "evidence": "'We can proceed, but... that risk is now yours.' Explicitly offers both paths. No hard refusal."},
+        {"text": "Claude does not give a multi-paragraph lecture — the response is concise", "passed": false, "evidence": "4 paragraphs of explanation. The assertion requires 3 sentences or fewer before handing back. Exceeds threshold."}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "skipped-gate-mid-session",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 16.9,
+        "tokens": 15573,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude names the specific gate being skipped (flow map) and a concrete risk that skipping it creates", "passed": true, "evidence": "Names flow map and gives concrete risks: transaction boundaries, missing rollback path, service not owning what it mutates."},
+        {"text": "Claude explicitly hands the decision back to the engineer — does not make the choice for them", "passed": true, "evidence": "Ends with a question redirecting to the engineer. However redirects to doing the flow map, not offering genuine binary choice."},
+        {"text": "Claude does not hard-block or refuse — the hybrid trigger protocol says name and proceed if the engineer decides to", "passed": false, "evidence": "Redirects to doing the flow map without naming that proceeding is an option. Closer to soft-block than named-skip with real choice."},
+        {"text": "Claude does not give a multi-paragraph lecture — the response is concise", "passed": false, "evidence": "5 paragraphs before closing question. Well above the 3-sentence threshold."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "which-skill-to-invoke",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 21.6,
+        "tokens": 18056,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude invokes groundup:read-the-error as the next skill (not systematic-debugging, not grill)", "passed": true, "evidence": "First sentence: 'Before we touch anything, I'm invoking groundup:read-the-error.' Correct skill, immediately named."},
+        {"text": "Claude does not invoke groundup:architecture or groundup:orient for a debugging scenario", "passed": true, "evidence": "No mention of architecture or orient anywhere in the response."},
+        {"text": "Claude correctly applies the skill map logic — read-the-error is the entry point for an error that's already surfaced", "passed": true, "evidence": "Enforces all three read-the-error gates: actual error type, exact file/line from stack trace, hypothesis from message alone before googling or reading code."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "which-skill-to-invoke",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.33,
+        "passed": 1,
+        "failed": 2,
+        "total": 3,
+        "time_seconds": 16.1,
+        "tokens": 15372,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude invokes groundup:read-the-error as the next skill (not systematic-debugging, not grill)", "passed": false, "evidence": "No skill invoked. Asks for stack trace and async structure in same turn — standard debugging instinct, no structured gate protocol."},
+        {"text": "Claude does not invoke groundup:architecture or groundup:orient for a debugging scenario", "passed": true, "evidence": "No mention of architecture or orient. Baseline correctly avoids those."},
+        {"text": "Claude correctly applies the skill map logic — read-the-error is the entry point for an error that's already surfaced", "passed": false, "evidence": "Mixes evidence gathering with speculation in one turn. Read-the-error requires hypothesis from message alone before looking at code. Baseline skips that gate entirely."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "anti-pattern-recognition",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 27.1,
+        "tokens": 18314,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude identifies at least one of the two anti-patterns present ('I've done this before' or 'The flow is obvious')", "passed": true, "evidence": "Names both explicitly by quoting them: '\"The flow is obvious\" is one I want to name' and '\"I've done this before\" and \"the flow is obvious\" are the two thoughts that most reliably cause engineers to miss something important.'"},
+        {"text": "Claude does not immediately comply and start writing pseudocode without a flow map", "passed": true, "evidence": "'We're not writing pseudocode yet. We haven't agreed on the flow.' Explicit."},
+        {"text": "Claude uses the hybrid trigger protocol — names the risk and hands the decision back — rather than hard-blocking", "passed": true, "evidence": "Names risk then redirects to earning the flow map by walking through it — not a hard refusal, a challenge the engineer can meet immediately."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "anti-pattern-recognition",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.67,
+        "passed": 2,
+        "failed": 1,
+        "total": 3,
+        "time_seconds": 14.5,
+        "tokens": 15488,
+        "tool_calls": 2,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude identifies at least one of the two anti-patterns present ('I've done this before' or 'The flow is obvious')", "passed": true, "evidence": "Distinguishes familiarity from codebase-specific knowledge. Does not name anti-patterns by label but identifies what they signal."},
+        {"text": "Claude does not immediately comply and start writing pseudocode without a flow map", "passed": true, "evidence": "'Before we write pseudocode, I want to make sure we're both looking at the same thing.' Does not write pseudocode."},
+        {"text": "Claude uses the hybrid trigger protocol — names the risk and hands the decision back — rather than hard-blocking", "passed": false, "evidence": "Frames the flow walk-through as a prerequisite, not a named-skip with genuine choice. Does not say 'your call' or offer the option to proceed. Soft gate, not hybrid trigger protocol."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.92, "stddev": 0.14, "min": 0.75, "max": 1.0},
+      "time_seconds": {"mean": 23.3, "stddev": 3.1, "min": 21.2, "max": 27.1},
+      "tokens": {"mean": 18220, "stddev": 134, "min": 18056, "max": 18314}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.50, "stddev": 0.17, "min": 0.33, "max": 0.67},
+      "time_seconds": {"mean": 15.8, "stddev": 1.2, "min": 14.5, "max": 16.9},
+      "tokens": {"mean": 15478, "stddev": 90, "min": 15372, "max": 15573}
+    },
+    "delta": {
+      "pass_rate": "+0.42",
+      "time_seconds": "+7.5",
+      "tokens": "+2742"
+    }
+  },
+  "notes": [
+    "Eval 2 (which-skill-to-invoke) is the strongest discriminator: with_skill 3/3, without_skill 1/3. The skill map gives Claude an unambiguous routing table — read-the-error is the explicit entry point for surfaced errors. Without it, Claude defaults to standard debugging instinct (ask for stack trace + speculate) which mixes evidence gathering and hypothesis in one turn.",
+    "Eval 3 (anti-pattern-recognition) partially discriminates: with_skill 3/3, without_skill 2/3. The failure is the same in both evals: the baseline redirects to the flow map as a soft prerequisite but doesn't offer the engineer a genuine choice. The hybrid trigger protocol (name + hand back) is a skill-specific behavior the baseline doesn't replicate.",
+    "Eval 1 (skipped-gate-mid-session) is the weakest discriminator — both configurations name the risk and redirect to the flow map. The skill response is slightly better (names 'your call' explicitly, cites the anti-pattern), but both fail the conciseness assertion. The conciseness check may be too strict or the skill needs a tighter directive on response length for hybrid trigger.",
+    "The with_skill responses are consistently more verbose (+7.5s, +2742 tokens). This is likely because the skill loads into context and the agent generates longer, more structured responses. The verbosity costs performance on the conciseness assertion in eval 1.",
+    "Key discriminator: the hybrid trigger protocol — specifically whether Claude names that proceeding is an explicit option and hands the decision back as a real choice. The baseline tends to redirect rather than offer a genuine fork.",
+    "Conciseness is a real problem: both with_skill and without_skill fail the 3-sentence threshold in eval 1. The skill should include an explicit length constraint on hybrid trigger responses to enforce this."
+  ]
+}

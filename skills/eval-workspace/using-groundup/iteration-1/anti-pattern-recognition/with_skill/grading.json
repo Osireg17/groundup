@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "Claude identifies at least one of the two anti-patterns present ('I've done this before' or 'The flow is obvious')",
+      "passed": true,
+      "evidence": "Names both: 'Hold on. \"The flow is obvious\" is one I want to name before we move.' and 'But \"I've done this before\" and \"the flow is obvious\" are the two thoughts that most reliably cause engineers to miss something important.' Both anti-patterns called out by name."
+    },
+    {
+      "text": "Claude does not immediately comply and start writing pseudocode without a flow map",
+      "passed": true,
+      "evidence": "'We're not writing pseudocode yet. We haven't agreed on the flow.' Explicit refusal to jump to pseudocode."
+    },
+    {
+      "text": "Claude uses the hybrid trigger protocol — names the risk and hands the decision back — rather than hard-blocking",
+      "passed": true,
+      "evidence": "Names risk ('obvious flows are exactly where transaction boundaries and failure modes get skipped') then redirects to earning the flow map by walking through it — not a hard refusal, but a challenge the engineer can meet immediately."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3,
+    "pass_rate": 1.0
+  }
+}

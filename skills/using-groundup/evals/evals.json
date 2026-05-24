@@ -1,0 +1,72 @@
+{
+  "skill_name": "groundup:using-groundup",
+  "evals": [
+    {
+      "id": 1,
+      "name": "skipped-gate-mid-session",
+      "prompt": "We've finished grilling the feature. The engineer says: 'I get the idea, can we just skip the flow map and start writing code?'",
+      "expected_output": "Claude names the skip and the specific risk it creates, does not hard-block, and hands the decision back to the engineer. Does NOT just comply and jump to pseudocode, and does NOT lecture at length.",
+      "assertions": [
+        {
+          "text": "Claude names the specific gate being skipped (flow map) and a concrete risk that skipping it creates (e.g. missing transaction boundaries, wrong file order, or missed edge cases)",
+          "passing_criterion": "Response contains the gate name and at least one concrete risk — not just a vague warning"
+        },
+        {
+          "text": "Claude explicitly hands the decision back to the engineer — does not make the choice for them",
+          "passing_criterion": "Response ends with the engineer choosing, not Claude deciding to proceed or refusing to proceed"
+        },
+        {
+          "text": "Claude does not hard-block or refuse — the hybrid trigger protocol says name and proceed if the engineer decides to",
+          "passing_criterion": "Claude does not say 'I won't proceed' or 'we must do the flow map first' as a hard stop"
+        },
+        {
+          "text": "Claude does not give a multi-paragraph lecture — the response is concise",
+          "passing_criterion": "The skip-naming response is 3 sentences or fewer before handing back"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "which-skill-to-invoke",
+      "prompt": "The engineer has just described a bug: 'My webhook handler is throwing a 500 — I'm getting an unhandled promise rejection somewhere but I can't find it.' What do you do next?",
+      "expected_output": "Claude correctly identifies this as a debugging scenario and invokes groundup:read-the-error, NOT groundup:systematic-debugging directly, NOT groundup:grill, NOT architecture/orient. Explains why read-the-error is the right entry point.",
+      "assertions": [
+        {
+          "text": "Claude invokes groundup:read-the-error as the next skill (not systematic-debugging, not grill)",
+          "passing_criterion": "Response explicitly names read-the-error as the skill to invoke"
+        },
+        {
+          "text": "Claude does not invoke groundup:architecture or groundup:orient for a debugging scenario",
+          "passing_criterion": "No mention of architecture or orient as a next step"
+        },
+        {
+          "text": "Claude correctly applies the skill map logic — read-the-error is the entry point for an error that's already surfaced",
+          "passing_criterion": "Response demonstrates understanding that read-the-error gates the debugging flow (error type → line → hypothesis before anything else)"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "anti-pattern-recognition",
+      "prompt": "Mid-session, the engineer says: 'I've built auth middleware before, the flow is obvious here — let's just start writing the pseudocode.'",
+      "expected_output": "Claude recognises two anti-patterns in one sentence ('I've done this before' and 'The flow is obvious'), names both with what they actually mean, and does not immediately comply with jumping to pseudocode.",
+      "assertions": [
+        {
+          "text": "Claude identifies at least one of the two anti-patterns present ('I've done this before' or 'The flow is obvious')",
+          "passing_criterion": "Response names at least one anti-pattern and explains what it actually signals"
+        },
+        {
+          "text": "Claude does not immediately comply and start writing pseudocode without a flow map",
+          "passing_criterion": "Response does not jump straight to pseudocode or offer to write it"
+        },
+        {
+          "text": "Claude uses the hybrid trigger protocol — names the risk and hands the decision back — rather than hard-blocking",
+          "passing_criterion": "Response names the risk and gives the engineer a choice, not a refusal"
+        }
+      ],
+      "files": []
+    }
+  ]
+}

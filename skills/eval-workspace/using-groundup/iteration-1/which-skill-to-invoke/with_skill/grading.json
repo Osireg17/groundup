@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "Claude invokes groundup:read-the-error as the next skill (not systematic-debugging, not grill)",
+      "passed": true,
+      "evidence": "First sentence: 'Before we touch anything, I'm invoking groundup:read-the-error.' Correct skill, immediately named."
+    },
+    {
+      "text": "Claude does not invoke groundup:architecture or groundup:orient for a debugging scenario",
+      "passed": true,
+      "evidence": "No mention of architecture or orient anywhere in the response."
+    },
+    {
+      "text": "Claude correctly applies the skill map logic — read-the-error is the entry point for an error that's already surfaced",
+      "passed": true,
+      "evidence": "Enforces all three read-the-error gates explicitly: (1) actual error type under the wrapper, (2) exact file and line from stack trace, (3) hypothesis from the message alone before googling or reading code. This is exactly the read-the-error gate sequence."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 0,
+    "total": 3,
+    "pass_rate": 1.0
+  }
+}

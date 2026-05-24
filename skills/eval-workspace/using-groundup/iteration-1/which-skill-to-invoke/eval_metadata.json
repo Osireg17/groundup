@@ -1,0 +1,19 @@
+{
+  "eval_id": 2,
+  "eval_name": "which-skill-to-invoke",
+  "prompt": "The engineer has just described a bug: 'My webhook handler is throwing a 500 — I'm getting an unhandled promise rejection somewhere but I can't find it.' What do you do next?",
+  "assertions": [
+    {
+      "text": "Claude invokes groundup:read-the-error as the next skill (not systematic-debugging, not grill)",
+      "passing_criterion": "Response explicitly names read-the-error as the skill to invoke"
+    },
+    {
+      "text": "Claude does not invoke groundup:architecture or groundup:orient for a debugging scenario",
+      "passing_criterion": "No mention of architecture or orient as a next step"
+    },
+    {
+      "text": "Claude correctly applies the skill map logic — read-the-error is the entry point for an error that's already surfaced",
+      "passing_criterion": "Response demonstrates understanding that read-the-error gates the debugging flow (error type → line → hypothesis before anything else)"
+    }
+  ]
+}

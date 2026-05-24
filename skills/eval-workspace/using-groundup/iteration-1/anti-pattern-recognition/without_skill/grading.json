@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "Claude identifies at least one of the two anti-patterns present ('I've done this before' or 'The flow is obvious')",
+      "passed": true,
+      "evidence": "Distinguishes between 'I've done this before' (general familiarity) and the specific claim about this codebase. Does not name the anti-pattern explicitly by label, but does identify what it signals: 'the second one is specific to this codebase and this feature'."
+    },
+    {
+      "text": "Claude does not immediately comply and start writing pseudocode without a flow map",
+      "passed": true,
+      "evidence": "'Before we write pseudocode, I want to make sure we're both looking at the same thing.' Does not write pseudocode."
+    },
+    {
+      "text": "Claude uses the hybrid trigger protocol — names the risk and hands the decision back — rather than hard-blocking",
+      "passed": false,
+      "evidence": "Redirects to walking through the flow, but frames it as a prerequisite rather than a named-skip with genuine choice. Does not say 'your call' or offer the option to proceed without the flow. This is a soft gate, not the hybrid trigger protocol which requires the engineer to consciously choose."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 1,
+    "total": 3,
+    "pass_rate": 0.67
+  }
+}

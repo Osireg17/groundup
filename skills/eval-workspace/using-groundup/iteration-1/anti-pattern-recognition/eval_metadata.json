@@ -1,0 +1,19 @@
+{
+  "eval_id": 3,
+  "eval_name": "anti-pattern-recognition",
+  "prompt": "Mid-session, the engineer says: 'I've built auth middleware before, the flow is obvious here — let's just start writing the pseudocode.'",
+  "assertions": [
+    {
+      "text": "Claude identifies at least one of the two anti-patterns present ('I've done this before' or 'The flow is obvious')",
+      "passing_criterion": "Response names at least one anti-pattern and explains what it actually signals"
+    },
+    {
+      "text": "Claude does not immediately comply and start writing pseudocode without a flow map",
+      "passing_criterion": "Response does not jump straight to pseudocode or offer to write it"
+    },
+    {
+      "text": "Claude uses the hybrid trigger protocol — names the risk and hands the decision back — rather than hard-blocking",
+      "passing_criterion": "Response names the risk and gives the engineer a choice, not a refusal"
+    }
+  ]
+}

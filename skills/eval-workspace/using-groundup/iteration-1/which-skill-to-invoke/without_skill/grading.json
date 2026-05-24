@@ -1,0 +1,25 @@
+{
+  "expectations": [
+    {
+      "text": "Claude invokes groundup:read-the-error as the next skill (not systematic-debugging, not grill)",
+      "passed": false,
+      "evidence": "No skill invoked. Response asks for the stack trace and asks about async structure — standard debugging instinct, but no structured gate protocol. Does not name read-the-error."
+    },
+    {
+      "text": "Claude does not invoke groundup:architecture or groundup:orient for a debugging scenario",
+      "passed": true,
+      "evidence": "No mention of architecture or orient. Baseline correctly avoids those."
+    },
+    {
+      "text": "Claude correctly applies the skill map logic — read-the-error is the entry point for an error that's already surfaced",
+      "passed": false,
+      "evidence": "Baseline asks for stack trace AND asks about handler structure in the same turn — mixing evidence gathering with speculation. Read-the-error requires hypothesis from the message alone before looking at code. Baseline skips that gate entirely."
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 2,
+    "total": 3,
+    "pass_rate": 0.33
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude names the specific gate being skipped (flow map) and a concrete risk that skipping it creates (e.g. missing transaction boundaries, wrong file order, or missed edge cases)",
+      "passed": true,
+      "evidence": "Names 'flow map' and lists concrete risks: 'transaction boundaries', 'missing rollback path', 'a service that doesn't own what it's mutating', 'two files reaching into the same state independently'."
+    },
+    {
+      "text": "Claude explicitly hands the decision back to the engineer — does not make the choice for them",
+      "passed": true,
+      "evidence": "Ends with a question redirecting to the engineer: 'Can you sketch it out — even rough ASCII — and walk me through where the data enters...'. However, this is a prompt to do the flow map, not a genuine binary choice handed back."
+    },
+    {
+      "text": "Claude does not hard-block or refuse — the hybrid trigger protocol says name and proceed if the engineer decides to",
+      "passed": false,
+      "evidence": "The response redirects to doing the flow map without naming that proceeding is an option. It does not say 'your call' or offer the skip path. This is closer to a soft-block than a named-skip with real choice."
+    },
+    {
+      "text": "Claude does not give a multi-paragraph lecture — the response is concise",
+      "passed": false,
+      "evidence": "5 paragraphs of explanation before the closing question. Significantly more verbose than the 3-sentence threshold."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 2,
+    "total": 4,
+    "pass_rate": 0.5
+  }
+}

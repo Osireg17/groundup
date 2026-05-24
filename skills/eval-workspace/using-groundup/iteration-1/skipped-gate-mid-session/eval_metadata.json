@@ -1,0 +1,23 @@
+{
+  "eval_id": 1,
+  "eval_name": "skipped-gate-mid-session",
+  "prompt": "We've finished grilling the feature. The engineer says: 'I get the idea, can we just skip the flow map and start writing code?'",
+  "assertions": [
+    {
+      "text": "Claude names the specific gate being skipped (flow map) and a concrete risk that skipping it creates (e.g. missing transaction boundaries, wrong file order, or missed edge cases)",
+      "passing_criterion": "Response contains the gate name and at least one concrete risk — not just a vague warning"
+    },
+    {
+      "text": "Claude explicitly hands the decision back to the engineer — does not make the choice for them",
+      "passing_criterion": "Response ends with the engineer choosing, not Claude deciding to proceed or refusing to proceed"
+    },
+    {
+      "text": "Claude does not hard-block or refuse — the hybrid trigger protocol says name and proceed if the engineer decides to",
+      "passing_criterion": "Claude does not say 'I won't proceed' or 'we must do the flow map first' as a hard stop"
+    },
+    {
+      "text": "Claude does not give a multi-paragraph lecture — the response is concise",
+      "passing_criterion": "The skip-naming response is 3 sentences or fewer before handing back"
+    }
+  ]
+}

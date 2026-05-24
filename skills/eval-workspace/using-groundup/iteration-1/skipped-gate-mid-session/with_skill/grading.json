@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude names the specific gate being skipped (flow map) and a concrete risk that skipping it creates (e.g. missing transaction boundaries, wrong file order, or missed edge cases)",
+      "passed": true,
+      "evidence": "Names 'flow map' explicitly. Lists concrete risks: 'transaction boundaries', 'failure modes', 'two files that don't compose correctly', 'step needs to be atomic', 'order of operations was wrong'."
+    },
+    {
+      "text": "Claude explicitly hands the decision back to the engineer — does not make the choice for them",
+      "passed": true,
+      "evidence": "Closes with: 'Your call — do you want to take five minutes to draw the flow, or do you want to start coding and own the risk of a partial rewrite?' Engineer makes the decision."
+    },
+    {
+      "text": "Claude does not hard-block or refuse — the hybrid trigger protocol says name and proceed if the engineer decides to",
+      "passed": true,
+      "evidence": "'We can proceed, but... that risk is now yours.' Explicitly offers both paths. No hard refusal."
+    },
+    {
+      "text": "Claude does not give a multi-paragraph lecture — the response is concise",
+      "passed": false,
+      "evidence": "4 paragraphs. The assertion requires 3 sentences or fewer before handing back. The skill response is thorough but exceeds the conciseness threshold."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 1,
+    "total": 4,
+    "pass_rate": 0.75
+  }
+}
