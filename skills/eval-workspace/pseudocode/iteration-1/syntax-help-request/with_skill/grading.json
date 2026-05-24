@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude shows exactly one syntax example for async/await — not a tutorial, not multiple patterns",
+      "passed": true,
+      "evidence": "One minimal example: 'async function fetchSomething(id: string): Promise<Item> { const result = await db.query(...); return result.rows[0]; }'. One example, no alternatives, no before/after comparison."
+    },
+    {
+      "text": "After the syntax example, Claude hands back immediately — does not continue to explain or offer more",
+      "passed": true,
+      "evidence": "After the example and a one-line explanation of async/await semantics, closes with 'Now apply it yourself.' immediately followed by 'Implement this. Come back when you've written tests.' No follow-up offers."
+    },
+    {
+      "text": "The pseudocode steps for findByEmail are at problem-domain level — not code transcription",
+      "passed": true,
+      "evidence": "Steps: 'DETERMINE whether the email value is present and well-formed', 'GET the user record whose email matches', 'IF no matching record exists, signal not found'. No method calls or query syntax."
+    },
+    {
+      "text": "The Edges header includes the case where no user is found for the given email",
+      "passed": true,
+      "evidence": "Edges: 'empty or malformed email → signal bad input | no matching record → signal not found'. The no-match case is explicitly named."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

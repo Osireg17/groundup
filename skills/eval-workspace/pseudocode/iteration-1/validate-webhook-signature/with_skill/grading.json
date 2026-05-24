@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "The pseudocode steps do not name specific library methods or classes (e.g. no 'crypto.createHmac', no 'req.headers[...]', no 'Buffer.from')",
+      "passed": true,
+      "evidence": "Steps use: 'READ the raw body', 'EXTRACT the timestamp and the signature value(s)', 'COMPUTE the HMAC-SHA256 digest', 'DETERMINE whether the computed digest matches'. No library names, method calls, or Node.js-specific APIs in the pseudocode steps."
+    },
+    {
+      "text": "The Edges header covers the timing-safe comparison failure case and the missing/malformed header case",
+      "passed": true,
+      "evidence": "Edges: 'raw body absent → signal bad request | Stripe-Signature header absent → signal bad request | signature mismatch → signal unauthorised'. Both required cases are covered."
+    },
+    {
+      "text": "The pseudocode has a filled Purpose, In, Out, and Edges header — none left as placeholders",
+      "passed": true,
+      "evidence": "All four header fields filled: Purpose describes verification intent, In lists req/res/next/secret with constraints, Out describes void + next() or error, Edges lists all 4 failure/success conditions."
+    },
+    {
+      "text": "Claude ends with 'Implement this. Come back when you've written tests.' and does not offer implementation help",
+      "passed": true,
+      "evidence": "Closes with 'Implement this. Come back when you've written tests.' The pre-implementation notes (raw body requirement, timing-safe comparison, header format) are awareness flags, not step-by-step implementation guidance."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

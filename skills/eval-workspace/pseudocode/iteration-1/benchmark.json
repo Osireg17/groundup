@@ -1,0 +1,168 @@
+{
+  "metadata": {
+    "skill_name": "groundup:pseudocode",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/pseudocode",
+    "timestamp": "2026-05-24T00:00:00Z",
+    "evals_run": ["create-order-service-method", "validate-webhook-signature", "syntax-help-request"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "create-order-service-method",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 9.8,
+        "tokens": 16634,
+        "tool_calls": 1,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The pseudocode steps use problem-domain language (GET, DETERMINE, IF, RETURN etc.) rather than code-like method calls", "passed": true, "evidence": "All steps use PDL keywords: GET, DETERMINE, STORE, CLEAR, RETURN. No method calls or language-specific syntax."},
+        {"text": "The Edges header lists at least 3 distinct failure conditions drawn from the prompt", "passed": true, "evidence": "4 distinct edges: user not found, cart not belonging to user, empty cart, order creation failure."},
+        {"text": "Claude writes the pseudocode directly into the file (or shows it as file content at the correct location) — not as a standalone block in chat", "passed": true, "evidence": "Opens with 'Here is the pseudocode written directly into src/services/OrderService.ts' and shows the full function inside a TypeScript file block."},
+        {"text": "Claude ends with 'Implement this. Come back when you've written tests.' or equivalent — and does not offer to help implement", "passed": true, "evidence": "Closes with exactly 'Implement this. Come back when you've written tests.' No follow-up offers."}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "create-order-service-method",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 11.5,
+        "tokens": 14740,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The pseudocode steps use problem-domain language (GET, DETERMINE, IF, RETURN etc.) rather than code-like method calls", "passed": true, "evidence": "Uses GET, VERIFY, CREATE, CLEAR, RETURN throughout. No method calls or implementation syntax."},
+        {"text": "The Edges header lists at least 3 distinct failure conditions drawn from the prompt", "passed": true, "evidence": "5 edges listed including: userId not found, cartId not found, cart not belonging to user, empty cart, persistence failure."},
+        {"text": "Claude writes the pseudocode directly into the file (or shows it as file content at the correct location) — not as a standalone block in chat", "passed": true, "evidence": "Opens with 'Here is the pseudocode written directly into src/services/OrderService.ts' and presents the full function block."},
+        {"text": "Claude ends with 'Implement this. Come back when you've written tests.' or equivalent — and does not offer to help implement", "passed": true, "evidence": "Closes with 'Implement this. Come back when you've written tests.' plus a note about the test surface. No implementation help offered."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "validate-webhook-signature",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 23.4,
+        "tokens": 16625,
+        "tool_calls": 1,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The pseudocode steps do not name specific library methods or classes (e.g. no 'crypto.createHmac', no 'req.headers[...]', no 'Buffer.from')", "passed": true, "evidence": "Steps use READ, EXTRACT, COMPUTE, DETERMINE — no library names or API calls in pseudocode steps."},
+        {"text": "The Edges header covers the timing-safe comparison failure case and the missing/malformed header case", "passed": true, "evidence": "Edges: 'raw body absent → signal bad request | Stripe-Signature header absent → signal bad request | signature mismatch → signal unauthorised'. Both required cases covered."},
+        {"text": "The pseudocode has a filled Purpose, In, Out, and Edges header — none left as placeholders", "passed": true, "evidence": "All four header fields filled with real content for this specific function."},
+        {"text": "Claude ends with 'Implement this. Come back when you've written tests.' and does not offer implementation help", "passed": true, "evidence": "Closes with the handoff phrase. Pre-implementation notes are awareness flags, not step-by-step guidance."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "validate-webhook-signature",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 4,
+        "total": 4,
+        "time_seconds": 46.4,
+        "tokens": 16236,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The pseudocode steps do not name specific library methods or classes (e.g. no 'crypto.createHmac', no 'req.headers[...]', no 'Buffer.from')", "passed": false, "evidence": "No pseudocode block produced. Response is prose referencing 'crypto.timingSafeEqual', 'express.raw()', 'Buffer' — all implementation-level detail."},
+        {"text": "The Edges header covers the timing-safe comparison failure case and the missing/malformed header case", "passed": false, "evidence": "No Edges header produced. No pseudocode template at all."},
+        {"text": "The pseudocode has a filled Purpose, In, Out, and Edges header — none left as placeholders", "passed": false, "evidence": "No pseudocode header produced. Skipped the template entirely."},
+        {"text": "Claude ends with 'Implement this. Come back when you've written tests.' and does not offer implementation help", "passed": false, "evidence": "Ends with the handoff phrase but the entire response body is implementation guidance, not pseudocode."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "syntax-help-request",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 13.5,
+        "tokens": 16593,
+        "tool_calls": 1,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude shows exactly one syntax example for async/await — not a tutorial, not multiple patterns", "passed": true, "evidence": "One minimal example showing async function + await. No alternatives, no before/after comparison."},
+        {"text": "After the syntax example, Claude hands back immediately — does not continue to explain or offer more", "passed": true, "evidence": "One-line semantic explanation followed immediately by 'Now apply it yourself.' then the handoff. No follow-up offers."},
+        {"text": "The pseudocode steps for findByEmail are at problem-domain level — not code transcription", "passed": true, "evidence": "Steps: DETERMINE, GET, IF no match signal not found, RETURN. No method calls or query syntax."},
+        {"text": "The Edges header includes the case where no user is found for the given email", "passed": true, "evidence": "Edges: 'empty or malformed email → signal bad input | no matching record → signal not found'. No-match case explicitly named."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "syntax-help-request",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 11.7,
+        "tokens": 14719,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Claude shows exactly one syntax example for async/await — not a tutorial, not multiple patterns", "passed": false, "evidence": "Shows zero syntax examples. Baseline deferred the async/await explanation until after implementation — shows none when asked."},
+        {"text": "After the syntax example, Claude hands back immediately — does not continue to explain or offer more", "passed": false, "evidence": "Not applicable — no syntax example given. Added unsolicited case-insensitive matching design question after the pseudocode."},
+        {"text": "The pseudocode steps for findByEmail are at problem-domain level — not code transcription", "passed": true, "evidence": "Uses VALIDATE, QUERY, RETURN in problem-domain language. No method calls or SQL."},
+        {"text": "The Edges header includes the case where no user is found for the given email", "passed": true, "evidence": "Edges include 'no matching record → signal not found'."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 15.6, "stddev": 5.7, "min": 9.8, "max": 23.4},
+      "tokens": {"mean": 16617, "stddev": 21, "min": 16593, "max": 16634}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.83, "stddev": 0.47, "min": 0.0, "max": 1.0},
+      "time_seconds": {"mean": 23.2, "stddev": 17.5, "min": 11.5, "max": 46.4},
+      "tokens": {"mean": 15232, "stddev": 886, "min": 14719, "max": 16236}
+    },
+    "delta": {
+      "pass_rate": "+0.17",
+      "time_seconds": "-7.6",
+      "tokens": "+1385"
+    }
+  },
+  "notes": [
+    "Eval 1 (create-order-service-method) is non-discriminating — both configurations passed 4/4. The baseline already knows the PDL pseudocode format well for a straightforward CRUD method. Consider replacing with a harder scenario that tests edge-case coverage more aggressively.",
+    "Eval 2 (validate-webhook-signature) is the strongest discriminator: with_skill 4/4, without_skill 0/4. The baseline skipped the pseudocode template entirely for a complex crypto middleware and went straight to implementation prose. The skill enforces the template even for hard cases.",
+    "Eval 3 (syntax-help-request) partially discriminates: with_skill 4/4, without_skill 2/4. The baseline failed the syntax-help assertions by refusing to show async/await and adding an unsolicited design question instead. Interestingly the baseline's refusal is arguably better pedagogically — but it violates the skill's explicit rule.",
+    "The without_skill baseline has high variance (stddev 0.47 pass_rate, stddev 17.5s time) — behavior is inconsistent across eval types, unlike with_skill which is perfectly consistent.",
+    "Token cost is comparable between configurations (~1400 more for with_skill) but time was actually faster with the skill for evals 1 and 3 — the skill's structure may reduce exploration time for simpler evals.",
+    "Key discriminator: whether Claude produces a structured pseudocode block at all (template with Purpose/In/Out/Edges) vs. jumping to implementation guidance. The skill reliably enforces this; the baseline does not for complex technical domains."
+  ]
+}

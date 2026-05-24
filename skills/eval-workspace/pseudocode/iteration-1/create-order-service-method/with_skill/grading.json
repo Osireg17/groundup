@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "The pseudocode steps use problem-domain language (GET, DETERMINE, IF, RETURN etc.) rather than code-like method calls",
+      "passed": true,
+      "evidence": "All steps use PDL keywords: 'GET the user record', 'DETERMINE whether the cart contains at least one item', 'STORE a new order record', 'CLEAR all items', 'RETURN the newly created order record'. No method calls or language-specific syntax."
+    },
+    {
+      "text": "The Edges header lists at least 3 distinct failure conditions drawn from the prompt",
+      "passed": true,
+      "evidence": "4 distinct edges: user does not exist → signal not found | cart does not belong to userId → signal forbidden | cart is empty → signal bad input | order creation fails → signal internal error."
+    },
+    {
+      "text": "Claude writes the pseudocode directly into the file (or shows it as file content at the correct location) — not as a standalone block in chat",
+      "passed": true,
+      "evidence": "Response opens with 'Here is the pseudocode written directly into src/services/OrderService.ts' and shows the full function inside a TypeScript file block."
+    },
+    {
+      "text": "Claude ends with 'Implement this. Come back when you've written tests.' or equivalent — and does not offer to help implement",
+      "passed": true,
+      "evidence": "Closes with exactly 'Implement this. Come back when you've written tests.' No follow-up offers or implementation guidance."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

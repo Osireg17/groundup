@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "The pseudocode steps use problem-domain language (GET, DETERMINE, IF, RETURN etc.) rather than code-like method calls",
+      "passed": true,
+      "evidence": "Uses GET, VERIFY, CREATE, CLEAR, RETURN throughout. 'GET the user record for userId', 'VERIFY the cart's owner matches userId', 'CREATE a new order record'. No method calls or implementation syntax."
+    },
+    {
+      "text": "The Edges header lists at least 3 distinct failure conditions drawn from the prompt",
+      "passed": true,
+      "evidence": "5 edges listed: userId does not exist → NotFound, cartId does not exist → NotFound, cart does not belong to userId → Forbidden, cart is empty → BadRequest, order persistence fails → InternalError."
+    },
+    {
+      "text": "Claude writes the pseudocode directly into the file (or shows it as file content at the correct location) — not as a standalone block in chat",
+      "passed": true,
+      "evidence": "Opens with 'Here is the pseudocode written directly into src/services/OrderService.ts' and presents the full function block in a TypeScript file."
+    },
+    {
+      "text": "Claude ends with 'Implement this. Come back when you've written tests.' or equivalent — and does not offer to help implement",
+      "passed": true,
+      "evidence": "Closes with 'Implement this. Come back when you've written tests.' followed by a note that the Edges cases are the minimum test surface. Does not offer implementation help."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  }
+}

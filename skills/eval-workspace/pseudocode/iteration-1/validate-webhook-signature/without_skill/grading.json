@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "The pseudocode steps do not name specific library methods or classes (e.g. no 'crypto.createHmac', no 'req.headers[...]', no 'Buffer.from')",
+      "passed": false,
+      "evidence": "No pseudocode block was produced at all. The response is entirely implementation-oriented prose: references to 'crypto.timingSafeEqual', 'express.raw({ type: application/json })', 'Buffer' arguments. No PDL-style steps present."
+    },
+    {
+      "text": "The Edges header covers the timing-safe comparison failure case and the missing/malformed header case",
+      "passed": false,
+      "evidence": "No Edges header produced — no pseudocode template at all. The response describes implementation concerns in prose but does not structure them as a function header."
+    },
+    {
+      "text": "The pseudocode has a filled Purpose, In, Out, and Edges header — none left as placeholders",
+      "passed": false,
+      "evidence": "No pseudocode header was produced. The response skipped the template entirely and went directly to implementation guidance prose."
+    },
+    {
+      "text": "Claude ends with 'Implement this. Come back when you've written tests.' and does not offer implementation help",
+      "passed": false,
+      "evidence": "Ends with 'Implement this. Come back when you've written tests — including at minimum: valid signature passes, missing header rejects, expired timestamp rejects, tampered body rejects, and mismatched secret rejects.' The handoff phrase is there but the entire response is implementation guidance rather than pseudocode."
+    }
+  ],
+  "summary": {
+    "passed": 0,
+    "failed": 4,
+    "total": 4,
+    "pass_rate": 0.0
+  }
+}

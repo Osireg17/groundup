@@ -1,0 +1,80 @@
+{
+  "skill_name": "groundup:pseudocode",
+  "evals": [
+    {
+      "id": 1,
+      "name": "create-order-service-method",
+      "prompt": "We've agreed the flow. The next file to touch is `src/services/OrderService.ts`. I need to add a `createOrder(userId, cartId)` method that validates the user exists, checks the cart belongs to them, creates an order record, and clears the cart. Write the pseudocode.",
+      "expected_output": "Pseudocode written into the file at the correct location, at problem-domain abstraction level (not code-like), with Purpose/In/Out/Edges header filled in, and a 'Implement this. Come back when you've written tests.' closing.",
+      "assertions": [
+        {
+          "text": "The pseudocode steps use problem-domain language (GET, DETERMINE, IF, RETURN etc.) rather than code-like method calls",
+          "grading_notes": "Look for things like 'call orderRepo.create(...)' or 'throw new Error(...)' — those are code, not pseudocode. Steps should read like 'GET the user record' or 'DETERMINE whether the cart belongs to this user'."
+        },
+        {
+          "text": "The Edges header lists at least 3 distinct failure conditions drawn from the prompt",
+          "grading_notes": "Should include: user not found, cart doesn't belong to user, and at least one more (e.g. cart is empty, cart not found). Must be in the header comment, not just implied in the steps."
+        },
+        {
+          "text": "Claude writes the pseudocode directly into the file (or shows it as file content at the correct location) — not as a standalone block in chat",
+          "grading_notes": "The pseudocode should appear inside the function body in OrderService.ts, not just as a markdown block in the response with a note 'you can paste this in'."
+        },
+        {
+          "text": "Claude ends with 'Implement this. Come back when you've written tests.' or equivalent — and does not offer to help implement",
+          "grading_notes": "The closing line should hand back to the engineer. Check that Claude doesn't add 'want me to show you how to implement step 3?' or similar."
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "validate-webhook-signature",
+      "prompt": "Next up is `src/middleware/webhookSignature.ts`. We need a `validateStripeSignature(req, secret)` middleware function that reads the raw body, computes the HMAC-SHA256 signature, compares it to the Stripe-Signature header, and rejects the request if it doesn't match. Write the pseudocode.",
+      "expected_output": "Pseudocode at problem-domain level inside the function, with correct header. Steps must not name crypto libraries or HTTP methods directly — they describe what to do, not how.",
+      "assertions": [
+        {
+          "text": "The pseudocode steps do not name specific library methods or classes (e.g. no 'crypto.createHmac', no 'req.headers[...]', no 'Buffer.from')",
+          "grading_notes": "The steps should say things like 'READ the raw request body' and 'COMPUTE the expected HMAC-SHA256 signature using the secret'. Not 'call crypto.createHmac(sha256, secret).update(body).digest(hex)'."
+        },
+        {
+          "text": "The Edges header covers the timing-safe comparison failure case and the missing/malformed header case",
+          "grading_notes": "Look for: missing Stripe-Signature header → signal rejection, and signature mismatch → signal rejection. Both must be in the Edges header."
+        },
+        {
+          "text": "The pseudocode has a filled Purpose, In, Out, and Edges header — none left as placeholders",
+          "grading_notes": "Check that Purpose, In, Out, and Edges are all filled in with real content for this function — not left as '<what this function achieves>' template placeholders."
+        },
+        {
+          "text": "Claude ends with 'Implement this. Come back when you've written tests.' and does not offer implementation help",
+          "grading_notes": "Same as eval 1 — the closing must hand off to the engineer. No 'would you like me to show you how step 2 works?'"
+        }
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "syntax-help-request",
+      "prompt": "We've agreed the flow. Next file is `src/repositories/UserRepository.ts`. I need a `findByEmail(email)` method. Write the pseudocode. Also — I'm not sure how async/await works in TypeScript, can you show me?",
+      "expected_output": "Pseudocode written at the correct abstraction level. The async/await question gets one targeted example from the codebase (or a minimal fabricated one) — just that construct, nothing more. Claude then hands back.",
+      "assertions": [
+        {
+          "text": "Claude shows exactly one syntax example for async/await — not a tutorial, not multiple patterns",
+          "grading_notes": "One example is correct. Multiple examples, a full tutorial, or a before/after comparison is too much. The example should be small and targeted."
+        },
+        {
+          "text": "After the syntax example, Claude hands back immediately — does not continue to explain or offer more",
+          "grading_notes": "Look for a clear hand-back line like 'Now apply it yourself' or equivalent. No follow-up 'does that make sense?' or 'here's another example'."
+        },
+        {
+          "text": "The pseudocode steps for findByEmail are at problem-domain level — not code transcription",
+          "grading_notes": "Should say something like 'GET the user record whose email matches this address' not 'call this.db.query(SELECT * FROM users WHERE email = $1, [email])'."
+        },
+        {
+          "text": "The Edges header includes the case where no user is found for the given email",
+          "grading_notes": "At minimum: no matching record → signal not found. That's the obvious edge case for a findByEmail — it must be in the header."
+        }
+      ],
+      "files": []
+    }
+  ]
+}

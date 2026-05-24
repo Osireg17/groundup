@@ -1,0 +1,30 @@
+{
+  "expectations": [
+    {
+      "text": "Claude shows exactly one syntax example for async/await — not a tutorial, not multiple patterns",
+      "passed": false,
+      "evidence": "Shows zero syntax examples. The baseline refused to demonstrate async/await upfront, deferring it until after the engineer attempts implementation. The assertion requires one example when asked — showing none fails this."
+    },
+    {
+      "text": "After the syntax example, Claude hands back immediately — does not continue to explain or offer more",
+      "passed": false,
+      "evidence": "Not applicable — no syntax example was given. Instead the baseline added a design question about case-insensitive matching after the pseudocode, which is unsolicited additional guidance."
+    },
+    {
+      "text": "The pseudocode steps for findByEmail are at problem-domain level — not code transcription",
+      "passed": true,
+      "evidence": "Steps use VALIDATE, QUERY, RETURN in problem-domain language. 'QUERY the data store for a user whose email matches the given value'. No method calls or SQL."
+    },
+    {
+      "text": "The Edges header includes the case where no user is found for the given email",
+      "passed": true,
+      "evidence": "Edges: 'empty or missing email → signal invalid input | no matching record → signal not found'. The no-match case is present."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 2,
+    "total": 4,
+    "pass_rate": 0.5
+  }
+}

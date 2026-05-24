@@ -1,0 +1,19 @@
+{
+  "eval_id": 3,
+  "eval_name": "syntax-help-request",
+  "prompt": "We've agreed the flow. Next file is `src/repositories/UserRepository.ts`. I need a `findByEmail(email)` method. Write the pseudocode. Also — I'm not sure how async/await works in TypeScript, can you show me?",
+  "assertions": [
+    {
+      "text": "Claude shows exactly one syntax example for async/await — not a tutorial, not multiple patterns"
+    },
+    {
+      "text": "After the syntax example, Claude hands back immediately — does not continue to explain or offer more"
+    },
+    {
+      "text": "The pseudocode steps for findByEmail are at problem-domain level — not code transcription"
+    },
+    {
+      "text": "The Edges header includes the case where no user is found for the given email"
+    }
+  ]
+}

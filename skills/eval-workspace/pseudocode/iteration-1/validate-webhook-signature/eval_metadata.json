@@ -1,0 +1,19 @@
+{
+  "eval_id": 2,
+  "eval_name": "validate-webhook-signature",
+  "prompt": "Next up is `src/middleware/webhookSignature.ts`. We need a `validateStripeSignature(req, secret)` middleware function that reads the raw body, computes the HMAC-SHA256 signature, compares it to the Stripe-Signature header, and rejects the request if it doesn't match. Write the pseudocode.",
+  "assertions": [
+    {
+      "text": "The pseudocode steps do not name specific library methods or classes (e.g. no 'crypto.createHmac', no 'req.headers[...]', no 'Buffer.from')"
+    },
+    {
+      "text": "The Edges header covers the timing-safe comparison failure case and the missing/malformed header case"
+    },
+    {
+      "text": "The pseudocode has a filled Purpose, In, Out, and Edges header — none left as placeholders"
+    },
+    {
+      "text": "Claude ends with 'Implement this. Come back when you've written tests.' and does not offer implementation help"
+    }
+  ]
+}

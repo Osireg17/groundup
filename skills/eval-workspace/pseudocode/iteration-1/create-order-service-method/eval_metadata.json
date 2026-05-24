@@ -1,0 +1,19 @@
+{
+  "eval_id": 1,
+  "eval_name": "create-order-service-method",
+  "prompt": "We've agreed the flow. The next file to touch is `src/services/OrderService.ts`. I need to add a `createOrder(userId, cartId)` method that validates the user exists, checks the cart belongs to them, creates an order record, and clears the cart. Write the pseudocode.",
+  "assertions": [
+    {
+      "text": "The pseudocode steps use problem-domain language (GET, DETERMINE, IF, RETURN etc.) rather than code-like method calls"
+    },
+    {
+      "text": "The Edges header lists at least 3 distinct failure conditions drawn from the prompt"
+    },
+    {
+      "text": "Claude writes the pseudocode directly into the file (or shows it as file content at the correct location) — not as a standalone block in chat"
+    },
+    {
+      "text": "Claude ends with 'Implement this. Come back when you've written tests.' or equivalent — and does not offer to help implement"
+    }
+  ]
+}
