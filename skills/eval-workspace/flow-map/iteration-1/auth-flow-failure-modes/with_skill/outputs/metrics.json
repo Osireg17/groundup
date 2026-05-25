@@ -1,0 +1,82 @@
+{
+  "eval_id": "auth-flow-failure-modes",
+  "skill": "groundup:flow-map",
+  "variant": "with_skill",
+  "date": "2026-05-25",
+  "turns_simulated": 6,
+  "failure_modes_surfaced": [
+    {
+      "id": "db_unavailable",
+      "description": "Database is unreachable or times out during user lookup",
+      "turn_first_raised": 1,
+      "engineer_identified_unprompted": false,
+      "resolution": "Return 500; handled before password check step"
+    },
+    {
+      "id": "user_not_found_vs_wrong_password",
+      "description": "Distinguishing no-user from wrong-password without leaking enumeration",
+      "turn_first_raised": 2,
+      "engineer_identified_unprompted": false,
+      "resolution": "Generic 401 'invalid credentials' for both cases"
+    },
+    {
+      "id": "user_enumeration",
+      "description": "Returning 'user not found' specifically leaks which emails are registered",
+      "turn_first_raised": 3,
+      "engineer_identified_unprompted": true,
+      "resolution": "Same generic error message for all authentication failures"
+    },
+    {
+      "id": "bcrypt_manual_hash_compare",
+      "description": "Manually hashing input then comparing will fail because bcrypt salts are embedded in the stored hash",
+      "turn_first_raised": 4,
+      "engineer_identified_unprompted": true,
+      "resolution": "Use bcrypt.compare(), not hash-then-compare"
+    },
+    {
+      "id": "brute_force_no_rate_limiting",
+      "description": "No rate limiting means an attacker can send unlimited login attempts",
+      "turn_first_raised": 4,
+      "engineer_identified_unprompted": false,
+      "resolution": "Per-email attempt counter in Redis with lockout threshold; 429 on breach"
+    }
+  ],
+  "skill_behaviour_observed": {
+    "probed_db_failure": true,
+    "probed_empty_user_result": true,
+    "probed_enumeration_risk": true,
+    "probed_bcrypt_mechanics": true,
+    "probed_rate_limiting": true,
+    "presented_options_without_recommending": true,
+    "let_engineer_make_decisions": true,
+    "produced_canonical_mermaid_diagram": true,
+    "produced_implementation_order": true,
+    "asked_one_question_per_turn": true
+  },
+  "skill_compliance": {
+    "probed_failure_modes": true,
+    "probed_transaction_boundaries": true,
+    "probed_ownership": false,
+    "presented_options_neutrally": true,
+    "engineer_decided_on_rate_limiting_placement": true,
+    "signed_off_before_pseudocode": true,
+    "mermaid_diagram_produced": true,
+    "implementation_order_with_reasons": true
+  },
+  "engineer_growth_signals": [
+    "Independently identified user enumeration risk when prompted about the error message",
+    "Independently identified bcrypt.compare after a Socratic hint about bcrypt mechanics",
+    "Reasoned through rate-limiting placement tradeoffs and gave a justified decision"
+  ],
+  "issues_found": [
+    "Engineer's initial flow had no failure modes at all — 4 out of 5 failure modes required prompting",
+    "Engineer initially dismissed DB failure as 'not my problem to handle' — required one redirect question"
+  ],
+  "score": {
+    "failure_modes_caught_unprompted": 2,
+    "failure_modes_caught_with_prompting": 3,
+    "failure_modes_missed": 0,
+    "total_failure_modes_in_scope": 5,
+    "coverage_pct": 100
+  }
+}

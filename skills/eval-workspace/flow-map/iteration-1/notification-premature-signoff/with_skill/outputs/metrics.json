@@ -1,0 +1,97 @@
+{
+  "eval_id": "flow-map/iteration-1/notification-premature-signoff",
+  "skill": "groundup:flow-map",
+  "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/flow-map/SKILL.md",
+  "scenario": "Junior engineer presents thin 3-step notification flow and requests premature sign-off to move to pseudocode",
+  "turns": 4,
+  "date": "2026-05-25",
+
+  "skill_behaviours_observed": {
+    "gatekeeping_style": "curious_not_interrogating",
+    "gatekeeping_notes": "Skill did not hard-block the engineer. Each turn asked a single probing question before proceeding, framing it as genuine curiosity ('I'm curious...') rather than a checklist.",
+
+    "premature_signoff_handled": true,
+    "premature_signoff_notes": "Engineer asked to skip to pseudocode after Turn 1. Skill acknowledged the request, validated partial progress, then surfaced the first unresolved gap (synchronous vs async) before agreeing to move on.",
+
+    "transaction_boundary_raised": true,
+    "transaction_boundary_turn": 2,
+    "transaction_boundary_notes": "Skill directly named the transaction boundary risk in Turn 2: order save and email send in the same sequence with no stated boundary. Engineer had not considered this.",
+
+    "failure_mode_probed": true,
+    "failure_mode_turn": 2,
+    "failure_mode_notes": "Asked what happens to the order if the email library call fails. This was the question that unlocked the engineer's insight in Turn 3.",
+
+    "pattern_surfaced_before_lockdown": true,
+    "pattern_surfaced_turn": 3,
+    "pattern_notes": "Outbox Pattern surfaced in Turn 3, before the diagram was agreed. Consistent with skill rule: 'check for patterns during this step, before agreeing on the final diagram'.",
+
+    "engineer_made_the_decision": true,
+    "engineer_decision_notes": "Skill presented Outbox Pattern vs synchronous call with tradeoffs and asked the engineer to decide. Did not recommend one option.",
+
+    "canonical_diagram_produced": true,
+    "diagram_turn": 4,
+    "diagram_format": "ASCII flowchart",
+    "diagram_notes": "Produced after engineer proposed the corrected flow in Turn 4. Includes transaction boundary, failure/retry path, and happy path.",
+
+    "implementation_order_produced": true,
+    "implementation_order_turn": 4,
+    "implementation_order_files": [
+      "db/migrations/001_add_outbox_table.sql",
+      "order_service/repository.py",
+      "worker/notification_worker.py",
+      "email/email_client.py"
+    ],
+    "implementation_order_notes": "Files listed in dependency order with explicit rationale per file. Migration first because schema must exist before any code.",
+
+    "ownership_question_raised": false,
+    "ownership_question_notes": "Ownership ('which service owns this data?') was not explicitly probed as a standalone question. Implicitly resolved by moving to the Outbox pattern — worker and order service have distinct responsibilities. Minor gap.",
+
+    "idempotency_raised": true,
+    "idempotency_turn": 4,
+    "idempotency_notes": "At-least-once delivery edge case (worker crashes after send but before mark-processed) raised in Turn 4 before final sign-off. Engineer was asked to confirm this tradeoff is acceptable."
+  },
+
+  "pass_criteria": {
+    "did_not_allow_premature_signoff": true,
+    "surfaced_transaction_boundary": true,
+    "surfaced_failure_mode": true,
+    "surfaced_pattern_before_diagram_locked": true,
+    "engineer_made_design_decision": true,
+    "produced_canonical_diagram_on_agreement": true,
+    "produced_ordered_file_list": true,
+    "tone_curious_not_interrogating": true
+  },
+
+  "pass": true,
+
+  "scores": {
+    "gatekeeping_without_blocking": 5,
+    "transaction_boundary_coverage": 5,
+    "failure_mode_coverage": 5,
+    "pattern_timing": 5,
+    "engineer_agency_preserved": 5,
+    "diagram_quality": 4,
+    "implementation_order_quality": 5,
+    "ownership_coverage": 3,
+    "overall": 4.6
+  },
+
+  "score_notes": {
+    "diagram_quality": "ASCII diagram is clear and accurate. Mermaid (flowchart TD) format specified in skill contract was not used — skill produced ASCII instead. Minor compliance gap.",
+    "ownership_coverage": "Ownership of the outbox record (who owns it, who is allowed to write/delete it) was not probed as a distinct question. Implicitly addressed by the pattern choice but not explicitly stated."
+  },
+
+  "gaps_identified": [
+    "Diagram format: skill contract specifies Mermaid (flowchart TD) as the canonical output format; ASCII was produced instead.",
+    "Ownership question ('which service owns this data?') from the skill's probe list was not raised as an explicit standalone question — covered implicitly by pattern discussion but could be missed in less clear scenarios.",
+    "Session state update (`.groundup/session-state.json`) not modelled in dialogue — this is a harness-level concern but worth noting if the skill is expected to emit it."
+  ],
+
+  "strengths_identified": [
+    "Tone: curious and collaborative throughout, never adversarial. Engineer resistance in Turn 2 ('I don't want to overthink this') was acknowledged and the session continued with a concrete motivating example.",
+    "Pattern timing: Outbox Pattern surfaced before the diagram was locked, not as hindsight after the engineer committed.",
+    "Engineer agency: design decision (Outbox vs synchronous) was handed to the engineer with tradeoffs, not prescribed.",
+    "Failure mode and at-least-once delivery raised and confirmed before sign-off.",
+    "Implementation order includes rationale per file, making the dependency direction explicit."
+  ]
+}

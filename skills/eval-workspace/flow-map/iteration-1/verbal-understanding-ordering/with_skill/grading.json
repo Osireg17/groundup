@@ -1,0 +1,87 @@
+{
+  "expectations": [
+    {
+      "text": "Skill asks a question about what has to exist before the request arrives — framed as curiosity, not a test",
+      "passed": true,
+      "evidence": "Turn 1 response: 'What has to exist and be running before any request can arrive at all?' — phrased as an open question, not a leading challenge or test. No 'I need you to tell me X' framing anywhere in the turn."
+    },
+    {
+      "text": "When the engineer demonstrates verbal understanding of the ordering, skill acknowledges it and does not force a rewrite of the numbered list",
+      "passed": true,
+      "evidence": "Turn 2: engineer says 'Oh I get it, the server socket has to come first. You can't receive anything if the socket isn't bound and listening.' Claude responds 'Exactly right' and immediately moves to the next probing question about parsing — no request to rewrite the numbered list, no 'update your flow and show me the revised steps'."
+    },
+    {
+      "text": "Tone is curious and collaborative — phrases like 'I need you to say it explicitly' are absent",
+      "passed": true,
+      "evidence": "Full transcript reviewed. Tone is consistently exploratory and collaborative: 'Let me ask you about step 1 and step 2 before we go any further', 'Walk me through why that check exists', 'I want to make sure we both have the same understanding'. No coercive or test-like phrases found anywhere."
+    },
+    {
+      "text": "Skill still probes for the missing concurrency piece (virtual threads) once ordering is clear",
+      "passed": false,
+      "evidence": "Virtual threads appear only as a parenthetical note in the final agreed diagram: '(consider virtual thread per connection)'. The skill never asked a question about concurrency or connection handling — it was silently inserted into the diagram rather than probed through questioning. No turn contains a question about what happens when multiple clients connect simultaneously, thread-per-connection tradeoffs, or virtual threads specifically."
+    }
+  ],
+  "summary": {
+    "passed": 3,
+    "failed": 1,
+    "total": 4,
+    "pass_rate": 0.75
+  },
+  "execution_metrics": {
+    "tool_calls": {
+      "Read": 1,
+      "Bash": 2,
+      "Write": 2
+    },
+    "total_tool_calls": 5,
+    "total_steps": 5,
+    "errors_encountered": 0,
+    "output_chars": 7776,
+    "transcript_chars": 7776
+  },
+  "timing": {
+    "executor_duration_seconds": 69.7,
+    "grader_duration_seconds": null,
+    "total_duration_seconds": 69.7
+  },
+  "claims": [
+    {
+      "claim": "Skill accepted verbal understanding as sufficient per skill rule",
+      "type": "process",
+      "verified": true,
+      "evidence": "Turn 2 behaviour summary row confirms this, and the transcript shows no request for a written rewrite after the engineer verbally corrected the ordering."
+    },
+    {
+      "claim": "Canonical diagram folds in agreed corrections",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The agreed flow in Turn 5 shows [ServerSocket — bind to port, call accept()] before [Read raw bytes from InputStream], reflecting the corrected ordering the engineer verbally agreed to."
+    },
+    {
+      "claim": "Virtual thread concurrency was probed",
+      "type": "process",
+      "verified": false,
+      "evidence": "The claim appears in the behaviour summary table ('Continued probing remaining flow steps') but the concurrency topic was never raised as a question to the engineer — it was silently added to the diagram. This is not probing."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Skill still probes for the missing concurrency piece (virtual threads) once ordering is clear",
+        "reason": "The assertion is correct to test for this, but it's currently satisfied too easily by a parenthetical comment in a diagram. Tighten it to: 'Skill asks a direct question about what happens when multiple clients connect simultaneously, probing thread model or concurrency strategy.' A diagram note is not probing — the engineer never had to think about it."
+      },
+      {
+        "reason": "No assertion checks whether the skill produces a sign-off question before locking the diagram ('Does this match your mental model? Any changes before we sign off?'). The skill did produce this in Turn 5, but its absence would be a real failure mode — an eval should catch it."
+      },
+      {
+        "reason": "No assertion checks that the file list is in dependency order with rationale. The skill produced a detailed ordered list with per-file reasoning, which is a meaningful outcome of this skill — worth asserting on."
+      }
+    ],
+    "overall": "Three of four assertions are solid and discriminating. The concurrency assertion correctly identifies the gap but the bar is too low — a diagram note satisfies the letter but not the spirit. The two uncovered outcomes (sign-off question, dependency-ordered file list) are meaningful enough to add as assertions."
+  }
+}

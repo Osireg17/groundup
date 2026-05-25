@@ -1,0 +1,41 @@
+{
+  "skill_name": "groundup:flow-map",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "I want to build an HTTP server in Java. Here's my flow:\n1. We get a request with headers — method, path, HTTP version\n2. This will go through our server socket\n3. We extract the method, path and HTTP version\n4. We find the path within our filesystem, checking if the resolved path starts with the web root\n5. If found, return a status line, headers, blank line, and body\n6. If not, return a 403\n\nLet's discuss this flow.",
+      "expected_output": "Skill notices that step 1 (receiving a request) is listed before step 2 (server socket). It asks the engineer about what needs to exist before the request arrives — curiously, not accusatorially. When the engineer explains verbally ('we need a server socket to listen first'), skill acknowledges the understanding and moves on without demanding a full rewrite of the numbered list.",
+      "assertions": [
+        "Skill asks a question about what has to exist before the request arrives — framed as curiosity, not a test",
+        "When the engineer demonstrates verbal understanding of the ordering, skill acknowledges it and does not force a rewrite of the numbered list",
+        "Tone is curious and collaborative — phrases like 'I need you to say it explicitly' are absent",
+        "Skill still probes for the missing concurrency piece (virtual threads) once ordering is clear"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "Here's my flow for a user authentication endpoint:\n1. Request arrives at /login with email and password\n2. Look up user by email in the database\n3. Check password matches\n4. Return JWT token\n\nLooks good to me, what do you think?",
+      "expected_output": "Skill explores what's missing: failure cases (user not found, wrong password), timing attacks on password comparison, token expiry, what 'return JWT' means for the client. Done with genuine curiosity — 'what happens when the user isn't found?' rather than 'you MUST handle this case'. Does not accept 'looks good' as sign-off without probing failure modes.",
+      "assertions": [
+        "Skill does not accept the flow as complete without probing failure modes",
+        "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')",
+        "Skill raises at least one security consideration (timing attack OR token expiry OR brute force)",
+        "Skill asks one focused question at a time, not a numbered list of demands"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "I've drawn the flow for a notification system. When a user completes an order:\n1. Order service saves the order\n2. Order service sends an email notification\n3. User gets the email\n\nI think that covers it. Can we move on to pseudocode?",
+      "expected_output": "Skill does not jump to pseudocode — the flow has gaps. It explores: what happens if the email send fails? Is step 2 synchronous (order save + email in same transaction)? What if the email service is down? Framed as exploration, not gatekeeping. Skill moves toward sign-off once the engineer has addressed the key failure modes — it doesn't loop endlessly.",
+      "assertions": [
+        "Skill does not immediately proceed to pseudocode when asked — names that the flow needs exploration first",
+        "Raises the failure mode question (what if email send fails) curiously, not as a lecture",
+        "Raises whether step 2 is synchronous with step 1 — is the email in the same transaction as the save?",
+        "Does not frame the gaps as 'you're wrong' — frames them as 'I'm curious about this part'"
+      ],
+      "files": []
+    }
+  ]
+}

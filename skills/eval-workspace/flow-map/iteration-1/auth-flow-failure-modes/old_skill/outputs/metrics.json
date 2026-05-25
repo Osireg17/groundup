@@ -1,0 +1,50 @@
+{
+  "eval_id": "auth-flow-failure-modes",
+  "skill_version": "old_skill_snapshot",
+  "date": "2026-05-25",
+  "turns_simulated": 4,
+
+  "failure_modes_probed": {
+    "user_not_found_vs_wrong_password_leakage": true,
+    "credential_enumeration_risk": true,
+    "db_unavailability": true,
+    "plain_text_password_comparison": true,
+    "rate_limiting_lockout": true,
+    "race_condition_double_submit": true,
+    "jwt_storage_stateless_vs_stateful": true
+  },
+
+  "failure_modes_probed_count": 7,
+  "failure_modes_missed": [],
+
+  "contract_produced": true,
+  "mermaid_or_ascii_diagram_produced": true,
+  "implementation_order_produced": true,
+  "implementation_order_in_dependency_order": true,
+
+  "skill_rule_compliance": {
+    "engineer_draws_first": true,
+    "claude_interrogates_not_corrects": true,
+    "one_question_per_turn": true,
+    "no_code_written_before_signoff": true,
+    "patterns_check_attempted": false,
+    "session_state_update_mentioned": false,
+    "pseudocode_handoff_at_end": true
+  },
+
+  "notes": {
+    "patterns_check": "Skill instructs to invoke the patterns skill before locking the diagram. This was not done in this run — the flow was agreed without surfacing patterns such as token rotation or refresh token issuance.",
+    "session_state_update": "Skill instructs updating .groundup/session-state.json after flow is agreed. This step was not executed — acceptable in a simulated single-session eval context.",
+    "question_batching": "Turn 3 asked two related questions in one turn (DB failure and JWT issuance strategy). Consistent with skill guidance to batch related concerns.",
+    "engineer_cooperation": "Engineer was cooperative and responded well to prompts; needed nudging on error message enumeration risk and DB failure path but did not require excessive scaffolding."
+  },
+
+  "quality_scores": {
+    "failure_mode_coverage": 9,
+    "interrogation_quality": 8,
+    "contract_completeness": 8,
+    "skill_rule_adherence": 7,
+    "overall": 8
+  },
+  "score_scale": "0-10"
+}

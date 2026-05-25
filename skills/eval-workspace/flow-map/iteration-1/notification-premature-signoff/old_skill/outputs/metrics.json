@@ -1,0 +1,60 @@
+{
+  "eval_id": "notification-premature-signoff",
+  "skill_version": "old_snapshot",
+  "skill_path": "skills/eval-workspace/flow-map/iteration-1/skill-snapshot/SKILL.md",
+  "date": "2026-05-25",
+  "scenario": "Junior engineer presents a 3-step happy-path flow for an order notification system and asks to move to pseudocode immediately.",
+
+  "gatekeeping": {
+    "blocked_premature_signoff": true,
+    "method": "curiosity",
+    "hard_blocked": false,
+    "named_risk_explicitly": true,
+    "notes": "Skill held the gate by making the concrete failure mode visible (email failure coupling to order failure) rather than citing a rule. Never said 'you can't move on'. Used a question to surface the gap."
+  },
+
+  "interrogation_quality": {
+    "transaction_boundary_surfaced": true,
+    "failure_mode_surfaced": true,
+    "sync_vs_async_discussed": true,
+    "ownership_discussed": false,
+    "idempotency_discussed": false,
+    "dual_write_problem_raised": true,
+    "patterns_invoked": true,
+    "pattern_named": "Outbox Pattern",
+    "notes": "Skill surfaced the key risk (coupled sync call), prompted options discussion, and ended by surfacing the dual-write edge case before final sign-off. Ownership of the email service as a separate concern was implicit but not explicitly named. Idempotency not explored."
+  },
+
+  "engineer_resistance_handling": {
+    "turns_of_resistance": 1,
+    "skill_capitulated": false,
+    "tone": "collaborative, not prescriptive",
+    "options_presented_without_recommendation": true,
+    "engineer_made_decision": true,
+    "notes": "When engineer pushed back in Turn 2, skill made the risk concrete rather than softening or capitulating. Options in Turn 3 had no '(Recommended)' label. Engineer reached the right conclusion through their own reasoning."
+  },
+
+  "contract_produced": false,
+  "contract_not_produced_reason": "Dual-write edge case unresolved at end of simulation — correct behaviour per skill spec. Skill requires both parties to sign off before producing diagram.",
+
+  "scores": {
+    "gatekeeping_without_hard_blocking": 5,
+    "risk_made_concrete": 5,
+    "options_without_recommendation": 5,
+    "pattern_surfaced_before_diagram_lock": 4,
+    "engineer_reasoning_not_bypassed": 5,
+    "edge_case_coverage": 3,
+    "notes": "Pattern was named (Outbox) but not fully explained before the eval ended. Edge cases covered: sync/async coupling, email failure, dual write. Not covered: idempotency, ownership of notification service, what happens if the consumer crashes mid-send."
+  },
+
+  "overall_score": 4.5,
+  "max_score": 5,
+
+  "observations": [
+    "Skill correctly refused to produce a contract diagram while an unresolved edge case existed.",
+    "Skill introduced pattern awareness (Outbox Pattern) at the right moment — after the design direction was chosen, before locking the diagram.",
+    "Tone remained mentoring throughout — curious, not prescriptive.",
+    "One gap: the 'Check for Patterns' step in the skill spec says to invoke patterns BEFORE agreeing on the final diagram, but the Outbox Pattern was surfaced as a final question rather than a full patterns-skill invocation. In a real session this would require the `patterns` skill to be explicitly invoked.",
+    "Ownership ('which service owns the notification logic?') was not explicitly interrogated — a senior engineer would ask this."
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "eval_name": "verbal-understanding-ordering",
+  "prompt": "I want to build an HTTP server in Java. Here's my flow:\n1. We get a request with headers — method, path, HTTP version\n2. This will go through our server socket\n3. We extract the method, path and HTTP version\n4. We find the path within our filesystem, checking if the resolved path starts with the web root\n5. If found, return a status line, headers, blank line, and body\n6. If not, return a 403\n\nLet's discuss this flow.",
+  "assertions": [
+    "Skill asks a question about what has to exist before the request arrives — framed as curiosity, not a test",
+    "When the engineer demonstrates verbal understanding of the ordering, skill acknowledges it and does not force a rewrite of the numbered list",
+    "Tone is curious and collaborative — phrases like 'I need you to say it explicitly' are absent",
+    "Skill still probes for the missing concurrency piece (virtual threads) once ordering is clear"
+  ]
+}

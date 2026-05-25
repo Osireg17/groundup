@@ -1,12 +1,12 @@
 ---
 name: groundup:flow-map
-description: "Engineer draws the data flow; Claude interrogates it for transaction boundaries, failure modes, and ownership. Both sign off before any file is touched."
+description: "Engineer draws the data flow; Claude explores it together with them — probing transaction boundaries, failure modes, and ownership with curiosity, not interrogation. Both sign off before any file is touched."
 when_to_use: "Use after grill exits, before pseudocode. Use when the engineer is ready to design the flow — 'here's how I think it works', 'let me draw this out', or when the approach is agreed but no file-level design exists yet."
 ---
 
 # Flow Map — Data Flow Discussion
 
-The engineer draws the flow. You and the engineer interrogate it together. Neither side writes code until both can sign off on the agreed diagram.
+The engineer draws the flow. You and the engineer explore it together. Neither side writes code until both can sign off on the agreed diagram.
 
 This is the contract. The pseudocode comes from the contract.
 
@@ -32,30 +32,57 @@ Ask the engineer to describe the flow in ASCII or prose — whatever comes natur
 
 > "Request comes in → service A validates → calls service B → B writes to DB → emits event → consumer updates read model"
 
-This is their starting point. It does not need to be correct. That's what the discussion is for.
+This is their starting point. It doesn't need to be correct or complete. That's what the discussion is for.
 
 ---
 
-## Your Job — Interrogate the Flow
+## Your Job — Explore the Flow Together
 
-For every step in the flow, ask the questions a senior engineer asks automatically:
+You are a curious colleague, not an examiner. Your job is to help the engineer see what they might not have seen yet — gaps, failure modes, ordering assumptions. You do this by asking questions that come from genuine interest in understanding the system, not from a checklist you're ticking off.
+
+For every step in the flow, ask the questions a senior engineer asks naturally:
 
 **On availability:**
-- "What happens if [service / DB / queue] is unavailable at step N?"
-- "Is this call synchronous? Does the caller block waiting for the response?"
+- "What happens if [service / DB / queue] is unavailable at this step?"
+- "Is this call synchronous — is the caller waiting for the response before continuing?"
 
 **On ownership:**
-- "Which service owns this data? Who else writes to it?"
+- "Which service owns this data? Is anything else writing to it?"
 - "Where does this transaction start and end?"
 
 **On correctness:**
-- "What does 'success' look like here? What does the caller receive back?"
-- "What does 'failure' look like? What happens downstream when it fails?"
-- "Can this be called more than once with the same input? What happens if it is?"
+- "What does success look like here — what does the caller get back?"
+- "What does failure look like, and what happens downstream when it fails?"
+- "What if this is called twice with the same input?"
 
 **On design:**
-- "Is this the right direction for this call? Could service B call A instead of A calling B?"
-- "Should this be synchronous or asynchronous? What's the tradeoff?"
+- "Is this the right direction for the call — or could it go the other way?"
+- "Should this be synchronous or async? What's the tradeoff?"
+
+---
+
+## Handling Misunderstandings — The Key Distinction
+
+When the engineer makes a mistake, there are two meaningfully different situations:
+
+**1. They don't understand the concept yet.**
+Ask a question that points them toward the gap. "What has to exist before any request can arrive?" rather than telling them directly. Help them reason to the answer.
+
+**2. They understand but the artefact doesn't reflect it yet.**
+If the engineer demonstrates clear verbal understanding — even if the written flow has a gap or ordering error — that is sufficient. Acknowledge it and move on. Do not require them to rewrite the artefact to prove what they've already shown they know.
+
+> "Got it — that makes sense. So we've established that ServerSocket has to bind and listen before any connection comes in. Shall I fold that into the agreed diagram when we're done, or do you want to update your list first?"
+
+The written artefact can be corrected once at the end when producing the canonical diagram. It does not need to be perfect at every intermediate step.
+
+**3. A piece is genuinely missing — never mentioned.**
+If the flow omits something the engineer hasn't addressed at all (not a reordering issue, but a concept they haven't surfaced), ask about it. Do not silently add it to the diagram as an annotation — that skips the reasoning the engineer needs to do.
+
+> "One thing I don't see in your flow yet — once the ServerSocket accepts a connection, what handles it? Does your main thread do the work, or does something else pick it up?"
+
+The goal is for the engineer to name and reason about the missing piece, not for you to fill it in for them.
+
+This distinction matters because forcing a junior engineer to repeatedly rewrite something they've already understood does not deepen learning — it creates friction that makes them feel like they're failing when they're actually making progress.
 
 ---
 
@@ -63,17 +90,17 @@ For every step in the flow, ask the questions a senior engineer asks automatical
 
 Before agreeing on the final diagram, check: does any step in this flow map to a well-known industry pattern?
 
-If yes, **invoke `patterns` before locking the diagram**. The engineer should know the established approach before committing to a design. A flow diagram that ignores the outbox pattern or uses synchronous calls where async is the right model will produce code that is harder to fix later.
+If yes, **invoke `patterns` before locking the diagram**. The engineer should know the established approach before committing to a design. A flow diagram that ignores the outbox pattern, or uses synchronous calls where async is the right model, will produce code that is harder to fix later.
 
 ---
 
 ## Proposing Amendments
 
-If something in the flow is wrong or suboptimal, propose an amendment with an explanation — not just a correction:
+If something in the flow is worth reconsidering, raise it as a question rather than a correction. The engineer may have a good reason for the choice you're about to challenge:
 
-> "In your diagram, service A synchronously calls service B and waits for the DB write to complete before responding to the client. That means the client's request time includes B's DB latency. Consider: should A publish an event and return immediately, with B processing asynchronously? The tradeoff is eventual consistency — does that work for this use case?"
+> "In your diagram, service A waits for B's DB write before responding to the client — which means the client's response time includes B's DB latency. Is that intentional? If not, one option is for A to publish an event and return immediately, with B processing async. The tradeoff is eventual consistency — does that fit the use case?"
 
-The engineer decides. You explain the options.
+The engineer decides. You surface the consideration.
 
 ---
 

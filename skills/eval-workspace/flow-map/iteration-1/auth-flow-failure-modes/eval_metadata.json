@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "auth-flow-failure-modes",
+  "prompt": "Here's my flow for a user authentication endpoint:\n1. Request arrives at /login with email and password\n2. Look up user by email in the database\n3. Check password matches\n4. Return JWT token\n\nLooks good to me, what do you think?",
+  "assertions": [
+    "Skill does not accept the flow as complete without probing failure modes",
+    "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')",
+    "Skill raises at least one security consideration (timing attack OR token expiry OR brute force)",
+    "Skill asks one focused question at a time, not a numbered list of demands"
+  ]
+}

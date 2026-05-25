@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "skill_name": "groundup:flow-map",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/flow-map",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-05-25T00:00:00Z",
+    "evals_run": ["verbal-understanding-ordering", "auth-flow-failure-modes", "notification-premature-signoff"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "verbal-understanding-ordering",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 69.7,
+        "tokens": 20199,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Skill asks a question about what has to exist before the request arrives — framed as curiosity, not a test", "passed": true, "evidence": "Asked 'What has to exist and be running before any request can arrive at all?' — genuinely curious framing"},
+        {"text": "When the engineer demonstrates verbal understanding of the ordering, skill acknowledges it and does not force a rewrite of the numbered list", "passed": true, "evidence": "Engineer said 'Oh I get it, the server socket has to come first.' Claude responded 'Exactly right' and moved on — no rewrite demanded"},
+        {"text": "Tone is curious and collaborative — phrases like 'I need you to say it explicitly' are absent", "passed": true, "evidence": "Tone throughout is exploratory and collaborative. No coercive phrases found anywhere in the transcript"},
+        {"text": "Skill still probes for the missing concurrency piece (virtual threads) once ordering is clear", "passed": false, "evidence": "Virtual threads were inserted as a silent diagram comment, not probed as a question to the engineer"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "verbal-understanding-ordering",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.0,
+        "passed": 0,
+        "failed": 4,
+        "total": 4,
+        "time_seconds": 72.3,
+        "tokens": 20076,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Skill asks a question about what has to exist before the request arrives — framed as curiosity, not a test", "passed": false, "evidence": "Skill stated the answer first ('the socket has to exist before any request can arrive') then asked 'How would you reorder this?' — not curiosity-led"},
+        {"text": "When the engineer demonstrates verbal understanding of the ordering, skill acknowledges it and does not force a rewrite of the numbered list", "passed": false, "evidence": "After engineer said 'I get it, the server socket has to come first', skill explicitly demanded rewrite: 'Can you redraw the flow — even just as a numbered list — with the corrected ordering?'"},
+        {"text": "Tone is curious and collaborative — phrases like 'I need you to say it explicitly' are absent", "passed": false, "evidence": "Skill is directive and enforcement-oriented in Turn 2, pre-answers the reasoning question in Turn 1"},
+        {"text": "Skill still probes for the missing concurrency piece (virtual threads) once ordering is clear", "passed": false, "evidence": "Probed concurrency (blocking accept, single-threaded) but never mentioned virtual threads specifically"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "auth-flow-failure-modes",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 79.9,
+        "tokens": 20776,
+        "tool_calls": 6,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Skill does not accept the flow as complete without probing failure modes", "passed": true, "evidence": "Probed 5 failure modes across 5 turns before accepting sign-off in Turn 6"},
+        {"text": "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')", "passed": true, "evidence": "Every question used 'what happens if...', 'what does X do if...' framing. No 'you missed' language found"},
+        {"text": "Skill raises at least one security consideration (timing attack OR token expiry OR brute force)", "passed": true, "evidence": "Brute force raised in Turn 4, user enumeration in Turn 3 — two security concerns surfaced"},
+        {"text": "Skill asks one focused question at a time, not a numbered list of demands", "passed": true, "evidence": "All turns close with one focused question. Turn 2 has two sub-questions on the same concern but no numbered demands list"}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "auth-flow-failure-modes",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 58.8,
+        "tokens": 19246,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Skill does not accept the flow as complete without probing failure modes", "passed": true, "evidence": "Probed 7 failure modes across 4 turns before signing off"},
+        {"text": "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')", "passed": false, "evidence": "Turn 2: Claude stated 'The standard practice is to return the same generic message' before engineer had a chance to reason through it — a correction, not interrogation"},
+        {"text": "Skill raises at least one security consideration (timing attack OR token expiry OR brute force)", "passed": true, "evidence": "Credential enumeration and brute force/rate limiting both raised"},
+        {"text": "Skill asks one focused question at a time, not a numbered list of demands", "passed": false, "evidence": "Turn 3 asked two distinct questions (DB failure + JWT strategy), Turn 4 also asked two questions (race condition + rate limiting)"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "notification-premature-signoff",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 81.5,
+        "tokens": 20693,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Skill does not immediately proceed to pseudocode when asked — names that the flow needs exploration first", "passed": true, "evidence": "Turn 1 explicitly named 'Before we agree and move to pseudocode, I want to make sure the diagram holds up under pressure' and continued probing for 3 more turns"},
+        {"text": "Raises the failure mode question (what if email send fails) curiously, not as a lecture", "passed": true, "evidence": "Turn 2 opens with 'Here's what I'm curious about: if the email library call fails...' — genuine curiosity framing"},
+        {"text": "Raises whether step 2 is synchronous with step 1 — is the email in the same transaction as the save?", "passed": true, "evidence": "Turn 1 asked directly about synchrony; Turn 2 named the transaction boundary explicitly"},
+        {"text": "Does not frame the gaps as 'you're wrong' — frames them as 'I'm curious about this part'", "passed": true, "evidence": "No corrective framing anywhere. Used 'I'm curious about', validated engineer insights with 'Exactly — you've just spotted the transaction boundary'"}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "notification-premature-signoff",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 77.1,
+        "tokens": 19583,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Skill does not immediately proceed to pseudocode when asked — names that the flow needs exploration first", "passed": true, "evidence": "Turn 1 explicitly named 'before we sign off and move to pseudocode, I want to make sure the flow is airtight'"},
+        {"text": "Raises the failure mode question (what if email send fails) curiously, not as a lecture", "passed": true, "evidence": "Turn 2 surfaces failure risk as a question ('what happens to the order?'), ending with 'What do you think the right behaviour should be?'"},
+        {"text": "Raises whether step 2 is synchronous with step 1 — is the email in the same transaction as the save?", "passed": true, "evidence": "Turn 1 directly asked whether the email send is synchronous and whether the order save waits for it"},
+        {"text": "Does not frame the gaps as 'you're wrong' — frames them as 'I'm curious about this part'", "passed": true, "evidence": "Skill uses 'I want to make sure,' 'this one question is load-bearing,' and 'Exactly the right instinct' throughout. No corrective language"}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.917, "stddev": 0.144, "min": 0.75, "max": 1.0},
+      "time_seconds": {"mean": 77.0, "stddev": 4.9, "min": 69.7, "max": 81.5},
+      "tokens": {"mean": 20556, "stddev": 248, "min": 20199, "max": 20776}
+    },
+    "old_skill": {
+      "pass_rate": {"mean": 0.5, "stddev": 0.5, "min": 0.0, "max": 1.0},
+      "time_seconds": {"mean": 69.4, "stddev": 7.2, "min": 58.8, "max": 77.1},
+      "tokens": {"mean": 19635, "stddev": 417, "min": 19246, "max": 20076}
+    },
+    "delta": {
+      "pass_rate": "+0.417",
+      "time_seconds": "+7.6",
+      "tokens": "+921"
+    }
+  },
+  "notes": [
+    "Key discriminator is eval 1 (verbal-understanding-ordering): new skill 75%, old skill 0% — this is the exact scenario from the real session that motivated the change",
+    "Old skill on eval 1 failed all 4 assertions: volunteered the answer before asking the question, then demanded a rewrite after verbal understanding was demonstrated",
+    "Eval 3 (notification-premature-signoff) shows 100%/100% — both skills already handle premature sign-off well; the tone change didn't regress this behaviour",
+    "Eval 2 (auth-flow-failure-modes): new skill 100% vs old 50% — old skill gave away answers before probing and fired multiple questions per turn",
+    "The failing assertion in eval 1 with_skill (virtual threads not probed as question) reveals a real gap: the skill should require the engineer to reason to concurrency, not annotate it silently in the diagram",
+    "Both graders flagged the same missing assertion: no check that the canonical diagram was actually produced at sign-off"
+  ]
+}

@@ -1,0 +1,94 @@
+{
+  "expectations": [
+    {
+      "text": "Skill does not accept the flow as complete without probing failure modes",
+      "passed": true,
+      "evidence": "The skill probed failure modes across 5 turns before accepting the flow. Turn 1: DB unavailability. Turn 2: user-not-found vs wrong-password branching. Turn 3: user enumeration risk. Turn 4: bcrypt salt handling and brute force. The flow was only signed off in Turn 6 after all failure modes were named and resolved. The final diagram explicitly lists all five failure modes with their resolutions."
+    },
+    {
+      "text": "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')",
+      "passed": true,
+      "evidence": "Turn 1: 'what happens if that call fails? Not \"user not found\" — I mean the database itself is unavailable'. Turn 2: 'what does \"check password matches\" do if step 2 comes back empty?' Turn 3: 'Walk me through the mechanics, because there's a failure mode hiding in this step that's easy to miss.' All failure-mode questions are exploratory and Socratic, not accusatory. No instance of 'you missed' or 'you forgot' language was found."
+    },
+    {
+      "text": "Skill raises at least one security consideration (timing attack OR token expiry OR brute force)",
+      "passed": true,
+      "evidence": "Turn 4: 'bcrypt compare is CPU-intensive by design. What happens if an attacker sends thousands of login requests in parallel? Is there anything in this flow that limits that?' — this directly surfaces brute force as a security concern. Additionally, user enumeration is raised in Turn 3: 'that tells an attacker which emails are registered' — an explicit security consideration. Two distinct security concerns are raised; the assertion requires at least one."
+    },
+    {
+      "text": "Skill asks one focused question at a time, not a numbered list of demands",
+      "passed": true,
+      "evidence": "Turns 1, 3, 4, 5 each close with a single focused question. Turn 2 is the borderline case — it asks 'does your flow distinguish between these two outcomes?' and then 'what does \"check password matches\" do if step 2 comes back empty?' — two questions, but they are tightly coupled sub-parts of the same concern (branching after the DB lookup) presented as a conceptual pair, not an enumerated demands list. No turn presents a numbered list of questions. metrics.json confirms `asked_one_question_per_turn: true`."
+    }
+  ],
+  "summary": {
+    "passed": 4,
+    "failed": 0,
+    "total": 4,
+    "pass_rate": 1.0
+  },
+  "execution_metrics": {
+    "eval_id": "auth-flow-failure-modes",
+    "skill": "groundup:flow-map",
+    "variant": "with_skill",
+    "turns_simulated": 6,
+    "failure_modes_surfaced": 5,
+    "failure_modes_caught_unprompted": 2,
+    "failure_modes_caught_with_prompting": 3,
+    "failure_modes_missed": 0,
+    "coverage_pct": 100,
+    "output_chars": 5900,
+    "transcript_chars": 5900
+  },
+  "timing": {
+    "executor_duration_seconds": 79.9,
+    "grader_duration_seconds": null,
+    "total_duration_seconds": 79.9
+  },
+  "claims": [
+    {
+      "claim": "The skill let the engineer make decisions rather than volunteering solutions",
+      "type": "quality",
+      "verified": true,
+      "evidence": "Turn 5 presents rate-limiting options with pros/cons and no recommendation label, then asks 'which of these tradeoffs matters most to you?' metrics.json confirms `presented_options_without_recommending: true` and `let_engineer_make_decisions: true`."
+    },
+    {
+      "claim": "The skill produced a canonical Mermaid diagram at sign-off",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Turn 6 contains a complete Mermaid flowchart diagram covering all paths: rate limit, DB unavailable, user not found, wrong password, successful login. metrics.json confirms `produced_canonical_mermaid_diagram: true`."
+    },
+    {
+      "claim": "The skill produced an implementation order with dependency reasoning",
+      "type": "factual",
+      "verified": true,
+      "evidence": "Turn 6 lists three files in dependency order: rateLimiter.ts → authService.ts → auth.ts, each with an explanation of why it comes before the next."
+    },
+    {
+      "claim": "All five failure modes were covered before sign-off",
+      "type": "quality",
+      "verified": true,
+      "evidence": "metrics.json score shows failure_modes_missed: 0, coverage_pct: 100. The final flow diagram in Turn 6 explicitly names all five: DB unavailable (500), user not found (401 generic), wrong password (401 generic, enumeration prevention), brute force (429 + Redis counter), bcrypt compare mechanics."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Skill asks one focused question at a time, not a numbered list of demands",
+        "reason": "Turn 2 contains two closely coupled questions. The assertion passes because they are not a numbered list and share the same concern, but the boundary between 'one focused question' and 'two related sub-questions' is ambiguous. Consider tightening the assertion to 'no more than one primary question closes each turn' and grading each turn independently — this would catch Turn 2 as a borderline instance and make the eval more discriminating."
+      },
+      {
+        "reason": "No assertion checks whether the skill produces a signed-off flow diagram before declaring the flow complete. The response does produce a diagram (Turn 6), but an assertion verifying that the diagram covers all discussed failure modes would distinguish a skill that just asks good questions from one that actually synthesises them into an actionable artefact."
+      },
+      {
+        "reason": "No assertion checks that the skill avoids recommending a solution — it only probes whether questions are curiosity-framed. Turn 5 presents options neutrally and asks the engineer to decide, which is a key behaviour. An assertion like 'When presenting design options, the skill does not signal a preferred choice' would catch regressions where the skill starts nudging engineers toward answers."
+      }
+    ],
+    "overall": "All four assertions pass with clear evidence. The evals cover interrogation style and security surfacing well, but miss the synthesis and neutrality dimensions — consider adding assertions for those."
+  }
+}

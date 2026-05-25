@@ -1,0 +1,36 @@
+{
+  "eval_id": "verbal-understanding-ordering",
+  "skill_version": "old_skill",
+  "skill_path": "skills/eval-workspace/flow-map/iteration-1/skill-snapshot/SKILL.md",
+  "turns": 5,
+  "issues_in_original_flow": [
+    "step_ordering_inverted_socket_before_request",
+    "403_overloading_missing_vs_forbidden",
+    "blocking_accept_no_timeout",
+    "missing_400_for_malformed_request"
+  ],
+  "issues_caught_by_skill": [
+    "step_ordering_inverted_socket_before_request",
+    "403_overloading_missing_vs_forbidden",
+    "blocking_accept_no_timeout",
+    "missing_400_for_malformed_request"
+  ],
+  "issues_missed_by_skill": [],
+  "issue_catch_rate": 1.0,
+  "verbal_understanding_accepted": false,
+  "rewrite_demanded": true,
+  "rewrite_demand_turn": 2,
+  "rewrite_demand_rationale_present": true,
+  "rewrite_rationale": "diagram is the contract pseudocode is written from; verbal correction is not a diagram correction",
+  "final_diagram_produced": true,
+  "implementation_order_produced": true,
+  "implementation_files_listed": 4,
+  "dependency_order_reasoning_present": true,
+  "sign_off_requested": true,
+  "questions_asked": 5,
+  "questions_at_bottom_of_response": true,
+  "one_question_at_a_time": true,
+  "solution_volunteered_by_skill": false,
+  "engineer_led_corrections": true,
+  "notes": "Skill caught all 4 issues. Correctly refused verbal-only acknowledgement and demanded a redrawn flow. All interrogation questions followed the flow-map template (availability, correctness, design). Final contract output matches required format."
+}

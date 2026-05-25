@@ -1,0 +1,97 @@
+{
+  "expectations": [
+    {
+      "text": "Skill does not accept the flow as complete without probing failure modes",
+      "passed": true,
+      "evidence": "The skill did not accept the engineer's Turn 1 flow as complete. It probed failure modes across all four turns before signing off: user-not-found vs wrong-password error leakage (Turn 1), DB unavailability (Turn 3), rate limiting/brute force (Turn 4), and race conditions (Turn 4). The flow was only locked in at the end of Turn 4 after all failure modes were addressed."
+    },
+    {
+      "text": "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')",
+      "passed": false,
+      "evidence": "Turn 2 is a direct correction, not curiosity framing: 'There's an important security consideration here. If you return a distinct error for \"user not found\" versus \"wrong password\", what does that tell an attacker... The standard practice is to return the same generic message — \"invalid credentials\".' This is Claude explaining the answer and the reasoning, not asking the engineer to discover it. Contrast with Turn 1 ('What happens if no user with that email exists?') and Turn 3 ('what happens if the database is unavailable?') which are correctly framed. The assertion fails because Turn 2 violates it."
+    },
+    {
+      "text": "Skill raises at least one security consideration (timing attack OR token expiry OR brute force)",
+      "passed": true,
+      "evidence": "Turn 2 raises credential enumeration as a security risk (distinct error codes allow attackers to probe which email addresses are registered). Turn 4 explicitly raises brute force: 'What happens if an attacker fires this endpoint 10,000 times with different passwords?' and introduces rate limiting / account lockout as the mitigation. At least one security consideration from the specified set (brute force) is clearly present."
+    },
+    {
+      "text": "Skill asks one focused question at a time, not a numbered list of demands",
+      "passed": false,
+      "evidence": "Turn 3 asks two distinct questions in one response: (1) 'what happens if the database is unavailable when the request comes in?' and (2) 'Who issues the token — does your login handler call out to a separate token service, or does it generate the JWT itself? And once the token is issued, where does it go — do you store anything server-side, or is this fully stateless?' These are separate concerns (infrastructure failure vs. JWT architecture) and are not meaningfully related. The metrics.json defends this as 'batching related concerns,' but DB failure and JWT issuance strategy are not related concerns — they are distinct dimensions of the design. Turn 4 also asks two questions: one about race conditions and one about rate limiting."
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 2,
+    "total": 4,
+    "pass_rate": 0.5
+  },
+  "execution_metrics": {
+    "turns_simulated": 4,
+    "failure_modes_probed_count": 7,
+    "failure_modes_missed": [],
+    "contract_produced": true,
+    "mermaid_or_ascii_diagram_produced": true,
+    "implementation_order_produced": true,
+    "patterns_check_attempted": false,
+    "one_question_per_turn": "disputed — metrics.json claims true, but Turn 3 and Turn 4 each contain two distinct questions",
+    "overall_quality_score": 8,
+    "score_scale": "0-10"
+  },
+  "timing": {
+    "executor_duration_seconds": 58.8,
+    "grader_duration_seconds": null,
+    "total_duration_seconds": 58.8
+  },
+  "claims": [
+    {
+      "claim": "Claude interrogates rather than corrects (skill_rule_compliance.claude_interrogates_not_corrects: true)",
+      "type": "quality",
+      "verified": false,
+      "evidence": "Turn 2 directly states 'The standard practice is to return the same generic message — \"invalid credentials\" — regardless of whether the email doesn't exist or the password is wrong.' This is a correction with the answer given, not interrogation that leads the engineer to discover it. The metrics.json claim of 'claude_interrogates_not_corrects: true' is inaccurate."
+    },
+    {
+      "claim": "one_question_per_turn: true (from metrics.json)",
+      "type": "factual",
+      "verified": false,
+      "evidence": "Turn 3 contains two questions: DB unavailability handling AND JWT issuance/storage strategy. Turn 4 contains two questions: race condition AND rate limiting/lockout. The claim in metrics.json that 'one_question_per_turn' is true is contradicted by the transcript."
+    },
+    {
+      "claim": "patterns_check_attempted: false — skill notes this as a gap",
+      "type": "process",
+      "verified": true,
+      "evidence": "The metrics.json notes.patterns_check confirms: 'Skill instructs to invoke the patterns skill before locking the diagram. This was not done in this run.' No evidence of patterns invocation in the transcript."
+    },
+    {
+      "claim": "The flow diagram matches the failure modes probed",
+      "type": "quality",
+      "verified": true,
+      "evidence": "The ASCII diagram in Turn 4 includes branches for: user not found → 401, DB unavailable → 500, password mismatch → 401, success → 200 with JWT. The cross-cutting note covers rate limiting. All major failure modes discussed appear in the final diagram."
+    }
+  ],
+  "user_notes_summary": {
+    "uncertainties": [],
+    "needs_review": [],
+    "workarounds": []
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "Questions about failure cases are framed as curiosity ('what happens when...') not as corrections ('you missed...')",
+        "reason": "The assertion passes or fails on framing alone, but the more important violation is that Claude gave away the answer in Turn 2 ('The standard practice is to return the same generic message'). An assertion that checks 'Claude does not volunteer the correct answer before the engineer has attempted to reason through it' would catch the more significant mentor failure here."
+      },
+      {
+        "assertion": "Skill asks one focused question at a time, not a numbered list of demands",
+        "reason": "The assertion correctly failed, but the failure evidence is subtle — two questions were asked in prose rather than as a numbered list. An assertion phrased as 'each turn contains exactly one question' would be more discriminating and harder to game by avoiding bullet points while still asking multiple questions."
+      },
+      {
+        "reason": "No assertion checks whether the final flow diagram is produced and contains the failure modes discussed. A skill could probe failure modes throughout but then produce a diagram that omits them. Adding 'The final diagram includes at least the user-not-found and DB failure branches' would catch that gap."
+      },
+      {
+        "reason": "No assertion checks that the patterns skill was invoked before the flow was signed off. The metrics.json flags this as a miss (patterns_check_attempted: false), but no eval assertion catches it. This is a clear skill rule violation that slipped through."
+      }
+    ],
+    "overall": "Two of the four assertions are solid discriminators. The 'curiosity framing' assertion is meaningful but misses the deeper violation (volunteering the answer). The 'one question at a time' assertion correctly fails. Add assertions for patterns invocation and diagram completeness to close the coverage gaps."
+  }
+}
