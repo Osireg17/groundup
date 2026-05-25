@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "eval_name": "prose-readback",
+  "configuration": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 4,
+  "failed": 0,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The read-back paragraph does not use field labels (Trying to, Tried, Expected, Actually, Stuck on)",
+      "passed": true,
+      "evidence": "Turn 4 read-back: 'You're trying to fetch the current user's profile on the dashboard by calling userService.findById... the service is returning null... What actually happened is you got null, and after logging the value you found the session is storing the ID as a string...' — no field labels present anywhere."
+    },
+    {
+      "text": "The synthesised question is a single prose paragraph — not a bulleted list, not multiple labelled sections",
+      "passed": true,
+      "evidence": "The read-back is one continuous paragraph of 3 sentences. No bullets, no sections, no labels."
+    },
+    {
+      "text": "The paragraph leads with what the engineer is trying to achieve before describing what went wrong",
+      "passed": true,
+      "evidence": "Opens with 'You're trying to fetch the current user's profile on the dashboard' — goal stated first, then the symptom (returning null), then the root cause (type mismatch), then the stuck point."
+    },
+    {
+      "text": "After the read-back, the skill asks whether the engineer has a hypothesis about the answer",
+      "passed": true,
+      "evidence": "Immediately after 'Does that capture it?' and the engineer's confirmation, the mentor asks: 'Having said all of that — do you already have a hypothesis about what the answer might be?'"
+    }
+  ]
+}

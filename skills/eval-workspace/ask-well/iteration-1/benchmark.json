@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "skill_name": "groundup:ask-well",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/ask-well",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-05-25T00:00:00Z",
+    "evals_run": ["prose-readback"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "prose-readback",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 31.8,
+        "tokens": 18762,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The read-back paragraph does not use field labels (Trying to, Tried, Expected, Actually, Stuck on)", "passed": true, "evidence": "Turn 4 read-back uses no field labels — natural prose throughout ('You're trying to fetch...', 'the service is returning null...', 'you found the session is storing the ID as a string...')."},
+        {"text": "The synthesised question is a single prose paragraph — not a bulleted list, not multiple labelled sections", "passed": true, "evidence": "One continuous paragraph of 3 sentences. No bullets, no sections, no structural markers."},
+        {"text": "The paragraph leads with what the engineer is trying to achieve before describing what went wrong", "passed": true, "evidence": "Opens with 'You're trying to fetch the current user's profile on the dashboard' — goal first, then symptom, then root cause, then stuck point."},
+        {"text": "After the read-back, the skill asks whether the engineer has a hypothesis about the answer", "passed": true, "evidence": "After engineer confirms read-back: 'Having said all of that — do you already have a hypothesis about what the answer might be?'"}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "prose-readback",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 35.1,
+        "tokens": 18671,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The read-back paragraph does not use field labels (Trying to, Tried, Expected, Actually, Stuck on)", "passed": true, "evidence": "No explicit field headers used in the read-back. Uses natural connective phrases instead."},
+        {"text": "The synthesised question is a single prose paragraph — not a bulleted list, not multiple labelled sections", "passed": false, "evidence": "The read-back is one long sentence but ends with 'I'm stuck specifically on...' — a phrase that reads like a labelled field translated into prose. The synthesis also splits into two layout blocks (read-back + 'Does that capture it?' + hypothesis question) rather than one cohesive paragraph."},
+        {"text": "The paragraph leads with what the engineer is trying to achieve before describing what went wrong", "passed": true, "evidence": "Opens with 'I'm trying to fetch the current user's profile to display on the dashboard' — goal stated first."},
+        {"text": "After the read-back, the skill asks whether the engineer has a hypothesis about the answer", "passed": true, "evidence": "'Having said all of that — do you already have a hypothesis about what the answer might be?' is present after the read-back."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 31.8, "stddev": 0.0, "min": 31.8, "max": 31.8},
+      "tokens": {"mean": 18762, "stddev": 0, "min": 18762, "max": 18762}
+    },
+    "old_skill": {
+      "pass_rate": {"mean": 0.75, "stddev": 0.0, "min": 0.75, "max": 0.75},
+      "time_seconds": {"mean": 35.1, "stddev": 0.0, "min": 35.1, "max": 35.1},
+      "tokens": {"mean": 18671, "stddev": 0, "min": 18671, "max": 18671}
+    },
+    "delta": {
+      "pass_rate": "+0.25",
+      "time_seconds": "-3.3",
+      "tokens": "+91"
+    }
+  },
+  "notes": [
+    "with_skill 100% vs old_skill 75% — the failing assertion is the prose quality one (single clean paragraph)",
+    "Old skill read-back is technically prose but ends with 'I'm stuck specifically on...' — a field label phrase leaked into the synthesis, making it feel like a template fill rather than natural writing",
+    "with_skill read-back weaves all five fields into flowing sentences without any structural seams — the example in the new SKILL.md clearly influenced the output style",
+    "Both skills correctly place goal first and include the hypothesis question — those behaviours were emergent in the old skill and are now explicit in the new one",
+    "Token delta is negligible (+91 tokens) — the prose synthesis costs essentially nothing extra",
+    "with_skill is also 3.3 seconds faster — likely because it spent less time re-visiting the field structure mid-interaction"
+  ]
+}

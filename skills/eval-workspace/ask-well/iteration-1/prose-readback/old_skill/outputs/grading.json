@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "eval_name": "prose-readback",
+  "configuration": "old_skill",
+  "pass_rate": 0.75,
+  "passed": 3,
+  "failed": 1,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The read-back paragraph does not use field labels (Trying to, Tried, Expected, Actually, Stuck on)",
+      "passed": true,
+      "evidence": "Turn 5 read-back does not use the five labelled field headers. It uses natural connective phrases ('I called...', 'I expected...', 'I'm stuck specifically on...') rather than the labelled format from the skill template."
+    },
+    {
+      "text": "The synthesised question is a single prose paragraph — not a bulleted list, not multiple labelled sections",
+      "passed": false,
+      "evidence": "The read-back in Turn 5 is structured as two separate paragraphs: the synthesis sentence, then 'Does that capture it?' on its own line, then the hypothesis question as a separate paragraph. The synthesis itself is one run-on sentence with a hard 'I'm stuck specifically on' phrase that reads like a labelled field translated into prose rather than natural synthesis."
+    },
+    {
+      "text": "The paragraph leads with what the engineer is trying to achieve before describing what went wrong",
+      "passed": true,
+      "evidence": "Opens with 'I'm trying to fetch the current user's profile to display on the dashboard' — goal is stated first."
+    },
+    {
+      "text": "After the read-back, the skill asks whether the engineer has a hypothesis about the answer",
+      "passed": true,
+      "evidence": "Ends with 'Having said all of that — do you already have a hypothesis about what the answer might be?' — hypothesis prompt is present."
+    }
+  ]
+}

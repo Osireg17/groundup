@@ -1,0 +1,33 @@
+{
+  "skill_name": "groundup:ask-well",
+  "evals": [
+    {
+      "id": 1,
+      "name": "prose-readback",
+      "prompt": "I'm stuck. I'm trying to get the current user's profile to show up on the dashboard page, but it's not working. I called userService.findById with the userId from the session, but I'm getting null back even though I can see the user in the database. I thought it would return the user object. I don't know if I'm passing the wrong ID or if there's something wrong with the service.",
+      "expected_output": "The skill works through the five fields with the engineer, then synthesises the response into a single prose paragraph — not a labelled list. The paragraph leads with the goal, weaves in what was tried and what happened, states the gap between expected and actual, and names the specific stuck point. The read-back sounds like something a real engineer would write in a Slack message or Stack Overflow question.",
+      "assertions": [
+        {
+          "id": "no-field-labels",
+          "text": "The read-back paragraph does not use field labels (Trying to, Tried, Expected, Actually, Stuck on)",
+          "type": "output_check"
+        },
+        {
+          "id": "single-paragraph",
+          "text": "The synthesised question is a single prose paragraph — not a bulleted list, not multiple labelled sections",
+          "type": "output_check"
+        },
+        {
+          "id": "goal-first",
+          "text": "The paragraph leads with what the engineer is trying to achieve before describing what went wrong",
+          "type": "output_check"
+        },
+        {
+          "id": "hypothesis-prompt",
+          "text": "After the read-back, the skill asks whether the engineer has a hypothesis about the answer",
+          "type": "output_check"
+        }
+      ]
+    }
+  ]
+}

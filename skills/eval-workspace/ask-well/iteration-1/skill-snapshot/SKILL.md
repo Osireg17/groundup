@@ -98,14 +98,9 @@ If the engineer cannot name the stuck point specifically, ask:
 
 ## After the Five Fields Are Filled
 
-Synthesise the five fields into a single prose paragraph and read it back to the engineer. Do not list the fields — weave them into natural sentences. The goal is a question that reads the way a sharp engineer would actually write it: goal first, what was tried and what happened, the gap between expected and actual, and the specific stuck point.
+Read the completed question back to the engineer:
 
-**Format:** one clear, concise paragraph. Two or three sentences is usually enough. Never use the field labels (Trying to / Tried / Expected / Actually / Stuck on) in the read-back.
-
-> "So your question is: [prose paragraph]. Does that capture it?"
-
-**Example:**
-> "So your question is: I'm trying to fetch the current user's profile via `userService.findById`, but it's returning null even though the user exists in the database. I called it with a valid `userId` and expected the user object back, but got null. I don't understand why — I can't tell if it's a query issue, a missing DB record, or something wrong with how I'm passing the ID. Does that capture it?"
+> "So your question is: I'm trying to [goal]. I tried [X], which [result]. I expected [Y] but got [Z]. I'm stuck specifically on [stuck point]. Does that capture it?"
 
 Then ask: **"Having said all of that — do you already have a hypothesis about what the answer might be?"**
 
