@@ -1,0 +1,82 @@
+{
+  "metadata": {
+    "skill_name": "groundup:grill",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/grill",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-05-25T00:00:00Z",
+    "evals_run": ["dont-know-teaching-mode"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 4,
+      "eval_name": "dont-know-teaching-mode",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 46.7,
+        "tokens": 19039,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "After engineer says 'I don't know' and expresses frustration, skill explains the concept directly rather than asking another probing question", "passed": true, "evidence": "Turn 5 opens with 'You're right — that's on me' and immediately pivots to 'Let me actually explain this one.' No further probe question issued."},
+        {"text": "Teaching response includes a concrete example (e.g. resolvedPath.startsWith(webRoot), or a path like /etc/passwd escaping the web root)", "passed": true, "evidence": "Full path traversal example given: /var/www/static/images/cat.png (legitimate) vs /etc/passwd (malicious via ../../../../etc/passwd), with explanation of how .. segments walk up the directory tree."},
+        {"text": "Teaching response ends by asking the engineer to restate the principle in their own words — not another probe question about the same concept", "passed": true, "evidence": "Ends with 'Now you tell me back — in your own words, what's the rule about user-controlled paths and the filesystem?' — a restate question, not a new probe."},
+        {"text": "Skill does not respond to 'I don't know' with another question on the same topic it was just asking about", "passed": true, "evidence": "No probe question appears in Turn 5. The response is entirely explanation + concrete example + restate prompt."}
+      ]
+    },
+    {
+      "eval_id": 4,
+      "eval_name": "dont-know-teaching-mode",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 41.7,
+        "tokens": 18411,
+        "tool_calls": 5,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "After engineer says 'I don't know' and expresses frustration, skill explains the concept directly rather than asking another probing question", "passed": false, "evidence": "Turn 5 acknowledges frustration but pivots to a new scoping question ('Pick one: static files or API routes?') instead of explaining path traversal. The concept the engineer was stuck on is never taught."},
+        {"text": "Teaching response includes a concrete example (e.g. resolvedPath.startsWith(webRoot), or a path like /etc/passwd escaping the web root)", "passed": false, "evidence": "No path traversal example appears in Turn 5. The response omits the concept entirely and redirects to a different question."},
+        {"text": "Teaching response ends by asking the engineer to restate the principle in their own words — not another probe question about the same concept", "passed": false, "evidence": "Ends with 'Pick one: Are you building this server to serve static files from a directory, or to respond to defined API routes in code?' — a scoping probe, not a restate request."},
+        {"text": "Skill does not respond to 'I don't know' with another question on the same topic it was just asking about", "passed": true, "evidence": "Did not re-ask about path traversal specifically — asked a different question (static files vs API routes). Technically satisfies the letter of this assertion though not the spirit."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 1.0, "stddev": 0.0, "min": 1.0, "max": 1.0},
+      "time_seconds": {"mean": 46.7, "stddev": 0.0, "min": 46.7, "max": 46.7},
+      "tokens": {"mean": 19039, "stddev": 0, "min": 19039, "max": 19039}
+    },
+    "old_skill": {
+      "pass_rate": {"mean": 0.25, "stddev": 0.0, "min": 0.25, "max": 0.25},
+      "time_seconds": {"mean": 41.7, "stddev": 0.0, "min": 41.7, "max": 41.7},
+      "tokens": {"mean": 18411, "stddev": 0, "min": 18411, "max": 18411}
+    },
+    "delta": {
+      "pass_rate": "+0.75",
+      "time_seconds": "+5.0",
+      "tokens": "+628"
+    }
+  },
+  "notes": [
+    "Key discriminator: with_skill 100% vs old_skill 25% — the only passing assertion in old_skill is the weakest one (didn't re-ask the exact same question), technically true but missing the point",
+    "Old skill's Turn 5 deflects to a new scoping question rather than teaching — the engineer remains unequipped to reason about path traversal",
+    "With_skill's Turn 5 nails all three parts: acknowledge the frustration, explain with a concrete example, close with a restate question",
+    "Token cost of the teaching response is minimal — 628 tokens more than the deflecting response, but the learning value is incomparable",
+    "The 'I'm not sure' in Turn 4 correctly gets one more narrowing probe (concrete scenario) before teaching mode kicks in at Turn 5 — the threshold distinction works",
+    "Both graders agree: the old skill has no explicit teaching mode, so response quality on knowledge gaps is entirely emergent — the new rule makes this reliable"
+  ]
+}

@@ -72,6 +72,30 @@
         }
       ],
       "files": []
+    },
+    {
+      "id": 4,
+      "prompt": "Multi-turn scenario. Turn 1 (engineer): 'I want to build a web server that listens to connections and responds using HTTP.' Turn 2 (after skill asks about the request format): 'we send over a json, then we marshall it.' Turn 3 (after skill corrects and asks what you need to extract from the request line): 'The method, the path, and the HTTP version.' Turn 4 (after skill asks about path security): 'I'm not sure'. Turn 5: 'I don't know you asking me more questions is overwhelming not helping'",
+      "expected_output": "After the engineer says 'I don't know' and expresses frustration, skill switches to teaching mode — explains the concept (path traversal / web root check) concisely with a concrete example, then asks the engineer to restate it in their own words. Does NOT ask another probing question.",
+      "assertions": [
+        {
+          "id": "switches-to-teaching-on-explicit-dont-know",
+          "description": "After engineer says 'I don't know' + expresses frustration, skill explains the concept directly rather than asking another question"
+        },
+        {
+          "id": "explanation-includes-concrete-example",
+          "description": "Teaching response includes a concrete example (e.g. resolvedPath.startsWith(webRoot), or a path like /etc/passwd escaping the web root)"
+        },
+        {
+          "id": "ends-with-restate-question",
+          "description": "Teaching response ends by asking the engineer to restate the principle in their own words — not another probe question"
+        },
+        {
+          "id": "no-further-probing-on-same-point",
+          "description": "Skill does not respond to 'I don't know' with another question about the same concept it was just probing"
+        }
+      ],
+      "files": []
     }
   ]
 }

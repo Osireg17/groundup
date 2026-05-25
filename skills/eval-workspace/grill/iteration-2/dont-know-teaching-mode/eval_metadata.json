@@ -1,0 +1,27 @@
+{
+  "eval_id": 4,
+  "eval_name": "dont-know-teaching-mode",
+  "prompt": "Multi-turn scenario. Turn 1 (engineer): 'I want to build a web server that listens to connections and responds using HTTP.' Turn 2 (after skill asks about the request format): 'we send over a json, then we marshall it.' Turn 3 (after skill corrects and asks what you need to extract from the request line): 'The method, the path, and the HTTP version.' Turn 4 (after skill asks about path security): 'I'm not sure'. Turn 5: 'I don't know you asking me more questions is overwhelming not helping'",
+  "assertions": [
+    {
+      "text": "After engineer says 'I don't know' and expresses frustration, skill explains the concept directly rather than asking another probing question",
+      "passed": null,
+      "evidence": ""
+    },
+    {
+      "text": "Teaching response includes a concrete example (e.g. resolvedPath.startsWith(webRoot), or a path like /etc/passwd escaping the web root)",
+      "passed": null,
+      "evidence": ""
+    },
+    {
+      "text": "Teaching response ends by asking the engineer to restate the principle in their own words — not another probe question about the same concept",
+      "passed": null,
+      "evidence": ""
+    },
+    {
+      "text": "Skill does not respond to 'I don't know' with another question on the same topic it was just asking about",
+      "passed": null,
+      "evidence": ""
+    }
+  ]
+}

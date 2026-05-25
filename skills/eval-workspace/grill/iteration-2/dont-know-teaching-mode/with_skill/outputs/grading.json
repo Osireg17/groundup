@@ -1,0 +1,31 @@
+{
+  "eval_id": 4,
+  "eval_name": "dont-know-teaching-mode",
+  "configuration": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 4,
+  "failed": 0,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "After engineer says 'I don't know' and expresses frustration, skill explains the concept directly rather than asking another probing question",
+      "passed": true,
+      "evidence": "Turn 5 opens with 'You're right — that's on me' and immediately pivots to 'Let me actually explain this one.' No further probe question issued."
+    },
+    {
+      "text": "Teaching response includes a concrete example (e.g. resolvedPath.startsWith(webRoot), or a path like /etc/passwd escaping the web root)",
+      "passed": true,
+      "evidence": "Full path traversal example given: /var/www/static/images/cat.png (legitimate) vs /etc/passwd (malicious via ../../../../etc/passwd), with explanation of how .. segments walk up the directory tree."
+    },
+    {
+      "text": "Teaching response ends by asking the engineer to restate the principle in their own words — not another probe question about the same concept",
+      "passed": true,
+      "evidence": "Ends with 'Now you tell me back — in your own words, what's the rule about user-controlled paths and the filesystem?' — a restate question, not a new probe."
+    },
+    {
+      "text": "Skill does not respond to 'I don't know' with another question on the same topic it was just asking about",
+      "passed": true,
+      "evidence": "No probe question appears in Turn 5. The response is entirely explanation + concrete example + restate prompt."
+    }
+  ]
+}

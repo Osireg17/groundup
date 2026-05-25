@@ -1,0 +1,31 @@
+{
+  "eval_id": 4,
+  "eval_name": "dont-know-teaching-mode",
+  "configuration": "old_skill",
+  "pass_rate": 0.25,
+  "passed": 1,
+  "failed": 3,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "After engineer says 'I don't know' and expresses frustration, skill explains the concept directly rather than asking another probing question",
+      "passed": false,
+      "evidence": "Turn 5 acknowledges frustration but pivots to a new scoping question ('Pick one: static files or API routes?') instead of explaining path traversal. The concept the engineer was stuck on is never taught."
+    },
+    {
+      "text": "Teaching response includes a concrete example (e.g. resolvedPath.startsWith(webRoot), or a path like /etc/passwd escaping the web root)",
+      "passed": false,
+      "evidence": "No path traversal example appears in Turn 5. The response omits the concept entirely and redirects to a different question."
+    },
+    {
+      "text": "Teaching response ends by asking the engineer to restate the principle in their own words — not another probe question about the same concept",
+      "passed": false,
+      "evidence": "Ends with 'Pick one: Are you building this server to serve static files from a directory, or to respond to defined API routes in code?' — a scoping probe, not a restate request."
+    },
+    {
+      "text": "Skill does not respond to 'I don't know' with another question on the same topic it was just asking about",
+      "passed": true,
+      "evidence": "Did not re-ask about path traversal specifically — asked a different question (static files vs API routes). Technically satisfies the letter of this assertion though not the spirit."
+    }
+  ]
+}
