@@ -1,0 +1,31 @@
+{
+  "eval_id": 3,
+  "eval_name": "ruled-out-hypothesis",
+  "configuration": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 4,
+  "failed": 0,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The mentor explicitly validates that the ruled-out hypothesis was useful — it narrowed the space, not wasted time",
+      "passed": true,
+      "evidence": "\"Good — a ruled-out hypothesis isn't failure, it's evidence. You've just narrowed the space. You now know the bug is NOT in how the discount is passed into the price calculation. That's real progress.\""
+    },
+    {
+      "text": "The mentor routes back to Phase 2 (new hypothesis) rather than letting the engineer try random changes",
+      "passed": true,
+      "evidence": "\"You're back in Phase 2. You have new evidence: the discount value arrives correctly at the price calculation boundary. So the problem is either in what happens *inside* the price calculation with that value, or somewhere *after* the calculation.\" The mentor explicitly names the phase and redirects to hypothesis formation."
+    },
+    {
+      "text": "The mentor names or implies the 'trial and error' trap — commenting out code without a hypothesis is speculation",
+      "passed": true,
+      "evidence": "\"But commenting out the discount logic without a hypothesis is the 'let me just try a few things' trap. If that changes the behaviour, you won't know *why* — you'll have multiple simultaneous experiments and you won't be able to reason about what you found. Don't go down that road.\""
+    },
+    {
+      "text": "The mentor asks what the logs *did* show — uses the evidence from Phase 3 to inform the next hypothesis",
+      "passed": true,
+      "evidence": "\"What does the price calculation actually do with the discount once it receives it? Walk me through what you'd expect it to do, and what's actually happening at the output.\" The mentor builds directly on what was logged (discount IS passed correctly) to identify the new boundary to investigate, using the positive evidence from the ruled-out hypothesis to direct the next hypothesis."
+    }
+  ]
+}

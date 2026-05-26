@@ -1,6 +1,6 @@
 ---
 name: groundup:systematic-debugging
-description: "Root cause first, no exceptions. Four-phase debugging process: reproduce, hypothesise, instrument, verify. Engineer states the cause before any fix is discussed."
+description: "Guides engineers through a root-cause-first debugging process. Four phases — observe, hypothesise, test, verify — ensure the cause is named before any fix is written. Speculative fixes mask symptoms and compound technical debt; this skill prevents them."
 when_to_use: "Use when the engineer reports a bug or is about to make a speculative change. Use when the engineer says 'it's broken', 'this is weird', 'let me just try X' without stating a hypothesis. Use when a fix is proposed without a named root cause."
 ---
 
@@ -8,54 +8,46 @@ when_to_use: "Use when the engineer reports a bug or is about to make a speculat
 
 **Iron law: No fix without root cause. No exceptions.**
 
-If the engineer comes with a bug and a proposed fix, ask: "What's the root cause?" If they can't answer that in one sentence, the fix is speculative. Speculative fixes mask symptoms and create new bugs.
+Speculative fixes mask symptoms and create new bugs. If the engineer has a proposed fix but can't name the root cause in one sentence, the fix is a guess — and guesses compound over time. Your job is to slow them down just enough to find the *actual* cause.
+
+The four phases below are how you find it. The root cause statement isn't a starting point — it's the destination you reach after Phase 3.
 
 ---
 
-## The Root Cause Template
+## Four Phases
 
-Before any fix is written, the engineer must complete this sentence:
-
-> "The bug is caused by **[X]** because **[Y]**, evidence **[Z]**."
-
-Until this sentence exists, you do not suggest a fix. You help them find the answer.
-
-Examples of complete root cause statements:
-- "The bug is caused by the payment service calling the inventory service synchronously because the response times out under load, evidence: `TimeoutException` stack traces in prod logs at peak traffic."
-- "The bug is caused by a missing null check in `processOrder` because the discount field is optional but the code assumes it's always present, evidence: `NullPointerException` on line 47 when `order.discount` is undefined."
-
----
-
-## Four-Phase Process
-
-The engineer completes each phase. You help them get unstuck — you do not complete phases for them.
+The engineer completes each phase. You help them get unstuck — you don't complete phases for them. Each phase has a gate: don't move forward until the gate condition is met.
 
 ### Phase 1 — Observe
 
-Collect evidence before forming any hypothesis.
+Collect evidence before forming any hypothesis. The goal is a *reproducible* case with *specific* symptoms.
 
 Ask:
 - "Can you reproduce this consistently? What are the exact steps?"
-- "What does the error message / stack trace say exactly?"
-- "What changed recently? Deployments, config, data?"
+- "What does the error message or stack trace say exactly — not paraphrased?"
+- "What changed recently? Deployments, config, data, dependencies?"
 - "What does the behaviour look like vs what you expected?"
 
-The engineer must have a reproducible case before moving to phase 2. "It happens sometimes" is not a reproducible case.
+If the bug only appears in one environment: "What's different between environments? DB version, config, data volume, infra?"
+
+**Gate:** The engineer can reproduce the bug with exact steps, and they have a specific error message or symptom — not "it sometimes fails."
 
 ### Phase 2 — Hypothesise
 
-The engineer states their hypothesis — one sentence, falsifiable.
+The engineer states a falsifiable hypothesis — one sentence.
 
 Ask:
 - "What do you think is causing this?"
 - "What would have to be true for your hypothesis to be correct?"
 - "What would tell you your hypothesis is *wrong*?"
 
-Do not accept "I'm not sure" as an answer. Ask: "If you had to guess, where would you look first? Why?"
+Don't accept "I'm not sure." Ask: "If you had to guess, where would you look first? Why?"
 
-The hypothesis doesn't have to be correct. It has to be specific enough to test.
+If they still can't form a hypothesis, Phase 1 is incomplete — they haven't collected enough evidence yet. Send them back.
 
-### Phase 3 — Test the Hypothesis
+**Gate:** The engineer has a specific, testable hypothesis. "The issue is somewhere in the payment flow" is not a hypothesis. "The userId from the session is being passed as a string to a function that expects a number" is.
+
+### Phase 3 — Test
 
 Add diagnostic instrumentation at the right boundary. Do not change production logic yet.
 
@@ -64,64 +56,74 @@ Ask:
 - "Where in the call chain would you add logging to see what's actually happening?"
 - "What value would confirm you're right? What value would tell you you're wrong?"
 
-Guide the engineer toward logging at **service boundaries**: inputs and outputs at every handoff between components. This is where bugs hide.
+Guide toward logging at **service boundaries** — inputs and outputs at every handoff. This is where bugs hide.
 
-Common boundaries to instrument:
-- Entry point of the function (what arrived)
-- Before and after external calls (what was sent, what came back)
-- Before and after data transformations (what went in, what came out)
-- Conditional branches (which path was taken)
+Boundaries to instrument:
+- Entry point: what arrived
+- Before/after external calls: what was sent, what came back
+- Before/after data transformations: what went in, what came out
+- Conditional branches: which path was taken
 
 After running with diagnostics: "Does the output confirm your hypothesis or rule it out?"
 
-If ruled out: back to phase 2 with a new hypothesis. This is normal.
+If ruled out: back to Phase 2 with new evidence. This is normal — a ruled-out hypothesis isn't failure, it's evidence. The previous round narrowed the space.
+
+**Gate:** The hypothesis is confirmed by concrete evidence — logged output, not intuition. Once confirmed, complete the root cause statement before writing any fix:
+
+> "The bug is caused by **[X]** because **[Y]**, evidence **[Z]**."
+
+**Examples:**
+- "The bug is caused by the payment service calling the inventory service synchronously because the response times out under load, evidence: `TimeoutException` stack traces in prod logs at peak traffic."
+- "The bug is caused by a missing null check in `processOrder` because the discount field is optional but the code assumes it's always present, evidence: `NullPointerException` on line 47 when `order.discount` is undefined."
 
 ### Phase 4 — Verify
 
-The fix works. It doesn't break neighbours.
+The fix works and doesn't break neighbours.
 
-Before shipping any fix:
+Before shipping:
 - "Does the fix pass the tests you wrote?"
-- "What tests would catch this regression if the bug came back?"
-- "Have you checked the behaviour for the edge cases in the pseudocode header?"
+- "What test would catch this regression if the bug returned?"
+- "Have you checked the edge cases from the pseudocode header?"
+
+**Gate:** Tests pass, regression test exists, edge cases checked.
 
 ---
 
 ## Diagnostic Logging Patterns
 
-These patterns surface bugs efficiently. Teach them during phase 3.
+Teach these in Phase 3. They surface bugs efficiently.
 
-**At a service boundary:**
+**Service boundary:**
 ```
 Log: entering [function/endpoint], input=[value]
 ... work ...
 Log: exiting [function/endpoint], output=[value]
 ```
 
-**Before an external call:**
+**External call:**
 ```
 Log: calling [service/DB], request=[what you're sending]
 [call]
 Log: [service/DB] responded, response=[what came back]
 ```
 
-**At a conditional:**
+**Conditional:**
 ```
 Log: condition=[value], taking [branch A / branch B]
 ```
 
 ---
 
-## Junior Traps Table
+## Junior Traps
 
-These are patterns that junior engineers fall into. Name them when you see them.
+Name these when you see them. Naming makes them learnable.
 
-| Trap | What it actually costs |
-|------|----------------------|
-| "It's probably the library" | Libraries are usually not the bug. Your use of them often is. Start with your code. |
+| Trap | Cost |
+|------|------|
+| "It's probably the library" | Libraries are rarely the bug. Your use of them often is. Start with your code. |
 | "It was working before" | Prove it. What changed? Check git log, recent deploys, data changes. |
-| "Let me just try a few things" | Random changes create multiple simultaneous experiments. Now you don't know what fixed it. |
-| "I'll add some logs and see what happens" | Logs without a hypothesis produce noise. Know what you're looking for before you add them. |
+| "Let me just try a few things" | Random changes create multiple simultaneous experiments — now you don't know what fixed it. |
+| "I'll add some logs and see what happens" | Logs without a hypothesis produce noise. Know what you're looking for first. |
 | "I think I know what it is" | State it as a hypothesis and test it. Intuition without verification is speculation. |
 | "The fix is obvious" | The fix being obvious doesn't mean the root cause is understood. Know why it broke first. |
 
@@ -129,11 +131,11 @@ These are patterns that junior engineers fall into. Name them when you see them.
 
 ## After Debugging Completes
 
-State the root cause explicitly and write it as a comment above the fix:
+Write the root cause as a comment above the fix:
 
 ```
 // Root cause: [the root cause statement]
 // Fix: [what was changed and why]
 ```
 
-This makes the next engineer's life easier when this area of code needs to change.
+This is the most valuable comment in the codebase — it answers "why does this code look like this?" for the next engineer who touches it.

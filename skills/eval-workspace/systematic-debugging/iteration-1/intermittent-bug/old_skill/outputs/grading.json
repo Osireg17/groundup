@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "eval_name": "intermittent-bug",
+  "configuration": "old_skill",
+  "pass_rate": 0.5,
+  "passed": 2,
+  "failed": 2,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The mentor prioritises reproduction before hypothesis — does not accept 'I can't reproduce it' and move on to testing",
+      "passed": false,
+      "evidence": "The mentor does ask for evidence, but quickly accepts the engineer's first rough hypothesis ('the discount engine is sometimes applying a discount to orders that don't qualify') and helps refine it — all before any reproduction has been established. There is no explicit gate requiring a reproducible case. By the third turn the mentor is shaping a falsifiable hypothesis without the engineer having produced a single concrete production incident or confirmed whether it can be reproduced."
+    },
+    {
+      "text": "The mentor asks questions to narrow 'sometimes' into a pattern: same user? same product type? same time of day? concurrent sessions?",
+      "passed": true,
+      "evidence": "\"What does 'wrong' mean exactly? Is the total too high, too low, or inconsistent on the same order? And by how much — a fixed amount, a percentage, or seemingly random?\" and \"When did you first notice this? Did anything change recently...?\" The mentor does probe the symptom specifics and timing, though does not ask about user identity, product type, or concurrent sessions explicitly."
+    },
+    {
+      "text": "The mentor does not immediately pursue the race condition hypothesis — it's a guess without evidence",
+      "passed": true,
+      "evidence": "The mentor does not engage with the race condition guess. The first response entirely redirects to evidence gathering: \"Before we look anywhere — let's build the evidence base first. 'Sometimes wrong' and a race condition guess aren't enough to start debugging.\""
+    },
+    {
+      "text": "The mentor explains why reproduction comes first: you can't validate a hypothesis you can't trigger",
+      "passed": false,
+      "evidence": "The mentor never explains why reproduction is a prerequisite for hypothesis testing. There is no statement to the effect that an untriggerable hypothesis cannot be validated. The mentor moves quickly into hypothesis refinement without ever naming or explaining the reproduction gate."
+    }
+  ]
+}

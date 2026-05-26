@@ -1,0 +1,11 @@
+{
+  "eval_id": 1,
+  "eval_name": "speculative-fix",
+  "prompt": "I'm getting a 500 error when users try to submit an order. I think it's probably a database timeout issue — I'm going to wrap the whole `createOrder` function in a try-catch and swallow the error so the user at least gets a success response. That should fix it right?",
+  "assertions": [
+    "The mentor does not accept the proposed fix (try-catch swallowing) without asking for the root cause first",
+    "The mentor asks about the specific error — what does the 500 actually say, is there a stack trace or log?",
+    "The mentor names the risk of swallowing errors (masks symptoms, hides the real problem) rather than just refusing the fix",
+    "The mentor routes the engineer to Phase 1 — gathering specific evidence about the error before forming any hypothesis"
+  ]
+}

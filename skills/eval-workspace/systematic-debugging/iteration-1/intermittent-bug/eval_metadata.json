@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "intermittent-bug",
+  "prompt": "I have a weird bug — sometimes the total price shown at checkout is wrong. It's not always wrong, just occasionally. Maybe 1 in 20 times. I have no idea what's causing it and I can't reproduce it reliably. I'm thinking the pricing logic might have a race condition somewhere but I'm not sure where to look.",
+  "assertions": [
+    "The mentor prioritises reproduction before hypothesis — does not accept 'I can't reproduce it' and move on to testing",
+    "The mentor asks questions to narrow 'sometimes' into a pattern: same user? same product type? same time of day? concurrent sessions?",
+    "The mentor does not immediately pursue the race condition hypothesis — it's a guess without evidence",
+    "The mentor explains why reproduction comes first: you can't validate a hypothesis you can't trigger"
+  ]
+}

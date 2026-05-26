@@ -1,0 +1,44 @@
+{
+  "skill_name": "groundup:systematic-debugging",
+  "evals": [
+    {
+      "id": 1,
+      "name": "speculative-fix",
+      "prompt": "I'm getting a 500 error when users try to submit an order. I think it's probably a database timeout issue — I'm going to wrap the whole `createOrder` function in a try-catch and swallow the error so the user at least gets a success response. That should fix it right?",
+      "expected_output": "The skill asks for the root cause before discussing any fix, and identifies the proposed approach (swallowing the error) as a symptom-masking anti-pattern. The engineer should be guided through Phase 1 (observation) before anything else.",
+      "assertions": [
+        "The mentor does not accept the proposed fix (try-catch swallowing) without asking for the root cause first",
+        "The mentor asks about the specific error — what does the 500 actually say, is there a stack trace or log?",
+        "The mentor names the risk of swallowing errors (masks symptoms, hides the real problem) rather than just refusing the fix",
+        "The mentor routes the engineer to Phase 1 — gathering specific evidence about the error before forming any hypothesis"
+      ],
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "intermittent-bug",
+      "prompt": "I have a weird bug — sometimes the total price shown at checkout is wrong. It's not always wrong, just occasionally. Maybe 1 in 20 times. I have no idea what's causing it and I can't reproduce it reliably. I'm thinking the pricing logic might have a race condition somewhere but I'm not sure where to look.",
+      "expected_output": "The skill prioritises reproducibility before hypothesis. The engineer can't form a valid hypothesis yet because they haven't reproduced the bug. The mentor should keep them in Phase 1 — establishing what 'sometimes' actually means by finding a pattern, not jumping to hypotheses.",
+      "assertions": [
+        "The mentor prioritises reproduction before hypothesis — does not accept 'I can't reproduce it' and move on to testing",
+        "The mentor asks questions to narrow 'sometimes' into a pattern: same user? same product type? same time of day? concurrent sessions?",
+        "The mentor does not immediately pursue the race condition hypothesis — it's a guess without evidence",
+        "The mentor explains why reproduction comes first: you can't validate a hypothesis you can't trigger"
+      ],
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "ruled-out-hypothesis",
+      "prompt": "Ok so I logged everything like you said. I thought the bug was that the discount code wasn't being applied, so I logged the discount field going into the price calculation — and it IS being passed correctly. So my hypothesis was wrong. I'm not sure what to do now. Maybe I should just comment out the discount logic entirely and see if anything changes?",
+      "expected_output": "The skill normalises the ruled-out hypothesis as progress and routes the engineer back to Phase 2 with new evidence in hand. It should name the 'let me just try things' trap explicitly and guide toward a new specific hypothesis based on what the logs actually showed.",
+      "assertions": [
+        "The mentor explicitly validates that the ruled-out hypothesis was useful — it narrowed the space, not wasted time",
+        "The mentor routes back to Phase 2 (new hypothesis) rather than letting the engineer try random changes",
+        "The mentor names or implies the 'trial and error' trap — commenting out code without a hypothesis is speculation",
+        "The mentor asks what the logs *did* show — uses the evidence from Phase 3 to inform the next hypothesis"
+      ],
+      "files": []
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+{
+  "metadata": {
+    "skill_name": "groundup:systematic-debugging",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/systematic-debugging",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-05-26T00:00:00Z",
+    "evals_run": ["speculative-fix", "intermittent-bug", "ruled-out-hypothesis"],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "speculative-fix",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 57.7,
+        "tokens": 19281,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The mentor does not accept the proposed fix (try-catch swallowing) without asking for the root cause first", "passed": true, "evidence": "Mentor blocked the speculative fix immediately at Turn 1 before any hypothesis discussion."},
+        {"text": "The mentor asks about the specific error — what does the 500 actually say, is there a stack trace or log?", "passed": true, "evidence": "Mentor sent the engineer to get the actual stack trace before forming any hypothesis."},
+        {"text": "The mentor names the risk of swallowing errors (masks symptoms, hides the real problem) rather than just refusing the fix", "passed": true, "evidence": "Mentor named 'silent data loss' as the explicit cost of swallowing the error."},
+        {"text": "The mentor routes the engineer to Phase 1 — gathering specific evidence about the error before forming any hypothesis", "passed": true, "evidence": "Phase 1 (Observe) was the explicit opening frame — mentor required reproducible evidence before any hypothesis."}
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "speculative-fix",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 55.0,
+        "tokens": 18791,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The mentor does not accept the proposed fix (try-catch swallowing) without asking for the root cause first", "passed": true, "evidence": "Iron law fired immediately — fix was not accepted without root cause."},
+        {"text": "The mentor asks about the specific error — what does the 500 actually say, is there a stack trace or log?", "passed": true, "evidence": "Mentor asked for the actual stack trace and server logs."},
+        {"text": "The mentor names the risk of swallowing errors (masks symptoms, hides the real problem) rather than just refusing the fix", "passed": true, "evidence": "Mentor named the trap and explained swallowing errors causes silent data corruption."},
+        {"text": "The mentor routes the engineer to Phase 1 — gathering specific evidence about the error before forming any hypothesis", "passed": false, "evidence": "The old skill mentions 'Phase 1' only as a mid-paragraph aside rather than opening with it as a deliberate structural frame. The routing is implicit rather than explicit."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "intermittent-bug",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 85.2,
+        "tokens": 20176,
+        "tool_calls": 3,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The mentor prioritises reproduction before hypothesis — does not accept 'I can't reproduce it' and move on to testing", "passed": true, "evidence": "Mentor refused the race condition guess and kept the engineer in Phase 1 until a pattern was established."},
+        {"text": "The mentor asks questions to narrow 'sometimes' into a pattern: same user? same product type? same time of day? concurrent sessions?", "passed": true, "evidence": "Mentor pushed for exact symptoms, reproduction conditions, and concurrent session patterns before any hypothesis."},
+        {"text": "The mentor does not immediately pursue the race condition hypothesis — it's a guess without evidence", "passed": true, "evidence": "Skill correctly named the 'I think I know what it is' trap and refused to act on the race condition guess until evidence existed."},
+        {"text": "The mentor explains why reproduction comes first: you can't validate a hypothesis you can't trigger", "passed": false, "evidence": "Mentor enforces the gate but never explicitly states the rationale — that you cannot validate a hypothesis you cannot trigger. The enforcement is present, the explanation is missing."}
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "intermittent-bug",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 2,
+        "failed": 2,
+        "total": 4,
+        "time_seconds": 72.8,
+        "tokens": 19464,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The mentor prioritises reproduction before hypothesis — does not accept 'I can't reproduce it' and move on to testing", "passed": false, "evidence": "Old skill moves into hypothesis refinement before any production incident is pinned down — reproduction gate not held firmly."},
+        {"text": "The mentor asks questions to narrow 'sometimes' into a pattern: same user? same product type? same time of day? concurrent sessions?", "passed": true, "evidence": "Mentor did ask about recent changes and logs to narrow the pattern."},
+        {"text": "The mentor does not immediately pursue the race condition hypothesis — it's a guess without evidence", "passed": true, "evidence": "Old skill blocked the race condition guess and pushed for evidence first."},
+        {"text": "The mentor explains why reproduction comes first: you can't validate a hypothesis you can't trigger", "passed": false, "evidence": "Same gap as with_skill — enforcement without explanation of the underlying rationale."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "ruled-out-hypothesis",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 4,
+        "failed": 0,
+        "total": 4,
+        "time_seconds": 56.1,
+        "tokens": 19120,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The mentor explicitly validates that the ruled-out hypothesis was useful — it narrowed the space, not wasted time", "passed": true, "evidence": "Mentor explicitly reframes ruling-out a hypothesis as evidence: 'a ruled-out hypothesis isn't failure, it's evidence. The previous round narrowed the space.'"},
+        {"text": "The mentor routes back to Phase 2 (new hypothesis) rather than letting the engineer try random changes", "passed": true, "evidence": "Mentor named the 'let me just try a few things' trap and redirected to Phase 2 with new evidence in hand."},
+        {"text": "The mentor names or implies the 'trial and error' trap — commenting out code without a hypothesis is speculation", "passed": true, "evidence": "Mentor explicitly named the junior trap and explained its cost — multiple simultaneous experiments with no way to reason about results."},
+        {"text": "The mentor asks what the logs *did* show — uses the evidence from Phase 3 to inform the next hypothesis", "passed": true, "evidence": "Mentor used what was learned (discount arrives correctly at function boundary) to narrow the search space and prompt a new, tighter hypothesis."}
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "ruled-out-hypothesis",
+      "configuration": "old_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.75,
+        "passed": 3,
+        "failed": 1,
+        "total": 4,
+        "time_seconds": 49.2,
+        "tokens": 18651,
+        "tool_calls": 4,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "The mentor explicitly validates that the ruled-out hypothesis was useful — it narrowed the space, not wasted time", "passed": true, "evidence": "Old skill names the trap and redirects, though the reframing of ruled-out hypothesis as positive progress is less explicit than the new skill."},
+        {"text": "The mentor routes back to Phase 2 (new hypothesis) rather than letting the engineer try random changes", "passed": true, "evidence": "Mentor redirected away from speculative change and back to forming a new hypothesis."},
+        {"text": "The mentor names or implies the 'trial and error' trap — commenting out code without a hypothesis is speculation", "passed": true, "evidence": "Old skill named the 'let me just try a few things' trap from the Junior Traps table."},
+        {"text": "The mentor asks what the logs *did* show — uses the evidence from Phase 3 to inform the next hypothesis", "passed": false, "evidence": "Old skill re-asks the engineer to describe the symptom from scratch rather than building directly on the log evidence already surfaced in Phase 3."}
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.917, "stddev": 0.118, "min": 0.75, "max": 1.0},
+      "time_seconds": {"mean": 66.3, "stddev": 13.3, "min": 56.1, "max": 85.2},
+      "tokens": {"mean": 19526, "stddev": 465, "min": 19120, "max": 20176}
+    },
+    "old_skill": {
+      "pass_rate": {"mean": 0.667, "stddev": 0.118, "min": 0.5, "max": 0.75},
+      "time_seconds": {"mean": 59.0, "stddev": 10.0, "min": 49.2, "max": 72.8},
+      "tokens": {"mean": 18969, "stddev": 355, "min": 18651, "max": 19464}
+    },
+    "delta": {
+      "pass_rate": "+0.25",
+      "time_seconds": "+7.3",
+      "tokens": "+557"
+    }
+  },
+  "notes": [
+    "with_skill 91.7% vs old_skill 66.7% — +25 percentage point improvement across 3 evals",
+    "Shared weak spot: intermittent-bug assertion 4 ('explains why reproduction comes first') — neither version explicitly articulates the rationale for the reproduction gate. The skill enforces it but doesn't teach the why.",
+    "with_skill wins speculative-fix and ruled-out-hypothesis at 100% vs 75% each — explicit phase routing and the 'narrowed the space' reframe are the differentiating behaviours",
+    "intermittent-bug is the hardest eval: with_skill 75%, old_skill 50%. Old skill failed the reproduction-before-hypothesis gate entirely. New skill holds the gate but skips the explanation.",
+    "Token cost: +557/run (3%). Time cost: +7.3s/run. Both acceptable given the +25pp gain.",
+    "Next iteration target: add explicit rationale for the reproduction gate in Phase 1 — 'you can't validate a hypothesis you can't trigger' should be a teaching moment, not just silent enforcement."
+  ]
+}

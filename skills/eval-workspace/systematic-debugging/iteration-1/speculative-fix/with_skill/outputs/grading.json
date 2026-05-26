@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "eval_name": "speculative-fix",
+  "configuration": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 4,
+  "failed": 0,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The mentor does not accept the proposed fix (try-catch swallowing) without asking for the root cause first",
+      "passed": true,
+      "evidence": "\"Stop — this is a speculative fix, and it's a dangerous one... Iron law: no fix without root cause.\" The mentor immediately rejects the fix and pivots to evidence gathering before any hypothesis is entertained."
+    },
+    {
+      "text": "The mentor asks about the specific error — what does the 500 actually say, is there a stack trace or log?",
+      "passed": true,
+      "evidence": "\"Before we go any further: go pull the server logs for one of these failed submissions. What I need you to bring back is the exact error message and the full stack trace — not a paraphrase, the actual text.\""
+    },
+    {
+      "text": "The mentor names the risk of swallowing errors (masks symptoms, hides the real problem) rather than just refusing the fix",
+      "passed": true,
+      "evidence": "\"Notice what we didn't do: we didn't swallow the error with a try-catch. If we had, users would have seen 'success', no order would have been created, and you'd have silent data loss in production with no way to know which orders were dropped. The error was the signal.\" Also early: \"A try-catch won't change what's broken — it'll just hide it.\""
+    },
+    {
+      "text": "The mentor routes the engineer to Phase 1 — gathering specific evidence about the error before forming any hypothesis",
+      "passed": true,
+      "evidence": "\"Let's go through this properly. Phase 1 is observation — we collect evidence before we form any hypothesis. Can you reproduce this consistently? What are the exact steps to trigger the 500?\""
+    }
+  ]
+}

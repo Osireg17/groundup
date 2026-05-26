@@ -1,0 +1,31 @@
+{
+  "eval_id": 3,
+  "eval_name": "ruled-out-hypothesis",
+  "configuration": "old_skill",
+  "pass_rate": 0.75,
+  "passed": 3,
+  "failed": 1,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The mentor explicitly validates that the ruled-out hypothesis was useful — it narrowed the space, not wasted time",
+      "passed": true,
+      "evidence": "\"Good — ruling out a hypothesis is real progress. You now know the discount is arriving correctly at the price calculation. That's a fact you didn't have before.\""
+    },
+    {
+      "text": "The mentor routes back to Phase 2 (new hypothesis) rather than letting the engineer try random changes",
+      "passed": true,
+      "evidence": "The mentor blocks the speculative change immediately: \"But commenting out the discount logic is a speculative change... That's the 'let me just try a few things' trap.\" It then redirects toward tightening the symptom definition and forming a new hypothesis by asking \"what is the actual symptom you're seeing?\""
+    },
+    {
+      "text": "The mentor names or implies the 'trial and error' trap — commenting out code without a hypothesis is speculation",
+      "passed": true,
+      "evidence": "\"But commenting out the discount logic is a speculative change. You'd be running two experiments at once — removing logic *and* observing the effect — without knowing what you're looking for. That's the 'let me just try a few things' trap. If something changes, you won't know why.\""
+    },
+    {
+      "text": "The mentor asks what the logs *did* show — uses the evidence from Phase 3 to inform the next hypothesis",
+      "passed": false,
+      "evidence": "The mentor does not ask what the logs showed. After affirming the ruled-out hypothesis, the first question is \"what is the actual symptom you're seeing?\" — which re-establishes the symptom rather than mining the existing log evidence. The logs showed the discount arriving correctly, but the mentor does not use that specific positive finding to direct the next hypothesis. It treats the engineer as if starting fresh rather than building on the logged evidence."
+    }
+  ]
+}

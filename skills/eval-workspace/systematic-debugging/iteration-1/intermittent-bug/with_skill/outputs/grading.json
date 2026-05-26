@@ -1,0 +1,31 @@
+{
+  "eval_id": 2,
+  "eval_name": "intermittent-bug",
+  "configuration": "with_skill",
+  "pass_rate": 0.75,
+  "passed": 3,
+  "failed": 1,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The mentor prioritises reproduction before hypothesis — does not accept 'I can't reproduce it' and move on to testing",
+      "passed": true,
+      "evidence": "\"Phase 1 is about observation. Let's make the problem specific.\" and later \"You said you tried reproducing it locally with the same cart contents — but did you reproduce the exact conditions, or just the cart? 'Same items, same prices' isn't the same as 'same user session, same loyalty points balance, same active coupons, same concurrent requests.'\" The mentor holds the engineer in Phase 1 and demands a specific reproducing case before moving on."
+    },
+    {
+      "text": "The mentor asks questions to narrow 'sometimes' into a pattern: same user? same product type? same time of day? concurrent sessions?",
+      "passed": true,
+      "evidence": "\"Three questions — answer what you can: 1. What does 'wrong' mean exactly? Is the total too high, too low, or is it showing a completely different number...? 2. When you say you can't reproduce it — have you actually tried with the same inputs repeatedly, or have you just noticed it happens occasionally in production?\" and \"Is there only one instance of the app running locally vs. multiple in prod? Is the loyalty points balance read from the database in real time, or is it cached anywhere? When a user has both a coupon code and loyalty points, do the two discount paths run independently?\""
+    },
+    {
+      "text": "The mentor does not immediately pursue the race condition hypothesis — it's a guess without evidence",
+      "passed": true,
+      "evidence": "\"Before we go anywhere near a hypothesis or a fix, we need to slow down and collect real evidence.\" The mentor explicitly defers the race condition framing and does not engage with it until evidence from production logs substantiates a concurrency mechanism."
+    },
+    {
+      "text": "The mentor explains why reproduction comes first: you can't validate a hypothesis you can't trigger",
+      "passed": false,
+      "evidence": "The mentor enforces reproduction discipline and states \"The gate for Phase 1 is: you have a specific, reproducible case with exact symptoms\" but never explicitly articulates the reasoning: that you cannot validate a hypothesis without being able to trigger the condition. The gate is named, but the underlying rationale — you can't test what you can't reproduce — is not stated. A strict reading of 'explains why' requires the explanation to be present, not merely implied by the gate."
+    }
+  ]
+}

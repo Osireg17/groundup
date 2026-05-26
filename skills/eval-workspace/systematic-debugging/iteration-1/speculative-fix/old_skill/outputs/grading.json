@@ -1,0 +1,31 @@
+{
+  "eval_id": 1,
+  "eval_name": "speculative-fix",
+  "configuration": "old_skill",
+  "pass_rate": 0.75,
+  "passed": 3,
+  "failed": 1,
+  "total": 4,
+  "expectations": [
+    {
+      "text": "The mentor does not accept the proposed fix (try-catch swallowing) without asking for the root cause first",
+      "passed": true,
+      "evidence": "\"Stop there. You've proposed a fix before stating a root cause. That's a speculative fix... Before we talk about any fix, you need to complete this sentence: 'The bug is caused by [X] because [Y], evidence [Z].'\""
+    },
+    {
+      "text": "The mentor asks about the specific error — what does the 500 actually say, is there a stack trace or log?",
+      "passed": true,
+      "evidence": "\"Before we go any further: go find the actual server-side logs for one of these failed requests. Stack trace, exception type, line number... What does the server log say for a failing request?\""
+    },
+    {
+      "text": "The mentor names the risk of swallowing errors (masks symptoms, hides the real problem) rather than just refusing the fix",
+      "passed": true,
+      "evidence": "\"swallowing errors is one of the most dangerous things you can do in a production system. If you tell the user the order succeeded but it didn't, you now have silent data corruption. That's worse than a 500.\" Also later: \"Hiding errors doesn't fix them. It defers them into a form that's much harder to debug: silent failures with corrupted state and no trace. A 500 is honest. A fake success is a lie that compounds.\""
+    },
+    {
+      "text": "The mentor routes the engineer to Phase 1 — gathering specific evidence about the error before forming any hypothesis",
+      "passed": false,
+      "evidence": "The mentor does not explicitly name Phase 1 or frame the interaction as a structured four-phase process. The mentor asks for logs and a stack trace, but the routing is informal: \"That's Phase 1 — you need a reproducible case with real evidence before forming any hypothesis.\" This is a brief mention buried mid-paragraph rather than a deliberate routing action. The with_skill response explicitly opens with \"Phase 1 is observation\" and structures the flow around it; old_skill does not."
+    }
+  ]
+}

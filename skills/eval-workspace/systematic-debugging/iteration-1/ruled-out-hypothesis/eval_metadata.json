@@ -1,0 +1,11 @@
+{
+  "eval_id": 3,
+  "eval_name": "ruled-out-hypothesis",
+  "prompt": "Ok so I logged everything like you said. I thought the bug was that the discount code wasn't being applied, so I logged the discount field going into the price calculation — and it IS being passed correctly. So my hypothesis was wrong. I'm not sure what to do now. Maybe I should just comment out the discount logic entirely and see if anything changes?",
+  "assertions": [
+    "The mentor explicitly validates that the ruled-out hypothesis was useful — it narrowed the space, not wasted time",
+    "The mentor routes back to Phase 2 (new hypothesis) rather than letting the engineer try random changes",
+    "The mentor names or implies the 'trial and error' trap — commenting out code without a hypothesis is speculation",
+    "The mentor asks what the logs *did* show — uses the evidence from Phase 3 to inform the next hypothesis"
+  ]
+}
