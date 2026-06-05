@@ -39,35 +39,59 @@ Look for:
 
 ## Part 2 — Produce the Diagram
 
-Once you have read the codebase, produce a Mermaid system diagram.
+Once you have read the codebase, produce an ASCII art system diagram.
 
 The diagram must show:
-- The layers or services as nodes
-- The dependency / call direction as edges (arrows point in the direction of the dependency)
-- Labels on edges where the relationship is not obvious ("calls", "owns", "reads from", "publishes to")
+- The layers or services as labelled boxes
+- The dependency or call direction as arrows
+- Labels on arrows where the relationship is not obvious ("calls", "owns", "reads from", "publishes to")
 
-Use `flowchart TD` for layered architectures. Use `flowchart LR` for service-to-service flows.
+Use plain characters only: `+`, `-`, `|`, `v`, `^`, `>`, `<`, `-->`. No Mermaid — it requires a plugin to render and is unreadable in most terminals and editors.
 
 **Example — layered monolith:**
-```mermaid
-flowchart TD
-    HTTP[HTTP Controllers] --> SVC[Service Layer]
-    SVC --> DOM[Domain]
-    SVC --> REPO[Repositories]
-    REPO --> DB[(Database)]
-    DOM --> REPO
+
+```
++---------------------+
+|   HTTP Controllers  |
++---------------------+
+          |
+          v
++---------------------+
+|    Service Layer    |
++---------------------+
+       |       |
+       v       v
++----------+ +-------------+
+|  Domain  | | Repositories|
++----------+ +-------------+
+                   |
+                   v
+            +----------+
+            | Database |
+            +----------+
 ```
 
 **Example — distributed system:**
-```mermaid
-flowchart LR
-    API[API Gateway] --> AUTH[Auth Service]
-    API --> ORDER[Order Service]
-    ORDER --> PAYMENT[Payment Service]
-    ORDER --> DB1[(Orders DB)]
-    PAYMENT --> DB2[(Payments DB)]
-    ORDER -->|publishes| Q[Event Queue]
-    Q -->|consumes| NOTIFY[Notification Service]
+
+```
++-------------+         +---------------+
+| API Gateway | ------> | Auth Service  |
++-------------+         +---------------+
+      |
+      v
++-------------+         +---------------+
+| Order Svc   | ------> | Payment Svc   |
++-------------+         +---------------+
+      |                        |
+      v                        v
++-------------+         +---------------+
+|  Orders DB  |         |  Payments DB  |
++-------------+         +---------------+
+      |
+      v (publishes)
++-------------+         +---------------+
+| Event Queue | ------> |  Notify Svc   |
++-------------+         +---------------+
 ```
 
 Label anything that would surprise a new hire. Leave out anything obvious.

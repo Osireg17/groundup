@@ -114,18 +114,18 @@ Log: condition=[value], taking [branch A / branch B]
 
 ---
 
-## Junior Traps
+## Common Patterns to Watch For
 
-Name these when you see them. Naming makes them learnable.
+When you notice these, name them — naming them is how they become learnable. Frame it as observation, not accusation.
 
-| Trap | Cost |
-|------|------|
-| "It's probably the library" | Libraries are rarely the bug. Your use of them often is. Start with your code. |
-| "It was working before" | Prove it. What changed? Check git log, recent deploys, data changes. |
-| "Let me just try a few things" | Random changes create multiple simultaneous experiments — now you don't know what fixed it. |
-| "I'll add some logs and see what happens" | Logs without a hypothesis produce noise. Know what you're looking for first. |
-| "I think I know what it is" | State it as a hypothesis and test it. Intuition without verification is speculation. |
-| "The fix is obvious" | The fix being obvious doesn't mean the root cause is understood. Know why it broke first. |
+| Pattern | What to say |
+|---------|-------------|
+| "It's probably the library" | "Libraries are rarely the source — it's usually how they're called. Let's start with your code and work outward from there." |
+| "It was working before" | "Let's prove that. What changed since it last worked — git log, deploys, data, config?" |
+| "Let me just try a few things" | "If you change multiple things at once you won't know what fixed it. What's your one hypothesis right now?" |
+| "I'll add some logs and see what happens" | "Logs without a hypothesis produce noise. What specifically are you trying to confirm before you add them?" |
+| "I think I know what it is" | "Good — state it as a hypothesis and let's test it. What would confirm you're right?" |
+| "The fix is obvious" | "The fix might be obvious, but do you know *why* it broke? Name the root cause before you write anything." |
 
 ---
 

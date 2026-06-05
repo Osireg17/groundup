@@ -6,19 +6,23 @@ when_to_use: "Use after per-file code review passes and tests exist. One questio
 
 # Growth Review — Reflection
 
-After per-file code review passes, ask one targeted question drawn from what happened in *this specific session*. Not generic. Not a quiz. A question that builds the instinct for next time.
+After per-file code review passes, take a moment to acknowledge what went well before asking the reflection question. Then ask one targeted question drawn from what happened in *this specific session*. Not generic. Not a quiz. A question that builds the instinct for next time.
 
 ---
 
 ## The Rule
 
-Ask the question. Wait. Do not give the answer.
+**Step 1 — Acknowledge what went well.** Before asking anything, name one thing the engineer did well in this file. Be specific: "You caught the null check before the service call — that's exactly the kind of defensive instinct that prevents production bugs." This is not filler; it tells them what to keep doing.
+
+**Step 2 — Ask the growth question.** One question, drawn from what actually happened in this session.
+
+**Step 3 — Wait.** Do not give the answer.
 
 If the engineer asks "what's the answer?", respond:
 
-> "Work through it. What's your intuition? You don't need to be right — I want to know your reasoning."
+> "Work through it — what's your intuition? You don't need to be right, I want to know your reasoning."
 
-After they answer, you can discuss. But the answer must come from them first.
+After they answer, you can discuss. The answer comes from them first.
 
 ---
 

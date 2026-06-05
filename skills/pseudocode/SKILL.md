@@ -50,6 +50,7 @@ The engineer has to decide: which method? What does "signal" map to — an excep
 // In:    <param> (<type, constraints>)
 // Out:   <what is returned and its shape>
 // Edges: <condition> → <signal raised> | <condition> → <signal raised>
+// Docs:  <framework or library doc link relevant to the main mechanism used — omit if none>
 
 function_signature {
     // given: <inputs with constraints>
@@ -65,6 +66,8 @@ function_signature {
 }
 ```
 
+**On the `Docs:` line:** include it whenever the function will use a specific framework mechanism or library API that has official documentation. Point to the specific section, not the homepage. If the function is purely domain logic with no framework dependency, omit the line. The engineer reads the linked doc before implementing — this is where the framework knowledge gets built, not in the grill.
+
 ---
 
 ## Filled Example
@@ -74,6 +77,7 @@ function_signature {
 // In:    userId (string, non-empty UUID), requestingUser (User, with role)
 // Out:   UserRecord — all fields except passwordHash and internalFlags
 // Edges: invalid userId → signal bad input | insufficient role → signal forbidden | no record → signal not found
+// Docs:  (none — pure domain logic, no framework dependency)
 
 async function getUser(userId: string, requestingUser: User): Promise<UserRecord> {
     // given: userId (string, non-empty UUID), requestingUser (User, with role)
@@ -111,6 +115,18 @@ Default: no syntax examples.
 If the engineer asks about a specific construct: find a real example in the codebase first. If none exists, fabricate a minimal analogue. Show that one thing only, then hand back immediately.
 
 > "Here's how this project handles that construct: [example]. Now apply it yourself."
+
+---
+
+## Code Review — Cite Patterns and Docs
+
+When reviewing an implementation after pseudocode exists, pair each finding with a reference:
+
+- If flagging a pattern mismatch: name the pattern and point to where it's applied in this codebase, or link the canonical description.
+- If flagging a framework misuse: link the relevant doc section. "The Spring `@Transactional` docs explain the propagation modes — the behaviour here is different from what you probably intended."
+- If flagging a style issue: explain the *why*, not just the *what*. "This should be extracted into its own method because [reason] — see how `src/services/OrderService.ts:42` handles the same concern."
+
+Don't just name the problem. Point to where the right answer lives.
 
 ---
 

@@ -35,7 +35,7 @@ The error type is not decoration. It encodes a category of failure:
 | `ValidationError` | Input didn't match the expected schema — check the test's input data |
 | `IntegrityError` / `ConstraintViolation` | A DB constraint was violated — duplicate key, missing required field, broken foreign key |
 
-If the engineer says "I don't know what that type means" — that is the next question: "What would you google to understand what this error type means?" Let them look it up. Do not explain it.
+If the engineer says "I don't know what that type means" — point them to where they can find out: "Look up `[ErrorType]` in the [framework/language] docs — the description tells you exactly what triggers it. Come back with what you find." Surface the specific doc if you know it. Do not just explain it yourself — the habit of reading error documentation is what you are building.
 
 ---
 
@@ -61,9 +61,9 @@ The hypothesis does not need to be correct. It needs to be stated. The format:
 
 > "I think the error is caused by [X] because the error says [Y] and the line it points to is doing [Z]."
 
-If the engineer says "I have no idea" — that is not acceptable. Push:
+If the engineer says "I have no idea" — that is not a stopping point, it is an opening. Help them find their footing:
 - "Look at the line it's pointing to. What could go wrong on that specific line?"
-- "Given the error type, what is the most common cause of that type of error?"
+- "Given the error type from Gate 1, what is the most common cause?"
 - "What was the last thing you changed before this test started failing?"
 
 A stated hypothesis — even a wrong one — is the entry point to `systematic-debugging`. An unstated hypothesis means you're guessing randomly.
