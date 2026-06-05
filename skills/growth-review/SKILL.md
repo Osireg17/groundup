@@ -63,14 +63,6 @@ Use the one most relevant to what happened in this session.
 
 ---
 
-## Explicit Framing
-
-After asking, add:
-
-> "The goal here isn't the answer. It's building the instinct so next time, you ask this question yourself before you need to."
-
----
-
 ## One Question Per File
 
 One question per per-file review. Do not stack them. If multiple things happened, pick the one with the highest learning value for this engineer at this point in time.

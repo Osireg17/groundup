@@ -6,10 +6,6 @@ when_to_use: "Use during flow-map before the diagram is agreed (does any step ma
 
 # Patterns — Contextual Teaching
 
-Surface patterns at the moment they matter: **before the engineer commits to an approach**, not after they've implemented something you could have told them about earlier.
-
-Engineers should always be striving for best practice. Discovering a pattern in code review is late. Discovering it during flow discussion or before pseudocode means they can apply it intentionally from the start.
-
 ---
 
 ## When to Invoke This Skill

@@ -5,9 +5,7 @@ description: "Maps an unfamiliar or brownfield codebase for a junior engineer �
 
 # Architecture — Read the System Design
 
-Before touching any code, understand the system you are working in. A change made without understanding the architecture either fights the design or breaks a boundary the original authors put there deliberately.
-
-This skill has two parts: **read** (you map the system), then **interrogate** (the engineer explains the reasoning behind the design).
+Two parts: **read** (you map the system), then **interrogate** (the engineer explains the reasoning behind the design).
 
 ---
 
@@ -102,13 +100,7 @@ After producing the diagram, present it and say: "Walk me through this — expla
 
 ## Part 3 — Interrogate the Engineer
 
-The diagram is a prop. The real work is finding out whether the engineer understands the *reasoning* behind the design, not just the shape of it. Junior engineers often know *what* a system does without knowing *why* it is structured that way. That gap leads to changes that are locally correct but architecturally wrong.
-
-**How to run the interrogation:**
-
-Ask one question. Wait for the answer. Then decide what to probe next based on what they said — not based on a script.
-
-The question categories below are a menu to draw from, not a sequence to follow. Pick the question that will reveal the biggest gap in their current answer.
+The question categories below are a menu, not a sequence. Pick the question that will reveal the biggest gap in their current answer.
 
 **On boundaries** — use when you want to know if they understand what a layer *protects*:
 - "Why does [layer A] not depend on [layer B]? What would break if it did?"
@@ -126,8 +118,6 @@ The question categories below are a menu to draw from, not a sequence to follow.
 **On design decisions** — use when the shape of the system seems arbitrary to them:
 - "Why is [X] synchronous and [Y] asynchronous? What drove that?"
 - "What would you have to change if this needed to scale to 10x traffic?"
-
-**Pacing rule:** One question per turn. If their answer is vague, probe the same thing from a different angle rather than moving on. Move on only when you are satisfied — not when they have said *something*.
 
 ---
 

@@ -6,10 +6,6 @@ when_to_use: "Use when the engineer is stuck and about to ask a question without
 
 # Ask Well — Structure the Question Before You Ask It
 
-When you are stuck, the instinct is to ask for help immediately. That instinct is not wrong — asking for help is a skill, not a weakness. But a vague question gets a vague answer. A precise question often contains its own answer.
-
-This skill runs before the engineer asks a question — to a senior engineer, on Stack Overflow, in a GitHub issue, or to Claude. It does not delay asking. It makes the asking useful.
-
 ---
 
 ## The Rule

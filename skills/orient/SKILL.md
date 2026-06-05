@@ -5,11 +5,7 @@ description: "Traces one real user journey end-to-end through the codebase, with
 
 # Orient — Locate Your Change in the System
 
-You have the architecture map. Now trace the specific path that matters for this session.
-
-The goal is a precise answer to one question: **where exactly does this change live, and what does it touch?**
-
-Junior engineers often start in the wrong place — they find a file that looks relevant and read outward from there. That produces a patchy mental model with gaps exactly where the bugs live. Tracing a journey end-to-end, from entry point to storage and back, closes those gaps before any code is written.
+Goal: a precise answer to **where exactly does this change live, and what does it touch?**
 
 ---
 
@@ -75,8 +71,6 @@ Wait for their answer. Then, one question at a time:
 - Once they answer that: "What do the hops after it depend on that our change might affect?"
 - Once they answer that: "Are we crossing an architectural boundary here? If yes — does our change belong on this side of it?"
 
-**Pacing rule:** One question per turn. Do not present all three as a list. Ask the first, wait, then ask the next based on what they said.
-
 The engineer should leave this step able to answer "which files are affected and why" with specific paths — not vague layer names. If they can't, the trace wasn't specific enough. Go back and tighten it.
 
 ---
@@ -87,7 +81,7 @@ After Step 3, ask:
 
 "Was there any hop in that journey where you weren't sure what was happening — where you followed the call but didn't understand the decision?"
 
-Wait for their answer. These gaps are where assumptions live. A named assumption is testable. An unnamed one is a future bug. If they name a gap, acknowledge it and add it to the list of things to resolve during grill.
+If they name a gap, acknowledge it and add it to the list of things to resolve during grill.
 
 ---
 

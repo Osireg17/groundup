@@ -6,15 +6,7 @@ when_to_use: "Use the moment an engineer hits a failing test, a thrown error, or
 
 # Read the Error — Before You Google Anything
 
-When a test fails or an error is thrown, the error message is a document. It was written to tell you exactly what went wrong. Most junior engineers do not read it — they copy-paste it into Google or Claude and skip the step where the error tells them the answer directly.
-
-This skill has one rule: **you must answer three questions from the error alone before any external help is given.**
-
----
-
-## The Three Gates
-
-Do not move past a gate until the engineer has answered it themselves. Do not give the answer. Ask the question and wait.
+Three gates from the error alone before any external help.
 
 ---
 

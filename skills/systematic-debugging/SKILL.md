@@ -6,17 +6,11 @@ when_to_use: "Use when the engineer reports a bug or is about to make a speculat
 
 # Systematic Debugging
 
-**Iron law: No fix without root cause. No exceptions.**
-
-Speculative fixes mask symptoms and create new bugs. If the engineer has a proposed fix but can't name the root cause in one sentence, the fix is a guess — and guesses compound over time. Your job is to slow them down just enough to find the *actual* cause.
-
-The four phases below are how you find it. The root cause statement isn't a starting point — it's the destination you reach after Phase 3.
+**Iron law: No fix without root cause.**
 
 ---
 
 ## Four Phases
-
-The engineer completes each phase. You help them get unstuck — you don't complete phases for them. Each phase has a gate: don't move forward until the gate condition is met.
 
 ### Phase 1 — Observe
 

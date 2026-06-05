@@ -5,16 +5,6 @@ description: "Claude writes problem-domain pseudocode directly into the target f
 
 # Pseudocode
 
-You write the pseudocode. The engineer writes the code.
-
-Write it directly into the file at the correct location — or create the new file if it doesn't exist yet. Work in dependency order: whatever the rest of the code calls first gets pseudocode first.
-
----
-
-## The Critical Rule — Abstraction Level
-
-Pseudocode must be written at the **problem-domain level**, not the implementation level. If it looks like code in another language, rewrite it. The engineer must have to *think* about how to translate it.
-
 **Standard: Dr. Dalbey's PDL.** Each step describes *what* to achieve using structured English keywords.
 
 **Allowed keywords:**
@@ -97,14 +87,6 @@ async function getUser(userId: string, requestingUser: User): Promise<UserRecord
     // 5. RETURN the sanitised record
 }
 ```
-
----
-
-## Before Writing — Edge Case Check
-
-Before writing, verify: are all edge cases from the flow-map discussion represented in the `Edges:` header?
-
-If not, add them. Every entry in `Edges:` must eventually have a test. That's the contract.
 
 ---
 

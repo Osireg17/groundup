@@ -6,10 +6,6 @@ when_to_use: "Use at the start of any groundup session, or after /clear to re-es
 
 # Start — Route to the Right Flow
 
-This skill does one job: route the engineer into the correct flow for today's work, as quickly as possible and with no wasted context. The three paths — implement, debug, scope — have almost no overlap in what they need. Loading codebase context before a debugging session wastes tokens; skipping it before an implementation session means guiding without knowing the terrain. This skill makes the call.
-
----
-
 ## Step 1 — Check for a Session in Progress
 
 Before asking anything, check whether `.groundup/session-state.json` exists in the current working directory and read it.
@@ -297,11 +293,3 @@ Then say: "Let me read the scoping guide." Read `SCOPING.md` (in this same direc
 
 The scoping flow is self-contained because there's no codebase to explore yet. Everything the engineer knows lives in their head. The job is to make that knowledge explicit, structured, and complete enough to drive the first real implementation session.
 
----
-
-## Token Economy
-
-- **Implement (map exists):** `start` reads map → `orient` (if needed) → `grill`. Fast path — map was paid for in a prior session.
-- **Implement (no map):** `start` explores codebase → writes map → `orient` (if needed) → `grill`. One-time exploration cost, paid once per codebase.
-- **Debug:** `start` → `read-the-error`. Two loads. Codebase map adds no value here.
-- **Scope:** `start` + reads `SCOPING.md`. One skill load plus one file read. No codebase to explore.
