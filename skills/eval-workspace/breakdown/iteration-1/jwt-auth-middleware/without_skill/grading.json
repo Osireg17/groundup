@@ -1,0 +1,35 @@
+{
+  "eval_id": 2,
+  "run": "without_skill",
+  "pass_rate": 1.0,
+  "passed": 5,
+  "total": 5,
+  "note": "ANOMALY: This run exhibits skill-specific behaviours (tickets.md content block, session state JSON) that should not appear in a baseline run. Possible cause: skill was active in the evaluation context or output template leaked from the Stripe eval prompt. Results should be treated with low confidence — this run may not be a true baseline.",
+  "expectations": [
+    {
+      "text": "Creates .groundup/tickets.md",
+      "passed": true,
+      "evidence": "Includes explicit '## tickets.md content' markdown block — but this structure mirrors the breakdown skill template, which should not be present without the skill."
+    },
+    {
+      "text": "Type augmentation ticket comes before or is combined with the middleware ticket (types are a dependency)",
+      "passed": true,
+      "evidence": "Ticket 1 = type augmentation (no deps), Ticket 2 = middleware (Depends on: Ticket 1)."
+    },
+    {
+      "text": "Routes wiring ticket comes last (depends on middleware existing)",
+      "passed": true,
+      "evidence": "Ticket 3 = route wiring, ordered last."
+    },
+    {
+      "text": "Acceptance criteria include all four edge cases: missing header, malformed token, expired token, valid token",
+      "passed": true,
+      "evidence": "All four present in Ticket 2 AC: missing header, malformed, expired, valid — with specific 401 messages."
+    },
+    {
+      "text": "Asks engineer for sign-off before starting Ticket 1",
+      "passed": true,
+      "evidence": "'Does this feel right — anything you'd split, combine, or reorder?' appears before session state block."
+    }
+  ]
+}

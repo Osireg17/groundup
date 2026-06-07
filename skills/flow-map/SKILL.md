@@ -1,7 +1,14 @@
 ---
 name: groundup:flow-map
-description: "Engineer draws the data flow; Claude explores it together with them — probing transaction boundaries, failure modes, and ownership with curiosity, not interrogation. Both sign off before any file is touched."
-when_to_use: "Use after grill exits, before pseudocode. Use when the engineer is ready to design the flow — 'here's how I think it works', 'let me draw this out', or when the approach is agreed but no file-level design exists yet."
+description: "DEPRECATED — flow discussion is now part of groundup:grill. This skill is retained as a reference. Do not invoke it as a separate step."
+when_to_use: "Do not invoke. Use groundup:grill instead — it includes flow discussion in its final phase before exit."
+---
+
+# Flow Map — DEPRECATED
+
+> Flow discussion is now part of `groundup:grill`. This file is retained as a reference only.
+> The full flow discussion content (engineer prompt, interrogation questions, pattern check) now lives in the grill skill.
+
 ---
 
 # Flow Map — Data Flow Discussion

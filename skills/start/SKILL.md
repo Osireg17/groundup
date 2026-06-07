@@ -17,15 +17,15 @@ If it exists and `phase` is not `"complete"`:
 
 Phase plain-English translations:
 - `grill` → "the design interview (we hadn't agreed on the approach yet)"
-- `flow_map` → "drawing the data flow"
-- `per_file_loop` → "the per-file implementation loop — you were working on `[current_file]`"
+- `breakdown` → "breaking the agreed plan into tickets (tickets.md may be partially written)"
+- `per_ticket_loop` → "the per-ticket implementation loop — you were working on Ticket [current_ticket]"
 - `final_review` → "the final code review before opening a PR"
 - `debugging` → "debugging"
 - `scoping` → "scoping the project (scope.md may already be partially written)"
 
 **Stop here and wait for the engineer's answer.** Do not continue until they explicitly say resume or start fresh. The choice must be real — do not auto-resume.
 
-If they want to **resume**: read the state fully, orient to the current phase and file, and continue from exactly that point. Do not restart grill or flow-map if they are recorded as complete — trust the state.
+If they want to **resume**: read the state fully, orient to the current phase and file, and continue from exactly that point. Do not restart grill or breakdown if they are recorded as complete — trust the state.
 
 If the phase is `"complete"` or the file doesn't exist: proceed to Step 2.
 

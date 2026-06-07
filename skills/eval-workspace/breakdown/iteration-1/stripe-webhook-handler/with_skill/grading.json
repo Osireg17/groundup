@@ -1,0 +1,39 @@
+{
+  "eval_id": 1,
+  "run": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 6,
+  "total": 6,
+  "expectations": [
+    {
+      "text": "Creates .groundup/tickets.md with at least 3 tickets",
+      "passed": true,
+      "evidence": "Response includes explicit '## tickets.md content' block with 4 tickets (T1 OrderRepository, T2 OrderService, T3 webhookSignature, T4 StripeWebhookController)"
+    },
+    {
+      "text": "Tickets are ordered in dependency order — repository before service before controller",
+      "passed": true,
+      "evidence": "Explicit ordering: T1=OrderRepository (no deps), T2=OrderService (depends on T1), T3=middleware (no deps), T4=Controller (depends on T2+T3)"
+    },
+    {
+      "text": "Every ticket has a verb-first title",
+      "passed": true,
+      "evidence": "T1: 'Add findByStripePaymentId and updateStatus...', T2: 'Add updateStatus to OrderService', T3: 'Implement webhookSignature middleware', T4: 'Create StripeWebhookController'"
+    },
+    {
+      "text": "Acceptance criteria reference the specific edge cases from the grill (idempotency, invalid signature, unknown event type, order not found)",
+      "passed": true,
+      "evidence": "Idempotency in T2 AC, invalid signature in T3 AC, unknown event type in T4 AC, order not found in T2 AC"
+    },
+    {
+      "text": "Asks the engineer to confirm the breakdown before starting",
+      "passed": true,
+      "evidence": "Opening line: 'Does this feel right — anything you'd split, combine, or reorder?'"
+    },
+    {
+      "text": "Each ticket touches no more than 3 files",
+      "passed": true,
+      "evidence": "Every ticket specifies exactly 1 file"
+    }
+  ]
+}

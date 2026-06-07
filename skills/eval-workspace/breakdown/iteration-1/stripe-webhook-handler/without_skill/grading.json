@@ -1,0 +1,39 @@
+{
+  "eval_id": 1,
+  "run": "without_skill",
+  "pass_rate": 0.5,
+  "passed": 3,
+  "total": 6,
+  "expectations": [
+    {
+      "text": "Creates .groundup/tickets.md with at least 3 tickets",
+      "passed": false,
+      "evidence": "Response is a rich markdown breakdown but makes no mention of writing to .groundup/tickets.md. No file path, no explicit write instruction — output would live only in the conversation."
+    },
+    {
+      "text": "Tickets are ordered in dependency order — repository before service before controller",
+      "passed": true,
+      "evidence": "Ticket 1=Repository, Ticket 2=Service, Ticket 3=Middleware, Ticket 4=Controller — correct dependency order."
+    },
+    {
+      "text": "Every ticket has a verb-first title",
+      "passed": false,
+      "evidence": "Titles are role-based noun phrases: 'Repository: ...', 'Service: ...', 'Middleware: ...', 'Controller: ...' — not verb-first."
+    },
+    {
+      "text": "Acceptance criteria reference the specific edge cases from the grill (idempotency, invalid signature, unknown event type, order not found)",
+      "passed": true,
+      "evidence": "All four edge cases are present in the acceptance criteria and Notes sections."
+    },
+    {
+      "text": "Asks the engineer to confirm the breakdown before starting",
+      "passed": false,
+      "evidence": "Ends with 'Suggested order of work' and Notes section — no sign-off prompt or confirmation request before work begins."
+    },
+    {
+      "text": "Each ticket touches no more than 3 files",
+      "passed": true,
+      "evidence": "Every ticket specifies exactly 1 file."
+    }
+  ]
+}

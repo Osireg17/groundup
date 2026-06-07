@@ -1,0 +1,34 @@
+{
+  "eval_id": 2,
+  "run": "with_skill",
+  "pass_rate": 0.8,
+  "passed": 4,
+  "total": 5,
+  "expectations": [
+    {
+      "text": "Creates .groundup/tickets.md",
+      "passed": false,
+      "evidence": "Response lays out 3 clear tickets but does not reference writing to .groundup/tickets.md or include an explicit file content block. Output would live only in the conversation."
+    },
+    {
+      "text": "Type augmentation ticket comes before or is combined with the middleware ticket (types are a dependency)",
+      "passed": true,
+      "evidence": "Ticket 1 is Express type augmentation (no deps), Ticket 2 is middleware (Depends on: Ticket 1)."
+    },
+    {
+      "text": "Routes wiring ticket comes last (depends on middleware existing)",
+      "passed": true,
+      "evidence": "Ticket 3 is route wiring — final position, not mentioned as a dependency of anything."
+    },
+    {
+      "text": "Acceptance criteria include all four edge cases: missing header, malformed token, expired token, valid token",
+      "passed": true,
+      "evidence": "Ticket 2 AC lists all four: missing header → 401 'No token', malformed → 401 'Invalid token', expired → 401 'Token expired', valid → next() called."
+    },
+    {
+      "text": "Asks engineer for sign-off before starting Ticket 1",
+      "passed": true,
+      "evidence": "Final lines: 'Does this feel right — anything you'd split, combine, or reorder? Once you confirm, we'll start with Ticket 1.'"
+    }
+  ]
+}

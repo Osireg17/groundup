@@ -1,0 +1,10 @@
+{
+  "eval_id": 3,
+  "eval_name": "incomplete-grill-blocked",
+  "prompt": "Alright let's break this down into tickets. We're building a notification system. We know it'll use a queue but haven't agreed on the exact files yet or how the flow works.",
+  "assertions": [
+    {"text": "Does NOT create tickets or write tickets.md", "passed": null, "evidence": null},
+    {"text": "Identifies specifically what is missing — files and flow are not agreed", "passed": null, "evidence": null},
+    {"text": "Redirects back to grill rather than proceeding", "passed": null, "evidence": null}
+  ]
+}

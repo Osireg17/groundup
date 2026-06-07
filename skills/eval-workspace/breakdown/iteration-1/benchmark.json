@@ -1,0 +1,183 @@
+{
+  "metadata": {
+    "skill_name": "groundup:breakdown",
+    "skill_path": "/Users/osiobomighie/Documents/Developer/groundup/skills/breakdown",
+    "executor_model": "claude-sonnet-4-6",
+    "analyzer_model": "claude-sonnet-4-6",
+    "timestamp": "2026-06-07T00:00:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "stripe-webhook-handler",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 6,
+        "failed": 0,
+        "total": 6,
+        "time_seconds": 43.5,
+        "tokens": 19509,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Creates .groundup/tickets.md with at least 3 tickets", "passed": true, "evidence": "Response includes explicit tickets.md content block with 4 tickets"},
+        {"text": "Tickets are ordered in dependency order — repository before service before controller", "passed": true, "evidence": "T1=OrderRepository (no deps), T2=OrderService (depends on T1), T3=middleware (no deps), T4=Controller (depends on T2+T3)"},
+        {"text": "Every ticket has a verb-first title", "passed": true, "evidence": "Add..., Add..., Implement..., Create... — all verb-first"},
+        {"text": "Acceptance criteria reference the specific edge cases from the grill (idempotency, invalid signature, unknown event type, order not found)", "passed": true, "evidence": "All four edge cases present across T2 and T4 ACs"},
+        {"text": "Asks the engineer to confirm the breakdown before starting", "passed": true, "evidence": "'Does this feel right — anything you'd split, combine, or reorder?'"},
+        {"text": "Each ticket touches no more than 3 files", "passed": true, "evidence": "Every ticket specifies exactly 1 file"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "stripe-webhook-handler",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.5,
+        "passed": 3,
+        "failed": 3,
+        "total": 6,
+        "time_seconds": 44.4,
+        "tokens": 17656,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Creates .groundup/tickets.md with at least 3 tickets", "passed": false, "evidence": "Produces markdown breakdown in response but never references .groundup/tickets.md"},
+        {"text": "Tickets are ordered in dependency order — repository before service before controller", "passed": true, "evidence": "Correct order: Repo → Service → Middleware → Controller"},
+        {"text": "Every ticket has a verb-first title", "passed": false, "evidence": "Titles are role-based noun phrases: 'Repository: ...', 'Service: ...', not verb-first"},
+        {"text": "Acceptance criteria reference the specific edge cases from the grill (idempotency, invalid signature, unknown event type, order not found)", "passed": true, "evidence": "All four edge cases present in ACs and Notes"},
+        {"text": "Asks the engineer to confirm the breakdown before starting", "passed": false, "evidence": "Ends with 'Suggested order of work' and Notes — no sign-off prompt"},
+        {"text": "Each ticket touches no more than 3 files", "passed": true, "evidence": "Every ticket specifies exactly 1 file"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "jwt-auth-middleware",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 51.4,
+        "tokens": 20563,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Creates .groundup/tickets.md", "passed": false, "evidence": "3 clear tickets in response but no explicit reference to writing .groundup/tickets.md"},
+        {"text": "Type augmentation ticket comes before or is combined with the middleware ticket (types are a dependency)", "passed": true, "evidence": "Ticket 1 = type augmentation (no deps), Ticket 2 = middleware (Depends on: Ticket 1)"},
+        {"text": "Routes wiring ticket comes last (depends on middleware existing)", "passed": true, "evidence": "Ticket 3 = routes, last position"},
+        {"text": "Acceptance criteria include all four edge cases: missing header, malformed token, expired token, valid token", "passed": true, "evidence": "All four present in Ticket 2 AC with specific 401 messages"},
+        {"text": "Asks engineer for sign-off before starting Ticket 1", "passed": true, "evidence": "'Does this feel right — anything you'd split, combine, or reorder? Once you confirm, we'll start with Ticket 1.'"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "jwt-auth-middleware",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 63.6,
+        "tokens": 25392,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Creates .groundup/tickets.md", "passed": true, "evidence": "Includes explicit 'tickets.md content' block — but this mirrors skill template structure (anomaly flagged)"},
+        {"text": "Type augmentation ticket comes before or is combined with the middleware ticket (types are a dependency)", "passed": true, "evidence": "Ticket 1 = type augmentation, Ticket 2 = middleware"},
+        {"text": "Routes wiring ticket comes last (depends on middleware existing)", "passed": true, "evidence": "Ticket 3 = routes, last position"},
+        {"text": "Acceptance criteria include all four edge cases: missing header, malformed token, expired token, valid token", "passed": true, "evidence": "All four present with specific 401 messages"},
+        {"text": "Asks engineer for sign-off before starting Ticket 1", "passed": true, "evidence": "'Does this feel right — anything you'd split, combine, or reorder?'"}
+      ],
+      "notes": ["ANOMALY: This run exhibits skill-specific behaviours (tickets.md content block, session state JSON) not expected in a without_skill baseline. Results treated with low confidence — may not be a true baseline. Re-run recommended with better isolation."]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "incomplete-grill-blocked",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 24.8,
+        "tokens": 18370,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Does NOT create tickets or write tickets.md", "passed": true, "evidence": "Explicitly refuses: 'creating tickets now would give us a breakdown built on assumptions'"},
+        {"text": "Identifies specifically what is missing — files and flow are not agreed", "passed": true, "evidence": "Lists all four gate requirements: Approach, Files, Flow, Edge cases"},
+        {"text": "Redirects back to grill rather than proceeding", "passed": true, "evidence": "Ends with a directed grill question about the notification lifecycle"}
+      ],
+      "notes": []
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "incomplete-grill-blocked",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 3,
+        "failed": 0,
+        "total": 3,
+        "time_seconds": 21.7,
+        "tokens": 16641,
+        "tool_calls": null,
+        "errors": 0
+      },
+      "expectations": [
+        {"text": "Does NOT create tickets or write tickets.md", "passed": true, "evidence": "'Before we break this into tickets, I need to stop us here — we're not ready.'"},
+        {"text": "Identifies specifically what is missing — files and flow are not agreed", "passed": true, "evidence": "Names 3 missing items (trigger, channel type, queue purpose) — slightly less precise than with_skill which named all 4 gate items"},
+        {"text": "Redirects back to grill rather than proceeding", "passed": true, "evidence": "Closes with: 'So: what triggers a notification in this system?'"}
+      ],
+      "notes": []
+    }
+  ],
+
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {"mean": 0.933, "stddev": 0.094, "min": 0.8, "max": 1.0},
+      "time_seconds": {"mean": 39.9, "stddev": 11.1, "min": 24.8, "max": 51.4},
+      "tokens": {"mean": 19481, "stddev": 895, "min": 18370, "max": 20563}
+    },
+    "without_skill": {
+      "pass_rate": {"mean": 0.833, "stddev": 0.236, "min": 0.5, "max": 1.0},
+      "time_seconds": {"mean": 43.2, "stddev": 17.1, "min": 21.7, "max": 63.6},
+      "tokens": {"mean": 19896, "stddev": 3908, "min": 16641, "max": 25392}
+    },
+    "delta": {
+      "pass_rate": "+0.10",
+      "time_seconds": "-3.3",
+      "tokens": "-415"
+    }
+  },
+
+  "notes": [
+    "ANOMALY — jwt/without_skill: The baseline run produced skill-specific output (tickets.md content block, session state JSON) that should not appear without the skill. This inflates the without_skill pass rate and masks the real baseline delta. Eval 2 should be re-run with better isolation before drawing conclusions from the overall delta.",
+    "NON-DISCRIMINATING — incomplete-grill-blocked: Both configurations scored 3/3. Base model already handles incomplete-grill rejection well. This eval tests a guardrail that the skill may be redundant for. Consider whether the skill adds value here beyond framing (named gates vs. unnamed gaps), or replace this eval with a harder variant where the baseline is more likely to proceed.",
+    "REAL DELTA on Eval 1 (stripe): with_skill 6/6, without_skill 3/6. The three failing assertions in the baseline are: (1) no tickets.md write, (2) non-verb-first titles, (3) no sign-off. These are all structural/process behaviours the skill explicitly enforces — exactly what a skill should add.",
+    "SKILL IS FASTER AND CHEAPER: with_skill mean 39.9s / 19,481 tokens vs without_skill mean 43.2s / 19,896 tokens. The skill does not add overhead — it focuses the model.",
+    "HIGH VARIANCE on without_skill: stddev 17.1s vs 11.1s on time, stddev 3908 vs 895 on tokens. Without the skill, output quality and cost are less predictable — another argument for the skill's value.",
+    "TITLE FORMAT: The verb-first ticket title assertion is the clearest differentiator between skill and baseline. Consider adding it to all future evals as a default check."
+  ]
+}

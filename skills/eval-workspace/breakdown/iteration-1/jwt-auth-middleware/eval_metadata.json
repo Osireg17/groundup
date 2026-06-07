@@ -1,0 +1,12 @@
+{
+  "eval_id": 2,
+  "eval_name": "jwt-auth-middleware",
+  "prompt": "We've finished the grill. We're adding JWT authentication to an Express API. Approach: a middleware function that extracts the Bearer token from the Authorization header, verifies it using the app secret, and attaches the decoded user to req.user. If valid, calls next(). Files: src/middleware/auth.ts (create), src/types/express.d.ts (update — augment Request with user field), src/routes/index.ts (update — apply middleware to protected routes). Edge cases: missing Authorization header → 401 with 'No token', malformed token → 401 with 'Invalid token', expired token → 401 with 'Token expired', valid token → next() with user on req. Let's break this into tickets.",
+  "assertions": [
+    {"text": "Creates .groundup/tickets.md", "passed": null, "evidence": null},
+    {"text": "Type augmentation ticket comes before or is combined with the middleware ticket (types are a dependency)", "passed": null, "evidence": null},
+    {"text": "Routes wiring ticket comes last (depends on middleware existing)", "passed": null, "evidence": null},
+    {"text": "Acceptance criteria include all four edge cases: missing header, malformed token, expired token, valid token", "passed": null, "evidence": null},
+    {"text": "Asks engineer for sign-off before starting Ticket 1", "passed": null, "evidence": null}
+  ]
+}

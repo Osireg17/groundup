@@ -72,15 +72,53 @@ This is what senior engineers do: they point you to where the answer lives, then
 
 ---
 
+## Flow Discussion
+
+Once the approach and edge cases are agreed, do the flow discussion before signing off. This is not a separate step — it is the final part of the grill. The flow discussion is where transaction boundaries, failure modes, and ownership become visible before any code is written.
+
+**Ask the engineer to describe the flow:**
+
+> "Walk me through the data flow for this change — how does data move from entry point to storage and back?"
+
+Their description doesn't need to be complete or correct. That's what the discussion is for.
+
+**Explore the flow together — you are a curious colleague, not an examiner.** For each step in the flow, ask the questions a senior engineer asks naturally:
+
+- *On availability:* "What happens if [service / DB / queue] is unavailable at this step?" / "Is this call synchronous — is the caller blocked waiting for a response?"
+- *On ownership:* "Which service owns this data? Is anything else writing to it?" / "Where does this transaction start and end?"
+- *On correctness:* "What does success look like here?" / "What does failure look like, and what happens downstream?" / "What if this is called twice with the same input?"
+- *On design:* "Should this be synchronous or async? What's the tradeoff?" / "Is this the right direction for the call?"
+
+**Handling misunderstandings — this distinction matters:**
+
+1. *They don't understand the concept yet:* Ask a question that points toward the gap. "What has to exist before any request can arrive?" rather than telling them directly.
+2. *They understand verbally but the flow description has a gap:* If the engineer demonstrates clear understanding — even if what they drew is incomplete — that is sufficient. Acknowledge it and move on. Don't require them to rewrite the artefact to prove what they've already shown they know.
+3. *Something is genuinely missing — never mentioned:* Ask about it. Do not silently add it. "One thing I don't see yet — once the event is emitted, what consumes it?"
+
+**Check for patterns before locking the flow:**
+
+Before agreeing on the final flow, invoke `groundup:patterns`. Does any step map to a known industry pattern — outbox, saga, idempotency, circuit breaker? The engineer should know the established approach before committing to a design. A flow that ignores the outbox pattern will produce code that's harder to fix later.
+
+**Proposing amendments:**
+
+Raise design concerns as questions, not corrections:
+
+> "In your flow, service A waits for B's DB write before responding to the client — which means the client's response time includes B's DB latency. Is that intentional? If not, one option is for A to publish an event and return immediately. The tradeoff is eventual consistency — does that fit the use case?"
+
+The engineer decides. You surface the consideration.
+
+---
+
 ## Exit Condition
 
-Grilling is complete when **both** you and the engineer can state, in one sentence each:
+Grilling is complete when **both** you and the engineer can state:
 
 - [ ] What the approach is
 - [ ] Which files are affected and why
 - [ ] What the key edge cases are and how they're handled
+- [ ] How data flows through the change — agreed and interrogated
 
-Do not move to the flow map until all three boxes are ticked. If the engineer cannot answer one of these, that is the next question.
+Do not sign off until all four are answered. If the engineer cannot answer one, that is the next question.
 
 ---
 

@@ -1,0 +1,24 @@
+{
+  "eval_id": 3,
+  "run": "with_skill",
+  "pass_rate": 1.0,
+  "passed": 3,
+  "total": 3,
+  "expectations": [
+    {
+      "text": "Does NOT create tickets or write tickets.md",
+      "passed": true,
+      "evidence": "Response contains no tickets, no tickets.md block, and explicitly states 'creating tickets now would give us a breakdown built on assumptions'."
+    },
+    {
+      "text": "Identifies specifically what is missing — files and flow are not agreed",
+      "passed": true,
+      "evidence": "Lists all four required gates explicitly: Approach, Files, Flow, Edge cases — each with a specific description of what's missing."
+    },
+    {
+      "text": "Redirects back to grill rather than proceeding",
+      "passed": true,
+      "evidence": "Closes with a directed grill question: 'Walk me through the notification lifecycle in your own words — from the moment something triggers a notification to the moment it reaches the end user.'"
+    }
+  ]
+}

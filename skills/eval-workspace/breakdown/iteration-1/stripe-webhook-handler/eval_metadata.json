@@ -1,0 +1,13 @@
+{
+  "eval_id": 1,
+  "eval_name": "stripe-webhook-handler",
+  "prompt": "Ok the grill is done. Here's what we agreed: we're adding a Stripe webhook handler to an Express/TypeScript app. The handler validates the Stripe signature, identifies the event type, and updates the order status in the DB. Files we're touching: src/middleware/webhookSignature.ts (already has pseudocode), src/webhooks/StripeWebhookController.ts (create), src/services/OrderService.ts (update — add updateStatus method), src/repositories/OrderRepository.ts (update — add findByStripePaymentId and updateStatus). Edge cases: duplicate events must be idempotent (use event ID), invalid signature → 400, unknown event type → log and 200, order not found → log and 200 (don't fail Stripe), DB failure → 500. Break this into tickets.",
+  "assertions": [
+    {"text": "Creates .groundup/tickets.md with at least 3 tickets", "passed": null, "evidence": null},
+    {"text": "Tickets are ordered in dependency order — repository before service before controller", "passed": null, "evidence": null},
+    {"text": "Every ticket has a verb-first title", "passed": null, "evidence": null},
+    {"text": "Acceptance criteria reference the specific edge cases from the grill (idempotency, invalid signature, unknown event type, order not found)", "passed": null, "evidence": null},
+    {"text": "Asks the engineer to confirm the breakdown before starting", "passed": null, "evidence": null},
+    {"text": "Each ticket touches no more than 3 files", "passed": null, "evidence": null}
+  ]
+}

@@ -1,0 +1,5 @@
+{
+  "phase": "per_ticket_loop",
+  "current_ticket": 1,
+  "tickets_file": ".groundup/tickets.md"
+}

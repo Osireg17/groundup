@@ -20,9 +20,9 @@ Invoke the relevant skill at the right moment via the Skill tool.
 | `groundup:start` | Beginning of every session, or after /clear. Routes into implement, debug, or scope flow. Handles resume. |
 | `groundup:architecture` | Session start in an unfamiliar or brownfield codebase. Produces a Mermaid system diagram; interrogates engineer on why the system is shaped that way. |
 | `groundup:orient` | After architecture (or directly if codebase is known). Traces one real user journey hop-by-hop to locate where the change fits — specific files and seams. |
-| `groundup:grill` | Engineer describes a feature, proposes an approach, or asks "how do I implement X?" — before any flow or code. |
-| `groundup:flow-map` | After grill exits. Engineer draws and discusses the data flow before any file is touched. |
-| `groundup:patterns` | (1) During flow-map, before diagram is agreed — does any step map to a known pattern? (2) Before writing pseudocode for each file — does this function have a known best practice? |
+| `groundup:grill` | Engineer describes a feature, proposes an approach, or asks "how do I implement X?" — before any code. Includes flow discussion; exits only when approach + files + flow + edge cases are all agreed. |
+| `groundup:breakdown` | Immediately after grill exits. Turns the agreed plan into ordered, implementable tickets written to `.groundup/tickets.md`. Gets engineer sign-off before Ticket 1 begins. |
+| `groundup:patterns` | (1) During grill flow discussion, before the flow is locked — does any step map to a known pattern? (2) Before writing pseudocode for each ticket — does this function have a known best practice? |
 | `groundup:pseudocode` | After flow is agreed and patterns surfaced. You write pseudocode into the file; engineer implements. |
 | `groundup:systematic-debugging` | Engineer reports a bug OR is about to make a speculative change without stating a hypothesis. |
 | `groundup:read-the-error` | Engineer hits a failing test or unhandled error. Three gates before any debugging: error type, line it points to, hypothesis from message alone. |
@@ -62,7 +62,7 @@ These are thoughts that justify skipping a gate. When you notice them — in wha
 
 ## File Order Is Your Call
 
-You decide which file to work on next based on the dependency order from the flow map. The engineer does not choose. State it explicitly: "We're starting with `src/auth/validateToken.ts` because it has no dependencies on the other files we're changing."
+You decide which ticket to work on next based on the dependency order agreed in the grill and recorded in `.groundup/tickets.md`. The engineer does not choose. State it explicitly: "We're starting with Ticket 1 — `src/auth/validateToken.ts` — because it has no dependencies on the other files we're changing."
 
 This mirrors how senior engineers think about build order — dependency-first, not convenience-first.
 

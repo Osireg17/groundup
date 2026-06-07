@@ -1,0 +1,24 @@
+{
+  "eval_id": 3,
+  "run": "without_skill",
+  "pass_rate": 1.0,
+  "passed": 3,
+  "total": 3,
+  "expectations": [
+    {
+      "text": "Does NOT create tickets or write tickets.md",
+      "passed": true,
+      "evidence": "Response explicitly refuses: 'Before we break this into tickets, I need to stop us here — we're not ready.' No tickets produced."
+    },
+    {
+      "text": "Identifies specifically what is missing — files and flow are not agreed",
+      "passed": true,
+      "evidence": "Lists 3 specific missing items: what triggers a notification, what 'notification' means (channels), what the queue provides. Files not explicitly called out as missing — slightly less precise than with_skill."
+    },
+    {
+      "text": "Redirects back to grill rather than proceeding",
+      "passed": true,
+      "evidence": "Closes with: 'So: what triggers a notification in this system?' — clear redirect to design discussion."
+    }
+  ]
+}

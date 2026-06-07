@@ -56,12 +56,13 @@ Follow these steps in order. Do not skip ahead.
 
 ```
 1. Explore       — read the codebase before anything else
-2. Grill         — design interview until approach + files + edge cases are agreed
+2. Grill         — design interview; includes flow discussion. Exits when approach +
+                   files + flow + edge cases are all agreed.
                    Invoke: Skill("grill")
-3. Flow map      — engineer draws the flow; both discuss and agree on it
-                   Check for patterns BEFORE agreeing on the diagram
-                   Invoke: Skill("flow-map")
-4. Per-file loop — in dependency order (you decide the order, not the engineer):
+3. Breakdown     — turn the agreed plan into ordered tickets in .groundup/tickets.md
+                   Get engineer sign-off before Ticket 1 begins.
+                   Invoke: Skill("breakdown")
+4. Per-ticket loop — in dependency order (tickets decide the order, not the engineer):
    a. Patterns   — does this function have a known best practice? Surface it first
                    Invoke: Skill("patterns")
    b. Pseudocode — you write problem-domain pseudocode into the file
@@ -97,8 +98,9 @@ Grilling is complete when both you and the engineer can state:
 - What the approach is
 - Which files are affected and why
 - What the key edge cases are and how they're handled
+- How data flows through the change — agreed and interrogated
 
-Do not move to the flow map until all three are answered.
+Do not move to breakdown until all four are answered.
 
 ### Format
 
