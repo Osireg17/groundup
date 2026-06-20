@@ -133,3 +133,47 @@ Write the root cause as a comment above the fix:
 ```
 
 This is the most valuable comment in the codebase — it answers "why does this code look like this?" for the next engineer who touches it.
+
+**Write the debug log.** Read `session_name` and `log_target` from `.groundup/session-state.json`. If `session_name` is still null, derive it from the bug description in kebab-case (e.g. `null-pointer-in-order-flow`) and write it back to session state.
+
+Resolve the path:
+- `"obsidian"`: `<vault>/groundup/logs/debug_log/dd-mm-yyyy_<session-name>.md`
+- `"local"`: `logs/debug_log/dd-mm-yyyy_<session-name>.md`
+
+Create the file if it doesn't exist. Write (overwrite if re-running after an interrupted session):
+
+```markdown
+# Debug Log — <session-name>
+
+Date: <dd-mm-yyyy>
+
+## Bug Description
+
+<what the engineer reported — the symptom in their words>
+
+## Reproduction Steps
+
+<the exact steps to reproduce, from Phase 1>
+
+## Hypothesis Tree
+
+<bullet list of each hypothesis considered, in order:>
+- Hypothesis 1: <statement> — <confirmed / ruled out — evidence>
+- Hypothesis 2: <statement> — <confirmed / ruled out — evidence>
+
+## Root Cause
+
+**The bug is caused by** <X> **because** <Y>, **evidence:** <Z>
+
+## Fix Applied
+
+<what was changed and in which file(s)>
+
+## Regression Test
+
+<the test added to prevent recurrence — file:line>
+
+## Traps Hit
+
+<any of the common patterns from the skill that the engineer fell into — or "none">
+```

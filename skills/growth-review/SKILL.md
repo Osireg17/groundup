@@ -69,30 +69,36 @@ One question per per-file review. Do not stack them. If multiple things happened
 
 ---
 
-## Write to Growth Log
+## Write to Learning Log
 
-After the reflection exchange (question asked + engineer has responded), append an entry to `~/.claude/groundup/growth-log.md`. Create the file and directory if they don't exist.
+After the reflection exchange (question asked + engineer has responded), append an entry to the session learning log.
 
-**Entry format:**
+Read `session_name` and `log_target` from `.groundup/session-state.json`. Resolve the path:
+- `"obsidian"`: `<vault>/groundup/logs/learning_log/dd-mm-yyyy_<session-name>.md`
+- `"local"`: `logs/learning_log/dd-mm-yyyy_<session-name>.md`
+
+Create the file if it doesn't exist. Append (never overwrite):
 
 ```markdown
-## <ISO 8601 date> — <project directory name> / <current file path>
+## <current file path> — <ISO 8601 timestamp>
 
 **Trap observed:** <trap name, or "none">
-**Evidence:** <one sentence describing what the engineer did that revealed the trap, or "n/a">
+**Evidence:** <one sentence — what the engineer did that revealed the trap, or "n/a">
 
-**Win observed:** <skill or gate name, or "none">
-**Evidence:** <one sentence describing what the engineer did well, or "n/a">
+**Win observed:** <skill or instinct name, or "none">
+**Evidence:** <one sentence — what the engineer did well, or "n/a">
 
-**Growth question asked:** "<the exact question you asked>"
-**Engineer's reasoning quality:** <one of: not attempted | partial — identified the question but not the answer | reasoned through it | strong — could explain it to someone else>
+**Growth question asked:** "<the exact question asked>"
+**Engineer's reasoning quality:** <not attempted | partial | reasoned through it | strong — could explain it to someone else>
+
+**Summary:** <one sentence capturing the key takeaway from this file — something the engineer could read back in a week and recognise>
 ```
 
 **Rules:**
-- Always write an entry — even when nothing notable happened (record "none" for both trap and win)
+- Always write an entry — even when nothing notable happened (record "none" for trap and win)
 - Append only — never rewrite or delete existing entries
-- Be specific in the evidence fields: "engineer skipped hypothesising and went straight to changing the code" is useful; "engineer made an error" is not
-- If both a trap and a win occurred in the same file, record both
+- Be specific in evidence fields: "engineer skipped hypothesising and went straight to changing the code" is useful; "engineer made an error" is not
+- The **Summary** line is the one they'll actually read when they look back — make it specific to what happened, not generic
 
 ---
 

@@ -105,3 +105,27 @@ See `docs/patterns-library.md` for the full and growing reference. Seed categori
 - Do not rewrite their code. Explain the pattern; they apply it.
 - Do not teach a pattern they already know well — ask first: "Are you familiar with X?" and calibrate based on the answer.
 - Do not teach a pattern that doesn't apply to what they're actually building right now. Relevance is what makes it stick.
+
+---
+
+## After Teaching a Pattern — Write the Pattern Log
+
+After the engineer has acknowledged the pattern (not before — the log should reflect what was discussed, not what was planned), append an entry to the pattern log.
+
+Read `session_name` and `log_target` from `.groundup/session-state.json`. Resolve the path:
+- `"obsidian"`: `<vault>/groundup/logs/pattern_log/dd-mm-yyyy_<session-name>.md`
+- `"local"`: `logs/pattern_log/dd-mm-yyyy_<session-name>.md`
+
+Create the file if it doesn't exist. Append (never overwrite — multiple patterns may be logged per session):
+
+```markdown
+## <Pattern Name> — <trigger context, e.g. "flow map" or "before pseudocode for OrderService.ts">
+
+**Why it applies here:** <one sentence — what about this specific implementation triggered it>
+
+**Tradeoff surfaced:** <the tradeoff explained to the engineer>
+
+**Engineer's prior familiarity:** <none | some | familiar>
+
+**Applied:** <yes — engineer applied it | no — engineer decided against it, reason: ...>
+```

@@ -6,6 +6,17 @@ when_to_use: "Use at the start of any groundup session, or after /clear to re-es
 
 # Start — Route to the Right Flow
 
+## Step 0 — Check for Obsidian MCP
+
+Before doing anything else, check whether the Obsidian MCP server is configured (look for `obsidian` in the MCP server list or `.claude/settings.json`).
+
+- **If Obsidian MCP is available:** store the vault path in session state as `"log_target": "obsidian"`. All log writes across every skill will go to the Obsidian vault under a `groundup/logs/` folder within it.
+- **If not available:** set `"log_target": "local"`. Logs will be written to `logs/` inside the project directory. Say once: "Logs will be written to `logs/` in the project — consider adding that folder to `.gitignore` so they don't get committed."
+
+Do not ask the engineer about this. Detect and decide silently, then continue.
+
+---
+
 ## Step 1 — Check for a Session in Progress
 
 Before asking anything, check whether `.groundup/session-state.json` exists in the current working directory and read it.
@@ -65,15 +76,19 @@ Create `.groundup/` if it doesn't exist. Write `.groundup/session-state.json`:
 {
   "mode": "implement",
   "task": null,
+  "session_name": null,
   "phase": "grill",
   "current_file": null,
   "files": [],
   "skipped_gates": [],
   "flow_diagram": null,
   "scope_file": null,
+  "log_target": "<obsidian or local — from Step 0>",
   "updated_at": "<ISO 8601 now>"
 }
 ```
+
+`session_name` will be set by grill when the task is known. Leave it `null` for now.
 
 Do not proceed to Gate 2 until the file is written.
 
@@ -255,15 +270,19 @@ Create `.groundup/` if it doesn't exist. Write `.groundup/session-state.json`:
 {
   "mode": "debug",
   "task": null,
+  "session_name": null,
   "phase": "debugging",
   "current_file": null,
   "files": [],
   "skipped_gates": [],
   "flow_diagram": null,
   "scope_file": null,
+  "log_target": "<obsidian or local — from Step 0>",
   "updated_at": "<ISO 8601 now>"
 }
 ```
+
+`session_name` will be set when the bug is named in read-the-error. Leave it `null` for now.
 
 **Gate 2 of 2 — Invoke `groundup:read-the-error`.**
 
@@ -279,15 +298,19 @@ Write `.groundup/session-state.json` immediately:
 {
   "mode": "scope",
   "task": null,
+  "session_name": null,
   "phase": "scoping",
   "current_file": null,
   "files": [],
   "skipped_gates": [],
   "flow_diagram": null,
   "scope_file": ".groundup/scope.md",
+  "log_target": "<obsidian or local — from Step 0>",
   "updated_at": "<ISO 8601 now>"
 }
 ```
+
+`session_name` will be set once the project name is known from the scoping discussion.
 
 Then say: "Let me read the scoping guide." Read `SCOPING.md` (in this same directory). Run the scoping flow from that file inline — no other skill is invoked.
 

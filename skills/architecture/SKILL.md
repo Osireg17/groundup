@@ -133,6 +133,59 @@ Do not move to `groundup:orient` until all three are answered clearly. If they c
 
 ---
 
-## After Architecture
+## After Architecture — Write the Architecture Log
+
+Read `log_target` from `.groundup/session-state.json` (fall back to `"local"` if not set).
+
+Resolve the path:
+- `"obsidian"`: `<vault>/groundup/logs/architecture_log/system.md`
+- `"local"`: `logs/architecture_log/system.md`
+
+This is a **single living document** — not per-session. If it already exists, update it in place. If it doesn't exist, create it.
+
+**Structure:**
+
+```markdown
+# Architecture Log
+
+Last updated: <ISO 8601 date> — <project name>
+
+## System Overview
+
+<2–3 sentences: what kind of system, what domain, what it does>
+
+## Layer Diagram
+
+<the ASCII diagram produced in Part 2 of this skill>
+
+## Layers and Boundaries
+
+<for each layer: what it is, what it protects, what it must not depend on>
+
+## Dependency Direction
+
+<which direction dependencies flow and why — e.g. "domain has no knowledge of infrastructure; all dependency arrows point inward">
+
+## Key Design Decisions
+
+<append-only list — add a new entry each time this skill runs or a structural decision is made in grill>
+
+### <ISO 8601 date> — <decision title>
+
+**Decision:** <what was decided>
+**Why:** <the reasoning — constraint, tradeoff, or deliberate choice>
+**Alternatives considered:** <what else was on the table>
+
+## External Dependencies
+
+<list of third-party services or APIs, what they're used for, where the integration point is in the codebase>
+```
+
+**Rules:**
+- The **Layer Diagram** and **Layers and Boundaries** sections are overwritten each time — they reflect the current state of the system
+- The **Key Design Decisions** section is append-only — never delete or rewrite previous entries
+- If only a design decision is being logged (not a full architecture run), only append to Key Design Decisions — do not regenerate the rest
+
+---
 
 Invoke `groundup:orient`. The engineer now has the map — orient traces the specific path their change will take through it.

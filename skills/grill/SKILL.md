@@ -146,6 +146,48 @@ Files affected: <list with reason for each>
 Key edge cases: <list with how each is handled>
 ```
 
-Then write `.groundup/session-state.json` updating `phase` to `"flow_map"`, with the task description and the files list (all `"pending"`). Create `.groundup/` if it doesn't exist.
+**Derive the session name** from the task description: kebab-case, 3–5 words, descriptive enough to identify the feature at a glance (e.g. `jwt-auth-middleware`, `stripe-webhook-handler`, `user-profile-update`). Propose it to the engineer in one line: "I'll name this session `<session-name>` — does that work?" Adjust if they correct it.
+
+**Write the decision log.** Read `session_name` and `log_target` from `.groundup/session-state.json`.
+
+- Determine the log path:
+  - If `log_target` is `"obsidian"`: write to `<vault>/groundup/logs/decision_log/dd-mm-yyyy_<session-name>.md`
+  - If `log_target` is `"local"`: write to `logs/decision_log/dd-mm-yyyy_<session-name>.md` (create directories if they don't exist)
+
+Write the file with this structure:
+
+```markdown
+# Decision Log — <session-name>
+
+Date: <dd-mm-yyyy>
+
+## What We're Building
+
+<one paragraph: the task in plain English, from the engineer's own description>
+
+## Approach Chosen
+
+<the agreed approach in one sentence>
+
+## Alternatives Considered
+
+<bullet list: each alternative that came up in grill, with the reason it was rejected>
+
+## Key Edge Cases
+
+<bullet list: each edge case, with how it's handled>
+
+## Files Affected
+
+<bullet list: each file path with a one-line reason>
+
+## Flow Summary
+
+<the agreed data flow in plain prose — entry point → transformations → storage → response>
+```
+
+If the file already exists (session was interrupted and grill re-ran), overwrite it — don't append. The latest grill is the authoritative record.
+
+**Update `.groundup/session-state.json`**: set `phase` to `"flow_map"`, set `session_name` to the agreed name, populate `task` and `files` (all `"pending"`).
 
 Then invoke the `flow-map` skill.

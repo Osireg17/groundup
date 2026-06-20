@@ -57,7 +57,32 @@ Break the work into tickets. Each ticket is a unit the engineer can complete in 
 
 ---
 
-## Step 3 — Write `.groundup/tickets.md`
+## Step 3 — Append to the Decision Log
+
+Read `session_name` and `log_target` from `.groundup/session-state.json`. Resolve the log path using the same rule as grill (obsidian or local). The file already exists from grill — append to it:
+
+```markdown
+
+---
+
+## Ticket Breakdown
+
+Created: <ISO 8601 date>
+
+### Ordering Rationale
+
+<one paragraph: why the tickets are ordered this way — what the dependencies are, what must exist before what>
+
+### Tickets
+
+<for each ticket: one line with the title and the one-sentence goal>
+- Ticket 1: <title> — <goal>
+- Ticket 2: <title> — <goal>
+```
+
+---
+
+## Step 4 — Write `.groundup/tickets.md`
 
 Create `.groundup/` if it doesn't exist. Write the file:
 
@@ -83,7 +108,7 @@ Created: [ISO 8601 date]
 
 ---
 
-## Step 4 — Present and Get Sign-Off
+## Step 5 — Present and Get Sign-Off
 
 Present the breakdown to the engineer:
 
@@ -91,11 +116,11 @@ Present the breakdown to the engineer:
 
 This is a genuine question. The engineer may know something about the codebase or the task that changes the right order. If they suggest a change, update the file and confirm the revision before starting.
 
-Once they confirm, say: "Good. Let's start with Ticket 1." Then proceed to Step 5.
+Once they confirm, say: "Good. Let's start with Ticket 1." Then proceed to Step 6.
 
 ---
 
-## Step 5 — Update Session State and Begin
+## Step 6 — Update Session State and Begin
 
 Update `.groundup/session-state.json` — add `current_ticket` and `tickets_file` to what's already there:
 
