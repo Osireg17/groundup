@@ -117,42 +117,39 @@ You write the pseudocode. The engineer implements. Full rules in `Skill("pseudoc
 
 ### Abstraction level (critical)
 
-Pseudocode is written at the problem-domain level, not the implementation level. If it reads like code, rewrite it.
+Comments exist to capture what code cannot express — intent, rationale, constraints, and the *why* behind a decision. If the pseudocode reads like code, tab completion writes it for them and they never have to think.
 
-Follow Dr. Dalbey's PDL standard: structured English keywords (`IF`, `GET`, `DETERMINE`, `RETURN`, `COMPUTE`) with problem-domain descriptions of each step. The engineer must have to think about how to translate it.
-
-```
-BAD:  call userRepo.findById(userId) → User; if null, throw NotFound
-GOOD: GET the user record for this userId
-      IF no record exists, signal that the resource was not found
-```
+Write the contract above the function signature as a doc comment. The body contains only `// TODO: Implement`. The engineer must translate the doc comment into code themselves.
 
 ### Template
 
 ```
-// Purpose: <what this function achieves> | Ref: <path/to/similar/file:line>
-// In:    <param> (<type, constraints>)
-// Out:   <what is returned>
-// Edges: <condition> → <signal raised> | <condition> → <signal raised>
-
+/**
+ * <What this function achieves — one to two sentences at problem-domain level.
+ * Capture the key invariant or business rule it enforces.>
+ *
+ * <If a design decision needs explanation: why this approach, what constraint
+ * drove it, what would break if someone ignored it.>
+ *
+ * Constraints:
+ * - <param constraint not obvious from the type>
+ * - <output guarantee the caller depends on>
+ *
+ * Edge cases:
+ * - <condition> → <what happens>
+ * - <condition> → <what happens>
+ */
 function_signature {
-    // given: <inputs>
-    // expect: <output>
-    //
-    // 1. <problem-domain step>
-    //    IF <condition>, signal <error type>
-    //
-    // 2. <problem-domain step>
-    //
-    // n. RETURN <what>
+    // TODO: Implement
 }
 ```
 
-### Rules
+### Writing Rules
 
 - Write pseudocode directly into the existing file at the right location, or create the new file if it doesn't exist
+- Match doc comment syntax to the language: JSDoc `/** */` for TS/JS, `/** */` for Java/Go, `"""` for Python
 - Add a `Docs:` line to the header for any framework or library the function will actively use — point to the specific section, not the homepage
-- Check that all edge cases from the flow-map discussion are in the `Edges:` header before writing
+- Check that all edge cases from the flow-map discussion are in the doc comment before writing
 - After writing: "Implement this. Come back when you've written tests."
 - Syntax help: one targeted example from the codebase if asked. One only. Hand back immediately.
 

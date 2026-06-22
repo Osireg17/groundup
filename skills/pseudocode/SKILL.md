@@ -5,86 +5,101 @@ description: "Claude writes problem-domain pseudocode directly into the target f
 
 # Pseudocode
 
-**Standard: Dr. Dalbey's PDL.** Each step describes *what* to achieve using structured English keywords.
+Comments exist to capture what code cannot express. Ousterhout distinguishes two kinds:
 
-**Allowed keywords:**
-- Control: `IF`, `THEN`, `ELSE`, `ENDIF`, `WHILE`, `ENDWHILE`, `FOR EACH`, `REPEAT UNTIL`, `CASE`, `OF`, `ENDCASE`
-- Action: `GET`, `COMPUTE`, `DETERMINE`, `CALL`, `RETURN`, `STORE`, `DISPLAY`, `READ`
+- **Higher-level** — abstract intuition: what this achieves and why it exists. Helps the reader understand intent without reading the body.
+- **Lower-level** — precision: units, boundary conditions, null behaviour, side effects. Fills in what names and types cannot.
 
-**Steps describe what to achieve, in problem-domain language:**
-- "DETERMINE whether the user holds the required permission" ✓
-- "call permissions.check(userId, role)" ✗ — this is code, not pseudocode
+A method's doc comment is its interface contract. It must give the caller everything they need to invoke it correctly — without reading the implementation. If someone has to open the body to understand how to call the function, the comment has failed.
+
+The contract goes **above** the function as a doc comment. The body contains only `// TODO: Implement`. The engineer must translate the contract into code themselves — that decision-making is where the skill gets built.
 
 ---
 
-## Concrete Contrast
+## What NOT to do
 
 ```
-BAD — too code-like, engineer just transcribes:
-  3. call userRepo.findById(userId) → User
-     if null, throw NotFound("user not found")
+BAD — steps inside the body; tab completion writes it for them:
+async function getUser(...) {
+    // 1. call userRepo.findById(userId) → User
+    //    if null, throw NotFound("user not found")
+    // 2. strip passwordHash and internalFlags
+    // 3. RETURN sanitised record
+}
 
-GOOD — problem-domain, engineer must translate:
-  3. GET the user record for this userId
-     IF no user record exists, signal that the resource was not found
+GOOD — contract above the function; engineer must translate:
+/**
+ * Fetch the display record for the given user.
+ * ...
+ */
+async function getUser(...) {
+    // TODO: Implement
+}
 ```
-
-The engineer has to decide: which method? What does "signal" map to — an exception? A Result type? An error response? That decision is where the skill gets built.
 
 ---
 
 ## Template
 
-```
-// Purpose: <what this function achieves in one sentence> | Ref: <path/to/similar/file:line>
-// In:    <param> (<type, constraints>)
-// Out:   <what is returned and its shape>
-// Edges: <condition> → <signal raised> | <condition> → <signal raised>
-// Docs:  <framework or library doc link relevant to the main mechanism used — omit if none>
-
+```text
+/**
+ * <Higher-level: what this function achieves and why it exists. The business
+ * rule or invariant it enforces. Abstract enough that a caller understands
+ * the contract without reading the implementation.>
+ *
+ * <Rationale if non-obvious: why this design, what constraint drove it,
+ * what would break if someone ignored it.>
+ *
+ * Preconditions:
+ * - <what must be true before this is called>
+ *
+ * Constraints:
+ * - <param precision: units, boundary conditions, null behaviour>
+ * - <output guarantee the caller depends on>
+ *
+ * Side effects:
+ * - <mutations, writes, external calls — anything invisible in the return value>
+ *
+ * Signals:
+ * - <condition> → <error type>
+ *
+ * Docs: <link to specific framework/library doc section — omit if pure domain logic>
+ */
 function_signature {
-    // given: <inputs with constraints>
-    // expect: <output — what it looks like when correct>
-    //
-    // 1. <problem-domain step>
-    //    IF <condition>, signal <error type with context>
-    //
-    // 2. <problem-domain step>
-    //    sub-detail indented here
-    //
-    // n. RETURN <what>
+    // TODO: Implement
 }
 ```
 
-**On the `Docs:` line:** include it whenever the function will use a specific framework mechanism or library API that has official documentation. Point to the specific section, not the homepage. If the function is purely domain logic with no framework dependency, omit the line. The engineer reads the linked doc before implementing — this is where the framework knowledge gets built, not in the grill.
+Omit any section that doesn't apply — don't write `Side effects: none`.
+
+**On the `Docs:` line:** include it whenever the function uses a specific framework mechanism or library API. Point to the specific section, not the homepage. The engineer reads the linked doc before implementing — this is where framework knowledge gets built, not in the grill.
 
 ---
 
 ## Filled Example
 
 ```ts
-// Purpose: fetch a user record for display, stripping sensitive fields | Ref: src/services/postService.ts:42
-// In:    userId (string, non-empty UUID), requestingUser (User, with role)
-// Out:   UserRecord — all fields except passwordHash and internalFlags
-// Edges: invalid userId → signal bad input | insufficient role → signal forbidden | no record → signal not found
-// Docs:  (none — pure domain logic, no framework dependency)
-
+/**
+ * Fetch the display record for the given user.
+ *
+ * Only admin and owner roles may access user records. The result must never
+ * include passwordHash or internalFlags — these fields must not leave the
+ * service layer, regardless of what the database returns.
+ *
+ * Preconditions:
+ * - Caller must have an active session (request must be authenticated)
+ *
+ * Constraints:
+ * - userId must be a non-empty, well-formed UUID
+ * - Returned record omits passwordHash and internalFlags
+ *
+ * Signals:
+ * - Malformed userId → InvalidInput
+ * - Requesting user lacks admin or owner role → Forbidden
+ * - No record found for this userId → NotFound
+ */
 async function getUser(userId: string, requestingUser: User): Promise<UserRecord> {
-    // given: userId (string, non-empty UUID), requestingUser (User, with role)
-    // expect: UserRecord with passwordHash and internalFlags stripped
-    //
-    // 1. DETERMINE whether userId is a well-formed, non-empty identifier
-    //    IF not, signal that the input is invalid
-    //
-    // 2. DETERMINE whether requestingUser holds a role that permits reading user records
-    //    IF not, signal that the operation is forbidden
-    //
-    // 3. GET the user record for this userId
-    //    IF no record exists, signal that the resource was not found
-    //
-    // 4. REMOVE the sensitive fields from the record (passwordHash, internalFlags)
-    //
-    // 5. RETURN the sanitised record
+    // TODO: Implement
 }
 ```
 
